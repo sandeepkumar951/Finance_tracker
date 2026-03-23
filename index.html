@@ -586,8 +586,7 @@ function renderTxns(){
     var ago=timeAgo(tx.month,tx.year);
     // ✅ Generate fake timestamp per month (1st of that month at 18:13)
     var monthIdx=MN.indexOf(tx.month);
-    var fakeTs=new Date(parseInt(tx.year),monthIdx,22,18,13,0).getTime();
-    var tsStr=fmtTimestamp(fakeTs);
+    var tsStr = lastSaveTimestamp ? fmtTimestamp(lastSaveTimestamp) : '—';
 
     h+=
       '<div class="txn-card">'+
