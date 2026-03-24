@@ -225,7 +225,6 @@ table.st td.sv{text-align:right;width:160px}
 .empty-icon{font-size:48px;margin-bottom:1rem;display:block}
 .empty h3{font-size:20px;font-weight:800;margin-bottom:0.5rem;color:var(--text)}
 .empty p{font-size:13px;color:var(--text3);font-weight:500}
-/* CATEGORY MANAGEMENT */
 .cat-manager{margin-bottom:1.5rem}
 .cat-sec-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);margin-bottom:1rem;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
 .cat-sec-hdr{padding:12px 16px;background:var(--bg3);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
@@ -256,6 +255,8 @@ table.st td.sv{text-align:right;width:160px}
 .add-sec-grid{display:grid;grid-template-columns:60px 1fr 1fr 80px;gap:8px;margin-bottom:10px}
 .color-input{width:100%;height:38px;border:1px solid var(--border2);border-radius:8px;cursor:pointer;padding:2px;background:var(--bg2)}
 .form-label{font-size:10px;font-weight:800;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.1em;display:block}
+.target-edit-input{width:85px;background:var(--bg3);border:1px solid var(--border2);outline:none;color:var(--green);font-family:var(--mono);font-size:12px;font-weight:700;padding:4px 7px;border-radius:6px;text-align:right;transition:all 0.15s}
+.target-edit-input:focus{border-color:var(--accent);background:var(--bg2)}
 @media(max-width:1100px){.txn-panel{display:none}}
 @media(max-width:800px){
   .shell{flex-direction:column}
@@ -315,7 +316,6 @@ table.st td.sv{text-align:right;width:160px}
     </div>
   </div>
 </aside>
-
 <main class="main">
   <div class="top-bar">
     <div class="tb-left">
@@ -387,7 +387,6 @@ var mBudget = 32000;
 var lastSave = null;
 var lastSaveTimestamp = null;
 var debT = null;
-var initialLoaded = false;
 var LOGOS = {
   hsbc:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/HSBC_logo_%282018%29.svg/1200px-HSBC_logo_%282018%29.svg.png',
   sbi:'https://upload.wikimedia.org/wikipedia/en/thumb/5/58/State_Bank_of_India_logo.svg/800px-State_Bank_of_India_logo.svg.png'
@@ -400,7 +399,7 @@ function R(id){ return document.getElementById(id); }
 function fmt(v){
   var n=Math.round(v);
   if(n>=100000) return '\u20B9'+(n/100000).toFixed(1).replace(/\.0$/,'')+'L';
-  if(n>=1000)   return '\u20B9'+(n/1000).toFixed(1).replace(/\.0$/,'')+'K';
+  if(n>=1000) return '\u20B9'+(n/1000).toFixed(1).replace(/\.0$/,'')+'K';
   return '\u20B9'+n.toLocaleString('en-IN');
 }
 function fmtF(v){ return '\u20B9'+Math.round(v).toLocaleString('en-IN'); }
@@ -496,25 +495,20 @@ function applyData(p){
 }
 
 function loadState(){
-  // Step 1: load from localStorage immediately so UI is not blank
-  var hadLocal = false;
   try{
     var d=localStorage.getItem('ft_v3');
     if(d){
       var p=JSON.parse(d);
       applyData(p);
-      hadLocal=true;
     }
   }catch(e){}
 
-  // Step 2: boot UI from localStorage data right away
   initSelects();
   startClock();
   var bootMs=sortedKeys();
   if(bootMs.length) cur=bootMs[bootMs.length-1];
   renderAll();
 
-  // Step 3: listen to Firebase for real-time sync
   var syncTxt=R('s-sync-txt');
   if(syncTxt) syncTxt.textContent='🔄 Syncing...';
 
@@ -526,11 +520,9 @@ function loadState(){
       updateSync();
       var ms=sortedKeys();
       if(ms.length&&(!cur||!ST[cur])) cur=ms[ms.length-1];
-      // Always re-render when Firebase data arrives
       renderAll();
       var st=R('s-sync-txt'); if(st) st.textContent='🔥 Firebase synced';
     } else {
-      // Doc doesn't exist yet — show empty state
       var st=R('s-sync-txt'); if(st) st.textContent='🔥 Firebase ready';
       renderAll();
     }
@@ -746,7 +738,7 @@ function renderTxns(){
   var countEl=R('txn-count'); if(countEl) countEl.textContent=getTxns(0).length;
   var luTime=R('lu-time'),luAgo=R('lu-ago');
   if(luTime&&lastSaveTimestamp) luTime.textContent=fmtTimestamp(lastSaveTimestamp);
-  if(luAgo&&lastSaveTimestamp)  luAgo.textContent=tsAgo(lastSaveTimestamp);
+  if(luAgo&&lastSaveTimestamp) luAgo.textContent=tsAgo(lastSaveTimestamp);
   if(!txns.length){
     panel.innerHTML='<div class="txn-empty"><span class="txn-empty-icon">💸</span>No transactions yet</div>';
     return;
@@ -1010,14 +1002,20 @@ function renderCategoryManager(secs){
     if(sec.rows.length===0){
       html+='<div style="padding:14px 16px;font-size:12px;color:var(--text3);font-style:italic">No categories. Click ＋ Add to create one.</div>';
     }
+
     sec.rows.forEach(function(row,rowIdx){
       html+='<div class="cat-row">'
         +'<div class="cat-row-info">'
         +'<span class="cat-row-emoji">'+row.emoji+'</span>'
         +'<span class="cat-row-name">'+row.name+'</span>'
-        +'<span class="cat-row-target">'+fmtF(row.target)+'</span>'
+        +'</div>'
+        +'<div style="display:flex;align-items:center;gap:10px;flex-shrink:0">'
+        +'<div style="display:flex;align-items:center;gap:6px">'
+        +'<span style="font-size:11px;color:var(--text3);font-weight:600">₹</span>'
+        +'<input class="target-edit-input" type="number" min="0" value="'+row.target+'" onchange="updateRowTarget('+secIdx+','+rowIdx+',this.value)"/>'
         +'</div>'
         +'<button class="btn-icon danger" onclick="deleteRow('+secIdx+','+rowIdx+')">✕</button>'
+        +'</div>'
         +'</div>';
     });
 
@@ -1038,9 +1036,21 @@ function renderCategoryManager(secs){
   container.innerHTML=html;
 }
 
+function updateRowTarget(secIdx, rowIdx, val){
+  var secs = customSecs ? JSON.parse(JSON.stringify(customSecs)) : JSON.parse(JSON.stringify(DEF_SECS));
+  var newTarget = parseFloat(val) || 0;
+  var rowId = secs[secIdx].rows[rowIdx].id;
+  secs[secIdx].rows[rowIdx].target = newTarget;
+  cTargets[rowId] = newTarget;
+  customSecs = secs;
+  save();
+  showSaveConfirm();
+}
+
 function toggleAddRow(secIdx){
   var f=R('add-form-'+secIdx); if(f) f.classList.toggle('show');
 }
+
 function toggleAddSection(){
   var f=R('add-sec-form'); if(f) f.classList.toggle('show');
 }
@@ -1255,7 +1265,7 @@ function renderCharts(app){
 }
 
 // ════════════════════════════════════════
-// BOOT — loadState handles everything
+// BOOT
 // ════════════════════════════════════════
 loadState();
 </script>
