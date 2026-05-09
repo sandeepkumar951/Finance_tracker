@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Finance Tracker</title>
+<title>💵 Finance Tracker</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -12,21 +12,20 @@
 <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore-compat.js"></script>
 <style>
 :root{
-  --bg:#F5F4F0;--bg2:#FFFFFF;--bg3:#EEECEA;--bg4:#E0DDD9;--bg5:#D5D2CE;
-  --border:rgba(59,31,14,0.08);--border2:rgba(59,31,14,0.15);
-  --text:#1A1208;--text2:#6B5C4E;--text3:#A89888;
-  --accent:#3B1F0E;--accent2:#5C3420;--aglow:rgba(59,31,14,0.08);
-  --green:#639922;--gbg:rgba(99,153,34,0.08);
-  --red:#E24B4A;--rbg:rgba(226,75,74,0.08);--blue:#378ADD;
-  --r:12px;--rl:18px;
-  --font:'Montserrat','Segoe UI',sans-serif;--mono:'JetBrains Mono',monospace;
-  --sw:275px;--tw:300px;
+--bg:#F5F4F0;--bg2:#FFFFFF;--bg3:#EEECEA;--bg4:#E0DDD9;--bg5:#D5D2CE;
+--border:rgba(59,31,14,0.08);--border2:rgba(59,31,14,0.15);
+--text:#1A1208;--text2:#6B5C4E;--text3:#A89888;
+--accent:#3B1F0E;--accent2:#5C3420;--aglow:rgba(59,31,14,0.08);
+--green:#639922;--gbg:rgba(99,153,34,0.08);
+--red:#E24B4A;--rbg:rgba(226,75,74,0.08);--blue:#378ADD;
+--r:12px;--rl:18px;
+--font:'Montserrat','Segoe UI',sans-serif;--mono:'JetBrains Mono',monospace;
+--sw:275px;--tw:300px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px}
 body{min-height:100vh}
 .shell{display:flex;min-height:100vh}
-
 .sidebar{width:var(--sw);flex-shrink:0;background:var(--bg3);border-right:1px solid var(--border);position:sticky;top:0;height:100vh;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:var(--bg5) transparent}
 .sidebar::-webkit-scrollbar{width:4px}
 .sidebar::-webkit-scrollbar-thumb{background:var(--bg5);border-radius:4px}
@@ -35,24 +34,20 @@ body{min-height:100vh}
 .sidebar-months-inner{padding-bottom:0.5rem}
 .s-footer{padding:0.6rem 1.1rem 0.75rem;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:4px}
 .main{flex:1;padding:2rem;overflow-x:hidden;min-width:0}
-
 .logo{font-size:19px;font-weight:800;padding:0.2rem 0.5rem 1.2rem;display:flex;align-items:center;gap:10px;letter-spacing:-0.5px;color:var(--text)}
 .logo-sub{font-size:11px;font-weight:500;color:var(--text3);display:block;margin-top:2px}
 .logo-icon{width:32px;height:32px;background:var(--blue);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-
 .nav-lbl{font-size:9px;font-weight:800;color:var(--text3);letter-spacing:0.14em;text-transform:uppercase;padding:0.65rem 0.6rem 0.2rem}
 .nav-btn{width:100%;text-align:left;background:transparent;border:none;color:var(--text2);font-family:var(--font);font-size:13px;font-weight:600;padding:8px 10px;border-radius:var(--r);cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:9px}
 .nav-btn:hover{background:var(--bg4);color:var(--text)}
 .nav-btn.active{background:linear-gradient(135deg,#3B1F0E,#7B4A2D);color:#fff}
 .nav-btn .ni{font-size:15px;width:20px;text-align:center}
 .sdiv{height:1px;background:var(--border);margin:0.5rem 0;flex-shrink:0}
-
 .mpill{width:100%;text-align:left;background:transparent;border:none;color:var(--text3);font-family:var(--font);font-size:11px;font-weight:600;padding:6px 10px;border-radius:8px;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .mpill:hover{background:var(--bg4);color:var(--text2)}
 .mpill.active{background:linear-gradient(135deg,#3B1F0E,#7B4A2D);color:#fff;font-weight:700}
 .mpill .dot{width:5px;height:5px;border-radius:50%;background:currentColor;opacity:0.6;flex-shrink:0}
 .mpill-month{white-space:nowrap;flex-shrink:0}
-
 .spie-wrap{margin:0.75rem 0.1rem 0;background:var(--bg2);border:1px solid var(--border);border-radius:18px;padding:1rem 0.9rem;flex-shrink:0;box-shadow:0 2px 12px rgba(0,0,0,0.06)}
 .spie-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.75rem}
 .spie-title{font-size:9px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:0.13em}
@@ -71,16 +66,13 @@ body{min-height:100vh}
 .spl-val{font-size:10px;font-family:var(--mono);color:var(--text);font-weight:500}
 .spl-pct{font-size:9px;font-family:var(--mono);color:var(--text3);background:var(--bg4);padding:1px 4px;border-radius:4px}
 .spie-empty{text-align:center;padding:1.5rem 0;font-size:11px;color:var(--text3);font-weight:500}
-
 .add-form{display:flex;flex-direction:column;gap:7px;padding:0.5rem 0}
 .add-form select{background:var(--bg2);border:1px solid var(--border2);color:var(--text);font-family:var(--font);font-size:12px;font-weight:600;padding:8px 10px;border-radius:8px;outline:none;cursor:pointer;width:100%}
 .add-form select option{background:var(--bg2);color:var(--text)}
 .btn-add{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:10px;font-size:13px;font-family:var(--font);cursor:pointer;font-weight:700;transition:all 0.15s;width:100%}
 .btn-add:hover{opacity:0.88;transform:translateY(-1px)}
-
 .s-sync{font-size:10px;font-weight:600;color:var(--text3);display:flex;align-items:center;gap:5px}
 .s-sync-dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;box-shadow:0 0 6px var(--green);animation:pulse 2s infinite}
-
 .top-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;padding:0.75rem 1.1rem;background:var(--bg2);border:1px solid var(--border);border-radius:14px;gap:12px;flex-wrap:wrap;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
 .tb-left{display:flex;align-items:center;gap:10px}
 .tb-greeting{font-size:13px;font-weight:700;color:var(--text)}
@@ -94,22 +86,18 @@ body{min-height:100vh}
 .sync-txt{font-size:10px;font-weight:600;color:var(--text2)}
 .sync-val{font-size:10px;font-weight:700;color:var(--green)}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
-
 .tracker-layout{display:flex;gap:1.5rem;align-items:flex-start}
 .tracker-content{flex:1;min-width:0}
 .txn-panel{width:var(--tw);flex-shrink:0;position:sticky;top:1rem}
-
 .page-header{margin-bottom:1.75rem}
 .page-title{font-size:26px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:10px;letter-spacing:-0.8px}
 .page-sub{font-size:12px;color:var(--text3);margin-top:5px;font-weight:500}
 .save-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--green);background:var(--gbg);padding:4px 10px;border-radius:20px;border:1px solid rgba(99,153,34,0.2);opacity:0;transition:opacity 0.3s;margin-left:12px;font-weight:700}
 .save-badge.show{opacity:1}
-
 .vtabs{display:flex;gap:4px;margin-bottom:1.75rem;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:4px;width:fit-content;flex-wrap:wrap;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
 .vtab{background:transparent;border:none;color:var(--text2);font-family:var(--font);font-size:13px;font-weight:700;padding:7px 18px;border-radius:9px;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:6px}
 .vtab:hover{color:var(--text);background:var(--bg3)}
 .vtab.active{background:linear-gradient(135deg,#3B1F0E,#7B4A2D);color:#fff;box-shadow:0 4px 12px rgba(59,31,14,0.3)}
-
 .scards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:2rem}
 .scard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:1.1rem 1.25rem;transition:all 0.2s;position:relative;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
 .scard:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.08)}
@@ -122,11 +110,9 @@ body{min-height:100vh}
 .scard-val.red{color:var(--red)}
 .scard-val.blue{color:var(--blue)}
 .scard-sub{font-size:11px;color:var(--text3);margin-top:4px;font-weight:500}
-
 .str{display:flex;align-items:center;gap:10px;margin-bottom:0.85rem;margin-top:1.5rem}
 .str h3{font-size:10px;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:0.12em;white-space:nowrap}
 .str::after{content:'';flex:1;height:1px;background:var(--border)}
-
 .bal-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:1px;background:var(--border);border-radius:var(--rl);overflow:hidden;border:1px solid var(--border);margin-bottom:0.5rem;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
 .bh{background:var(--bg3);padding:10px 14px;display:flex;align-items:center;gap:8px}
 .bh-logo{width:30px;height:20px;object-fit:contain;border-radius:3px;flex-shrink:0}
@@ -145,7 +131,6 @@ body{min-height:100vh}
 .bi{background:transparent;border:none;outline:none;color:var(--text);font-family:var(--mono);font-size:12px;width:100%;padding:0}
 .bi:focus{color:var(--blue)}
 .bi::placeholder{color:var(--text3)}
-
 .exp-sec{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-bottom:1.1rem;transition:border-color 0.2s;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
 .exp-sec:hover{border-color:var(--border2)}
 .exp-head{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border)}
@@ -176,7 +161,6 @@ table.et td.tt{font-family:var(--mono);font-size:12px;font-weight:700}
 .bdg.ok{color:var(--green);background:var(--gbg)}
 .bdg.ov{color:var(--red);background:var(--rbg)}
 .bdg.nt{color:var(--text3)}
-
 .cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.25rem;margin-bottom:1.25rem}
 .ccrd{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);padding:1.25rem;transition:border-color 0.2s;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
 .ccrd:hover{border-color:var(--border2)}
@@ -186,7 +170,6 @@ table.et td.tt{font-family:var(--mono);font-size:12px;font-weight:700}
 .ldot{width:8px;height:8px;border-radius:2px;flex-shrink:0}
 .btn-del{background:transparent;border:1px solid rgba(226,75,74,0.3);color:var(--red);font-family:var(--font);font-size:12px;font-weight:700;padding:6px 14px;border-radius:8px;cursor:pointer;transition:all 0.15s;margin-top:1.25rem}
 .btn-del:hover{background:var(--rbg)}
-
 .set-sec{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);overflow:hidden;margin-bottom:1.25rem;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
 table.st{width:100%;border-collapse:collapse}
 table.st td{padding:10px 16px;border-bottom:1px solid var(--border);vertical-align:middle}
@@ -209,12 +192,10 @@ table.st td.sv{text-align:right;width:160px}
 .blr-btn{background:var(--bg3);border:1px solid var(--border2);color:var(--accent);font-family:var(--font);font-size:11px;font-weight:700;padding:6px 14px;border-radius:8px;cursor:pointer;transition:all 0.15s;white-space:nowrap}
 .blr-btn:hover{background:var(--bg4)}
 .blr-file{display:none}
-
 .empty{text-align:center;padding:5rem 2rem;color:var(--text2)}
 .empty-icon{font-size:48px;margin-bottom:1rem;display:block}
 .empty h3{font-size:20px;font-weight:800;margin-bottom:0.5rem;color:var(--text)}
 .empty p{font-size:13px;color:var(--text3);font-weight:500}
-
 .cat-manager{margin-bottom:1.5rem}
 .cat-sec-box{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rl);margin-bottom:1rem;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
 .cat-sec-hdr{padding:12px 16px;background:var(--bg3);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
@@ -247,7 +228,6 @@ table.st td.sv{text-align:right;width:160px}
 .form-label{font-size:10px;font-weight:800;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.1em;display:block}
 .target-edit-input{width:85px;background:var(--bg3);border:1px solid var(--border2);outline:none;color:var(--green);font-family:var(--mono);font-size:12px;font-weight:700;padding:4px 7px;border-radius:6px;text-align:right;transition:all 0.15s}
 .target-edit-input:focus{border-color:var(--accent);background:var(--bg2)}
-
 /* ── PREMIUM TRANSACTION PANEL ── */
 .txn-wrap{
   width:100%;background:#F7F6F2;
@@ -331,7 +311,6 @@ table.st td.sv{text-align:right;width:160px}
 .txn-bal-val{font-size:10px;font-weight:700;font-family:var(--mono);color:#6B5C4E;white-space:nowrap;letter-spacing:-0.1px}
 .txn-empty{text-align:center;padding:2rem 1rem;color:var(--text3);font-size:11px;font-weight:500}
 .txn-empty-icon{font-size:28px;display:block;margin-bottom:8px}
-
 @media(max-width:1100px){.txn-panel{display:none}}
 @media(max-width:800px){
   .shell{flex-direction:column}
@@ -346,75 +325,77 @@ table.st td.sv{text-align:right;width:160px}
 </head>
 <body>
 <div class="shell">
-<aside class="sidebar">
-  <div class="sidebar-top">
-    <div class="logo">
-      <div class="logo-icon">💎</div>
-      <div>Finance<span class="logo-sub">Personal tracker</span></div>
-    </div>
-    <div class="nav-lbl">Views</div>
-    <button class="nav-btn active" id="nav-tracker" onclick="setView('tracker')"><span class="ni">📊</span>Tracker</button>
-    <button class="nav-btn" id="nav-charts" onclick="setView('charts')"><span class="ni">📈</span>Charts</button>
-    <button class="nav-btn" id="nav-settings" onclick="setView('settings')"><span class="ni">⚙️</span>Settings</button>
-    <div class="sdiv"></div>
-    <div class="spie-wrap" id="spie-section" style="display:none">
-      <div class="spie-hdr">
-        <span class="spie-title">🍩 Spending Mix</span>
-        <span class="spie-badge">ALL TIME</span>
+  <aside class="sidebar">
+    <div class="sidebar-top">
+      <div class="logo">
+        <div class="logo-icon">💎</div>
+        <div>Finance<span class="logo-sub">Personal tracker</span></div>
       </div>
-      <div class="spie-canvas-wrap">
-        <canvas id="spie-canvas"></canvas>
-        <div class="spie-center">
-          <div class="spie-amt" id="spie-amt">₹0</div>
-          <div class="spie-lbl">Total Spent</div>
+      <div class="nav-lbl">Views</div>
+      <button class="nav-btn active" id="nav-tracker" onclick="setView('tracker')"><span class="ni">📊</span>Tracker</button>
+      <button class="nav-btn" id="nav-charts" onclick="setView('charts')"><span class="ni">📈</span>Charts</button>
+      <button class="nav-btn" id="nav-settings" onclick="setView('settings')"><span class="ni">⚙️</span>Settings</button>
+      <div class="sdiv"></div>
+      <div class="spie-wrap" id="spie-section" style="display:none">
+        <div class="spie-hdr">
+          <span class="spie-title">🍩 Spending Mix</span>
+          <span class="spie-badge">ALL TIME</span>
+        </div>
+        <div class="spie-canvas-wrap">
+          <canvas id="spie-canvas"></canvas>
+          <div class="spie-center">
+            <div class="spie-amt" id="spie-amt">₹0</div>
+            <div class="spie-lbl">Total Spent</div>
+          </div>
+        </div>
+        <div class="spie-legend" id="spie-legend"></div>
+      </div>
+      <div class="sdiv"></div>
+      <div class="nav-lbl">Add Month</div>
+      <div class="add-form">
+        <select id="sel-month"></select>
+        <select id="sel-year"></select>
+        <button class="btn-add" onclick="addMonth()">+ Add month</button>
+      </div>
+      <div class="sdiv"></div>
+      <div class="nav-lbl" style="padding-bottom:0.4rem">Months</div>
+    </div>
+    <div class="sidebar-months">
+      <div class="sidebar-months-inner" id="mpills"></div>
+    </div>
+    <div class="s-footer">
+      <div class="s-sync">
+        <span class="s-sync-dot"></span>
+        <span id="s-sync-txt">Connecting...</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="top-bar">
+      <div class="tb-left">
+        <span style="font-size:20px">👋</span>
+        <div>
+          <div class="tb-greeting" id="tb-greeting">Good morning!</div>
+          <div class="tb-sub">Here is your financial snapshot</div>
         </div>
       </div>
-      <div class="spie-legend" id="spie-legend"></div>
-    </div>
-    <div class="sdiv"></div>
-    <div class="nav-lbl">Add Month</div>
-    <div class="add-form">
-      <select id="sel-month"></select>
-      <select id="sel-year"></select>
-      <button class="btn-add" onclick="addMonth()">+ Add month</button>
-    </div>
-    <div class="sdiv"></div>
-    <div class="nav-lbl" style="padding-bottom:0.4rem">Months</div>
-  </div>
-  <div class="sidebar-months">
-    <div class="sidebar-months-inner" id="mpills"></div>
-  </div>
-  <div class="s-footer">
-    <div class="s-sync">
-      <span class="s-sync-dot"></span>
-      <span id="s-sync-txt">Connecting...</span>
-    </div>
-  </div>
-</aside>
-<main class="main">
-  <div class="top-bar">
-    <div class="tb-left">
-      <span style="font-size:20px">👋</span>
-      <div>
-        <div class="tb-greeting" id="tb-greeting">Good morning!</div>
-        <div class="tb-sub">Here is your financial snapshot</div>
+      <div class="tb-right">
+        <div class="tb-sync">
+          <span class="sync-dot"></span>
+          <span class="sync-txt">Last saved&nbsp;</span>
+          <span class="sync-val" id="sync-val">not yet</span>
+        </div>
+        <div class="tb-clock">
+          <div class="tb-time" id="tb-time">00:00:00</div>
+          <div class="tb-date" id="tb-date">Loading...</div>
+        </div>
       </div>
     </div>
-    <div class="tb-right">
-      <div class="tb-sync">
-        <span class="sync-dot"></span>
-        <span class="sync-txt">Last saved&nbsp;</span>
-        <span class="sync-val" id="sync-val">not yet</span>
-      </div>
-      <div class="tb-clock">
-        <div class="tb-time" id="tb-time">00:00:00</div>
-        <div class="tb-date" id="tb-date">Loading...</div>
-      </div>
-    </div>
-  </div>
-  <div id="app"></div>
-</main>
+    <div id="app"></div>
+  </main>
 </div>
+
 <script>
 var firebaseConfig = {
   apiKey: "AIzaSyDVWYKS0ZMxMC-qnObZeUb6mi2V7A2PDpk",
@@ -429,6 +410,7 @@ var db = firebase.firestore();
 
 var MN = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 var DN = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
 var DEF_SECS = [
   {id:'savings',title:'Savings & investments',icon:'🏦',note:'Pay yourself first',color:'#7F77DD',
    rows:[{id:'stocks',name:'Stocks (SIP)',emoji:'📈',target:5000},{id:'trip',name:'Trip fund',emoji:'✈️',target:3000},{id:'emergency',name:'Emergency fund',emoji:'🆘',target:2000}]},
@@ -439,6 +421,7 @@ var DEF_SECS = [
   {id:'lifestyle',title:'Personal & lifestyle',icon:'🎯',note:'Control zone',color:'#D4537E',
    rows:[{id:'personal',name:'Personal',emoji:'👕',target:2000},{id:'haircut',name:'Hair cut',emoji:'💈',target:300},{id:'skincare',name:'Skin care',emoji:'🧴',target:300},{id:'spotify',name:'Spotify',emoji:'🎵',target:150},{id:'tickets',name:'Tickets',emoji:'🎟️',target:1000},{id:'dumbtax',name:'Dumb tax',emoji:'🤦',target:550}]}
 ];
+
 var ROW_C = ['#7F77DD','#6366F1','#378ADD','#1D9E75','#06B6D4','#0EA5E9','#EF9F27','#E8593C','#F97316','#84CC16','#D4537E','#14B8A6','#F43F5E','#A855F7','#22C55E','#EAB308','#64748B','#0F766E','#B45309','#7C3AED','#BE185D','#1D4ED8','#065F46','#92400E','#5B21B6','#0369A1','#166534','#9F1239','#1E3A5F','#78350F'];
 var SEC_COLORS = {savings:'#7F77DD',fixed:'#1D9E75',essentials:'#EF9F27',lifestyle:'#D4537E'};
 
@@ -453,6 +436,7 @@ var mBudget = 32000;
 var lastSave = null;
 var lastSaveTimestamp = null;
 var debT = null;
+
 var LOGOS = {
   hsbc:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/HSBC_logo_%282018%29.svg/1200px-HSBC_logo_%282018%29.svg.png',
   sbi:'https://upload.wikimedia.org/wikipedia/en/thumb/5/58/State_Bank_of_India_logo.svg/800px-State_Bank_of_India_logo.svg.png'
@@ -501,9 +485,7 @@ function getSecs(){
 
 function getTT(){
   var t = 0;
-  getSecs().forEach(function(s){
-    s.rows.forEach(function(r){ t += r.target; });
-  });
+  getSecs().forEach(function(s){ s.rows.forEach(function(r){ t += r.target; }); });
   return t;
 }
 
@@ -584,9 +566,9 @@ function save(){
 }
 
 function applyData(p){
-  ST = p.state || {};
-  cTargets = p.cTargets || {};
-  mBudget = p.mBudget || 32000;
+  ST         = p.state      || {};
+  cTargets   = p.cTargets   || {};
+  mBudget    = p.mBudget    || 32000;
   customSecs = p.customSecs || null;
   if(p.logos){
     LOGOS.hsbc = p.logos.hsbc || LOGOS.hsbc;
@@ -693,12 +675,14 @@ function delMonth(){
   var ms = sortedKeys(); cur = ms.length ? ms[ms.length-1] : null; renderAll();
 }
 </script>
+
 <script>
 function mkBankTh(bank, name){
   var logo = LOGOS[bank];
   var li = logo ? '<img src="'+logo+'" class="eth-bank-logo" alt="'+name+'" onerror="this.style.display=\'none\'"/>' : '';
   return '<div class="eth-bank">'+li+'<span class="eth-bank-name">'+name+'</span></div>';
 }
+
 function mkBankBh(bank, name, sub){
   var logo = LOGOS[bank];
   var li = logo ? '<img src="'+logo+'" class="bh-logo" alt="'+name+'" onerror="this.style.display=\'none\'"/>' : '';
@@ -783,10 +767,88 @@ function getRowIdx(rowId){
   return idx;
 }
 
+// ── UPDATED getTxns — includes income as credit transactions ──
 function getTxns(limit){
   var txns = [], secs = getSecs(), months = sortedKeys();
+
   months.forEach(function(k){
-    var parts = k.split('-');
+    var parts     = k.split('-');
+    var monthName = parts[0];
+    var year      = parts[1];
+    var monthIdx  = MN.indexOf(monthName);
+
+    // ── INCOME TRANSACTIONS (credits) ──
+    var inc = {};
+    try{ inc = ST[k].income || {}; }catch(e){}
+
+    ['hsbc','sbi'].forEach(function(acc){
+      var obField  = acc === 'hsbc' ? 'ob_hsbc'  : 'ob_sbi';
+      var salField = acc === 'hsbc' ? 'sal_hsbc' : 'sal_sbi';
+      var othField = acc === 'hsbc' ? 'oth_hsbc' : 'oth_sbi';
+
+      var obVal  = parseFloat(inc[obField])  || 0;
+      var salVal = parseFloat(inc[salField]) || 0;
+      var othVal = parseFloat(inc[othField]) || 0;
+
+      // Synthetic timestamps — income placed at start of month
+      var baseTs = new Date(parseInt(year), monthIdx, 1).getTime();
+
+      if(obVal > 0){
+        txns.push({
+          name     : 'Opening Balance',
+          emoji    : '🏦',
+          color    : '#378ADD',
+          secId    : 'income',
+          secColor : '#378ADD',
+          acc      : acc,
+          amt      : obVal,
+          type     : 'credit',
+          month    : monthName,
+          year     : year,
+          ts       : baseTs + 1,
+          key      : k,
+          rowId    : 'ob_' + acc
+        });
+      }
+
+      if(salVal > 0){
+        txns.push({
+          name     : 'Salary',
+          emoji    : '💰',
+          color    : '#1D9E75',
+          secId    : 'income',
+          secColor : '#1D9E75',
+          acc      : acc,
+          amt      : salVal,
+          type     : 'credit',
+          month    : monthName,
+          year     : year,
+          ts       : baseTs + 2,
+          key      : k,
+          rowId    : 'sal_' + acc
+        });
+      }
+
+      if(othVal > 0){
+        txns.push({
+          name     : 'Other Income',
+          emoji    : '➕',
+          color    : '#06B6D4',
+          secId    : 'income',
+          secColor : '#06B6D4',
+          acc      : acc,
+          amt      : othVal,
+          type     : 'credit',
+          month    : monthName,
+          year     : year,
+          ts       : baseTs + 3,
+          key      : k,
+          rowId    : 'oth_' + acc
+        });
+      }
+    });
+
+    // ── EXPENSE TRANSACTIONS (debits) ──
     secs.forEach(function(sec){
       sec.rows.forEach(function(row){
         ['hsbc','sbi'].forEach(function(acc){
@@ -795,156 +857,198 @@ function getTxns(limit){
             var txTs = 0;
             try{ txTs = ST[k].expenses[row.id]['_ts_'+acc] || 0; }catch(e){}
             txns.push({
-              name:row.name, emoji:row.emoji,
-              color:ROW_C[getRowIdx(row.id)],
-              secId:sec.id, secColor:sec.color,
-              acc:acc, amt:v,
-              month:parts[0], year:parts[1],
-              ts:txTs, key:k, rowId:row.id
+              name     : row.name,
+              emoji    : row.emoji,
+              color    : ROW_C[getRowIdx(row.id)],
+              secId    : sec.id,
+              secColor : sec.color,
+              acc      : acc,
+              amt      : v,
+              type     : 'debit',
+              month    : monthName,
+              year     : year,
+              ts       : txTs,
+              key      : k,
+              rowId    : row.id
             });
           }
         });
       });
     });
   });
-  txns.sort(function(a,b){
-    var ai = months.indexOf(a.month+'-'+a.year);
-    var bi = months.indexOf(b.month+'-'+b.year);
+
+  // Sort newest first
+  txns.sort(function(a, b){
+    var ai = months.indexOf(a.month + '-' + a.year);
+    var bi = months.indexOf(b.month + '-' + b.year);
     if(bi !== ai) return bi - ai;
     if(b.ts !== a.ts) return b.ts - a.ts;
     return b.amt - a.amt;
   });
+
   return limit ? txns.slice(0, limit) : txns;
 }
 
+// ── UPDATED renderTxns — correct running balance with credit/debit logic ──
 function renderTxns(){
   var panel = R('txn-inner'); if(!panel) return;
-  var txns = getTxns(80);
+  var txns    = getTxns(80);
   var allTxns = getTxns(0);
 
+  // Badge count
   var countEl = R('txn-count');
   if(countEl) countEl.textContent = allTxns.length;
 
+  // Most recent strip
   var mostRecentTs = 0;
   txns.forEach(function(tx){ if(tx.ts > mostRecentTs) mostRecentTs = tx.ts; });
   if(!mostRecentTs && lastSaveTimestamp) mostRecentTs = lastSaveTimestamp;
-
-  var mrEl = R('txn-mr-center');
+  var mrEl  = R('txn-mr-center');
   var mrAgo = R('txn-mr-ago');
   if(mrEl)  mrEl.textContent  = mostRecentTs ? fmtTimestamp(mostRecentTs) : '—';
-  if(mrAgo) mrAgo.textContent = mostRecentTs ? tsAgo(mostRecentTs) : '';
+  if(mrAgo) mrAgo.textContent = mostRecentTs ? tsAgo(mostRecentTs)        : '';
 
   if(!txns.length){
     panel.innerHTML = '<div class="txn-empty"><span class="txn-empty-icon">💸</span>No transactions yet</div>';
     return;
   }
 
-  var balCache = {};
-  function getClosing(monthKey, bank){
-    var ck = monthKey+'_'+bank;
-    if(balCache[ck] !== undefined) return balCache[ck];
-    var inc = {};
-    try{ inc = ST[monthKey].income || {}; }catch(e){}
-    var months = sortedKeys();
-    var prevK = null;
-    for(var i = 0; i < months.length; i++){
-      if(months[i] === monthKey){ prevK = i > 0 ? months[i-1] : null; break; }
+  // ── STEP 1: Compute true final closing balance for each bank ──
+  var months = sortedKeys();
+
+  function getFinalClosing(bank){
+    if(!months.length) return 0;
+    var balCache = {};
+
+    function getClosingForMonth(monthKey, b){
+      var ck = monthKey + '_' + b;
+      if(balCache[ck] !== undefined) return balCache[ck];
+
+      var inc = {};
+      try{ inc = ST[monthKey].income || {}; }catch(e){}
+
+      var prevK = null;
+      for(var i = 0; i < months.length; i++){
+        if(months[i] === monthKey){ prevK = i > 0 ? months[i-1] : null; break; }
+      }
+
+      var obField  = b === 'hsbc' ? 'ob_hsbc'  : 'ob_sbi';
+      var manualOB = inc[obField];
+      var ob;
+      if(manualOB !== undefined && manualOB !== '' && manualOB !== null){
+        ob = parseFloat(manualOB) || 0;
+      } else if(prevK){
+        ob = getClosingForMonth(prevK, b);
+      } else {
+        ob = 0;
+      }
+
+      var salF  = b === 'hsbc' ? 'sal_hsbc' : 'sal_sbi';
+      var othF  = b === 'hsbc' ? 'oth_hsbc' : 'oth_sbi';
+      var sal   = parseFloat(inc[salF]) || 0;
+      var oth   = parseFloat(inc[othF]) || 0;
+
+      var spent = 0;
+      getSecs().forEach(function(sec){
+        sec.rows.forEach(function(row){ spent += getX(monthKey, row.id, b); });
+      });
+
+      var closing = ob + sal + oth - spent;
+      balCache[ck] = closing;
+      return closing;
     }
-    var obField = bank === 'hsbc' ? 'ob_hsbc' : 'ob_sbi';
-    var manualOB = inc[obField];
-    var ob;
-    if(manualOB !== undefined && manualOB !== '' && manualOB !== null){
-      ob = parseFloat(manualOB) || 0;
-    } else if(prevK){
-      ob = getClosing(prevK, bank);
-    } else {
-      ob = 0;
-    }
-    var salF = bank === 'hsbc' ? 'sal_hsbc' : 'sal_sbi';
-    var othF = bank === 'hsbc' ? 'oth_hsbc' : 'oth_sbi';
-    var sal = parseFloat(inc[salF]) || 0;
-    var oth = parseFloat(inc[othF]) || 0;
-    var spent = 0;
-    getSecs().forEach(function(sec){
-      sec.rows.forEach(function(row){ spent += getX(monthKey, row.id, bank); });
-    });
-    var closing = ob + sal + oth - spent;
-    balCache[ck] = closing;
-    return closing;
+
+    return getClosingForMonth(months[months.length - 1], bank);
   }
 
-  function dayKey(ts){
-    if(!ts) return 'unknown';
-    var d = new Date(ts);
-    return d.getFullYear()+'-'+d.getMonth()+'-'+d.getDate();
-  }
+  // ── STEP 2: Start running balances from the latest closing balance ──
+  var runningBal = {
+    hsbc : getFinalClosing('hsbc'),
+    sbi  : getFinalClosing('sbi')
+  };
+
+  // ── STEP 3: Walk backwards — assign displayBal per transaction ──
+  var txnsWithBal = txns.map(function(tx){
+    var bal = runningBal[tx.acc];             // balance AFTER this transaction
+
+    if(tx.type === 'debit'){
+      runningBal[tx.acc] = bal + tx.amt;      // reconstruct: before debit = after + amt
+    } else {
+      runningBal[tx.acc] = bal - tx.amt;      // reconstruct: before credit = after - amt
+    }
+
+    return Object.assign({}, tx, { displayBal: bal });
+  });
+
+  // ── STEP 4: Group by date label ──
   function groupLabel(ts){
     if(!ts) return 'Earlier';
-    var now = new Date();
+    var now   = new Date();
     var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    var d = new Date(ts);
-    var day = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-    var diff = Math.round((today - day) / 86400000);
+    var d     = new Date(ts);
+    var day   = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    var diff  = Math.round((today - day) / 86400000);
     if(diff === 0) return 'Today';
     if(diff === 1) return 'Yesterday';
-    return d.getDate()+' '+MN[d.getMonth()].slice(0,3).toUpperCase()+' '+d.getFullYear();
+    return d.getDate() + ' ' + MN[d.getMonth()].slice(0,3).toUpperCase() + ' ' + d.getFullYear();
   }
 
-    var groups = [], keyMap = {}, labelMap = {};
-    txns.forEach(function(tx){
-      var dk = dayKey(tx.ts);
-      var lbl = groupLabel(tx.ts);
-      if(labelMap[lbl] === undefined){
-        labelMap[lbl] = groups.length;
-        groups.push({label:lbl, dk:dk, items:[]});
-      }
-      groups[labelMap[lbl]].items.push(tx);
-    });
+  var groups = [], labelMap = {};
+  txnsWithBal.forEach(function(tx){
+    var lbl = groupLabel(tx.ts);
+    if(labelMap[lbl] === undefined){
+      labelMap[lbl] = groups.length;
+      groups.push({ label: lbl, items: [] });
+    }
+    groups[labelMap[lbl]].items.push(tx);
+  });
 
-
+  // ── STEP 5: Render HTML ──
   function bankChip(acc){
     var logo = LOGOS[acc];
-    var li = logo ? '<img src="'+logo+'" class="txn-bank-chip-logo" alt="'+acc+'" onerror="this.style.display=\'none\'"/>' : '';
+    var li   = logo ? '<img src="'+logo+'" class="txn-bank-chip-logo" alt="'+acc+'" onerror="this.style.display=\'none\'"/>' : '';
     return '<span class="txn-bank-chip '+acc+'">'+li+(acc === 'hsbc' ? 'HSBC' : 'SBI')+'</span>';
   }
 
   var h = '';
   groups.forEach(function(g){
     h += '<div class="txn-date-group">'
-      + '<span class="txn-date-group-label">'+g.label+'</span>'
-      + '<span class="txn-date-group-line"></span>'
-      + '</div>';
+       + '<span class="txn-date-group-label">' + g.label + '</span>'
+       + '<span class="txn-date-group-line"></span>'
+       + '</div>';
 
     g.items.forEach(function(tx){
       var stripColor = tx.secColor || SEC_COLORS[tx.secId] || '#378ADD';
-      var tsStr  = tx.ts ? fmtTimestamp(tx.ts) : (tx.month+' '+tx.year);
-      var agoStr = tx.ts ? tsAgo(tx.ts) : '';
-      var bal    = getClosing(tx.month+'-'+tx.year, tx.acc);
-      var balLbl = tx.acc === 'hsbc' ? 'HSBC Balance' : 'SBI Balance';
+      var tsStr      = tx.ts ? fmtTimestamp(tx.ts) : (tx.month + ' ' + tx.year);
+      var agoStr     = tx.ts ? tsAgo(tx.ts) : '';
+      var balLbl     = tx.acc === 'hsbc' ? 'HSBC Balance' : 'SBI Balance';
+      var arrowClass = tx.type === 'credit' ? 'credit' : 'debit';
+      var arrowIcon  = tx.type === 'credit' ? '↙'      : '↗';
 
       h += '<div class="txn-card">'
-        + '<div class="txn-strip" style="background:'+stripColor+'"></div>'
-        + '<div class="txn-icon-col"><div class="txn-icon">'+tx.emoji+'</div></div>'
-        + '<div class="txn-info">'
-        +   '<div class="txn-name">'+tx.name+'</div>'
-        +   '<div class="txn-meta">'
-        +     '<span class="txn-month">'+tx.month.slice(0,3)+' '+tx.year+'</span>'
-        +     bankChip(tx.acc)
-        +   '</div>'
-        +   '<div class="txn-datetime"><span class="txn-datetime-icon">📅</span>'+tsStr+'</div>'
-        + '</div>'
-        + '<div class="txn-right">'
-        +   '<div class="txn-amt-row">'
-        +     '<span class="txn-amt">₹'+Math.round(tx.amt).toLocaleString('en-IN')+'</span>'
-        +     '<span class="txn-arrow debit">↗</span>'
-        +   '</div>'
-        +   '<span class="txn-ago-pill">'+agoStr+'</span>'
-        +   '<span class="txn-bal-label">'+balLbl+'</span>'
-        +   '<span class="txn-bal-val">'+fmtBal(bal)+'</span>'
-        + '</div>'
-        + '</div>';
+         + '<div class="txn-strip" style="background:' + stripColor + '"></div>'
+         + '<div class="txn-icon-col"><div class="txn-icon">' + tx.emoji + '</div></div>'
+         + '<div class="txn-info">'
+         +   '<div class="txn-name">'  + tx.name  + '</div>'
+         +   '<div class="txn-meta">'
+         +     '<span class="txn-month">' + tx.month.slice(0,3) + ' ' + tx.year + '</span>'
+         +     bankChip(tx.acc)
+         +   '</div>'
+         +   '<div class="txn-datetime"><span class="txn-datetime-icon">📅</span>' + tsStr + '</div>'
+         + '</div>'
+         + '<div class="txn-right">'
+         +   '<div class="txn-amt-row">'
+         +     '<span class="txn-amt">₹' + Math.round(tx.amt).toLocaleString('en-IN') + '</span>'
+         +     '<span class="txn-arrow ' + arrowClass + '">' + arrowIcon + '</span>'
+         +   '</div>'
+         +   '<span class="txn-ago-pill">' + agoStr + '</span>'
+         +   '<span class="txn-bal-label">' + balLbl + '</span>'
+         +   '<span class="txn-bal-val">'   + fmtBal(tx.displayBal) + '</span>'
+         + '</div>'
+         + '</div>';
     });
   });
+
   panel.innerHTML = h;
 }
 
@@ -954,6 +1058,7 @@ function setView(v){
   var nb = R('nav-'+v); if(nb) nb.classList.add('active');
   renderMain();
 }
+
 function renderAll(){ renderPills(); renderPie(); renderMain(); }
 
 function renderPills(){
@@ -990,6 +1095,7 @@ function renderMain(){
 function renderTracker(app){
   var parts = cur.split('-'), m = parts[0], y = parts[1];
   var t = calc(cur), TT = getTT(), rem = TT - t.totSp;
+
   var mostRecentTs = 0;
   getTxns(0).forEach(function(tx){ if(tx.ts > mostRecentTs) mostRecentTs = tx.ts; });
   if(!mostRecentTs && lastSaveTimestamp) mostRecentTs = lastSaveTimestamp;
@@ -1056,18 +1162,18 @@ function buildBal(t){
   var isAutoH = prev && !hManual;
   var isAutoS = prev && !sManual;
   var isAuto  = isAutoH && isAutoS;
-  var hOB = getInc(cur,'ob_hsbc'),  sOB = getInc(cur,'ob_sbi');
+  var hOB = getInc(cur,'ob_hsbc'), sOB = getInc(cur,'ob_sbi');
   var hSal = getInc(cur,'sal_hsbc'), sSal = getInc(cur,'sal_sbi');
   var hOth = getInc(cur,'oth_hsbc'), sOth = getInc(cur,'oth_sbi');
   var rows = [
-    {lbl:'🏦 Opening balance', hv:hOB,  sv:sOB,  hk:'ob_hsbc',  sk:'ob_sbi',  autoH:isAutoH, autoS:isAutoS, auto:isAuto},
-    {lbl:'💰 Salary received', hv:hSal, sv:sSal, hk:'sal_hsbc', sk:'sal_sbi', autoH:false, autoS:false, auto:false},
-    {lbl:'➕ Other income',    hv:hOth, sv:sOth, hk:'oth_hsbc', sk:'oth_sbi', autoH:false, autoS:false, auto:false}
+    {lbl:'🏦 Opening balance', hv:hOB, sv:sOB, hk:'ob_hsbc', sk:'ob_sbi', autoH:isAutoH, autoS:isAutoS, auto:isAuto},
+    {lbl:'💰 Salary received',  hv:hSal, sv:sSal, hk:'sal_hsbc', sk:'sal_sbi', autoH:false, autoS:false, auto:false},
+    {lbl:'➕ Other income',     hv:hOth, sv:sOth, hk:'oth_hsbc', sk:'oth_sbi', autoH:false, autoS:false, auto:false}
   ];
   var g = R('balgrid'); if(!g) return;
   var h = '<div class="bh"></div>'+mkBankBh('hsbc','HSBC','Primary bank')+mkBankBh('sbi','SBI','Secondary bank')+'<div class="bh"><div class="bh-text"><span class="bh-name">Combined</span><span class="bh-sub">Total</span></div></div>';
   rows.forEach(function(r){
-    var atag = r.auto ? '<span class="atag">AUTO</span>' : '';
+    var atag  = r.auto ? '<span class="atag">AUTO</span>' : '';
     var hCell = r.autoH
       ? '<div class="bc auto">'+fmtF(r.hv)+'</div>'
       : '<div class="bc"><input class="bi" data-inc="'+r.hk+'" value="'+(r.hv||'')+'" placeholder="0" type="number" min="0"/></div>';
@@ -1183,6 +1289,7 @@ function recalcExp(secId, rowId){
   }
 }
 </script>
+
 <script>
 function renderSettings(app){
   var h = '<div class="page-header"><div class="page-title">⚙️ Settings</div><div class="page-sub">Budget, bank logos & category management</div></div>'
@@ -1292,13 +1399,14 @@ function updateRowTarget(secIdx, rowIdx, val){
   cTargets[rowId] = newTarget;
   customSecs = secs; save(); showSaveConfirm();
 }
+
 function toggleAddRow(secIdx){ var f = R('add-form-'+secIdx); if(f) f.classList.toggle('show'); }
 function toggleAddSection(){ var f = R('add-sec-form'); if(f) f.classList.toggle('show'); }
 
 function addRow(secIdx){
   var secs = customSecs ? JSON.parse(JSON.stringify(customSecs)) : JSON.parse(JSON.stringify(DEF_SECS));
-  var emoji = (R('emoji-'+secIdx).value.trim()) || '🏷️';
-  var name = R('name-'+secIdx).value.trim();
+  var emoji  = (R('emoji-'+secIdx).value.trim()) || '🏷️';
+  var name   = R('name-'+secIdx).value.trim();
   var target = parseFloat(R('target-'+secIdx).value) || 0;
   if(!name){ alert('Please enter a category name.'); return; }
   var id = name.toLowerCase().replace(/[^a-z0-9]/g,'_')+'_'+Date.now();
@@ -1365,6 +1473,7 @@ function showSaveConfirm(){
   if(ok){ ok.style.opacity = '1'; setTimeout(function(){ ok.style.opacity = '0'; }, 1500); }
 }
 </script>
+
 <script>
 function renderCharts(app){
   var secs = getSecs(), months = sortedKeys();
@@ -1374,7 +1483,6 @@ function renderCharts(app){
   }
   if(!cur || !ST[cur]) cur = months[months.length-1];
   var parts = cur.split('-'), m = parts[0], y = parts[1], TT = getTT();
-
   app.innerHTML = '<div class="page-header"><div class="page-title">📈 Charts</div><div class="page-sub">'+m+' '+y+' · spending breakdown & trends</div></div>'
     + '<div class="vtabs"><button class="vtab" onclick="setView(\'tracker\')">📊 Tracker</button><button class="vtab active" onclick="setView(\'charts\')">📈 Charts</button><button class="vtab" onclick="setView(\'settings\')">⚙️ Settings</button></div>'
     + '<div class="cgrid" id="cg"></div>'
@@ -1383,10 +1491,9 @@ function renderCharts(app){
     + '<div class="lrow"><span class="leg"><span class="ldot" style="background:#E0DDD9"></span>Target</span><span class="leg"><span class="ldot" style="background:#7F77DD"></span>Actual</span><span class="leg"><span class="ldot" style="background:#E24B4A"></span>Over</span></div>'
     + '<div style="position:relative;height:'+Math.max(200, months.length*44+60)+'px"><canvas id="ca"></canvas></div>'
     + '</div>';
-
   var cg = R('cg');
   secs.forEach(function(sec){
-    var col = sec.color;
+    var col     = sec.color;
     var labels  = sec.rows.map(function(r){ return r.emoji+' '+r.name; });
     var targets = sec.rows.map(function(r){ return r.target; });
     var actuals = sec.rows.map(function(r){ return getX(cur,r.id,'hsbc') + getX(cur,r.id,'sbi'); });
@@ -1419,7 +1526,7 @@ function renderCharts(app){
   var gA = secA.reduce(function(a,v){ return a+v; }, 0);
 
   var dCard = document.createElement('div'); dCard.className = 'ccrd';
-  var dLeg = secs.map(function(s,i){
+  var dLeg  = secs.map(function(s,i){
     var pct = gA > 0 ? ((secA[i]/gA)*100).toFixed(0)+'%' : '0%';
     return '<span class="leg"><span class="ldot" style="background:'+s.color+'"></span>'+s.icon+' '+pct+'</span>';
   }).join('');
@@ -1428,18 +1535,20 @@ function renderCharts(app){
   aCharts.push(new Chart(R('cdnt'), {
     type:'doughnut',
     data:{labels:secs.map(function(s){ return s.title; }),datasets:[{data:secA,backgroundColor:secs.map(function(s){ return s.color; }),borderWidth:3,borderColor:'#F5F4F0',hoverOffset:10}]},
-    options:{responsive:true,maintainAspectRatio:false,cutout:'68%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){ return c.label+': '+fmtF(c.raw); }}}}}
+    options:{responsive:true,maintainAspectRatio:false,cutout:'68%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){ return c.label+': '+fmtF(c.raw); }}}}
+    }
   }));
 
-  var hT = secs.reduce(function(a,s){ return a + s.rows.reduce(function(b,r){ return b + getX(cur,r.id,'hsbc'); }, 0); }, 0);
-  var sT2 = secs.reduce(function(a,s){ return a + s.rows.reduce(function(b,r){ return b + getX(cur,r.id,'sbi'); }, 0); }, 0);
+  var hT  = secs.reduce(function(a,s){ return a + s.rows.reduce(function(b,r){ return b + getX(cur,r.id,'hsbc'); }, 0); }, 0);
+  var sT2 = secs.reduce(function(a,s){ return a + s.rows.reduce(function(b,r){ return b + getX(cur,r.id,'sbi');  }, 0); }, 0);
   var aCard = document.createElement('div'); aCard.className = 'ccrd';
   aCard.innerHTML = '<div class="ctitle">🏦 HSBC vs SBI</div><div class="lrow"><span class="leg"><span class="ldot" style="background:#378ADD"></span>HSBC '+fmtF(hT)+'</span><span class="leg"><span class="ldot" style="background:#1D9E75"></span>SBI '+fmtF(sT2)+'</span></div><div style="position:relative;height:220px"><canvas id="cacc"></canvas></div>';
   cg.appendChild(aCard);
   aCharts.push(new Chart(R('cacc'), {
     type:'doughnut',
     data:{labels:['HSBC','SBI'],datasets:[{data:[hT,sT2],backgroundColor:['#378ADD','#1D9E75'],borderWidth:3,borderColor:'#F5F4F0',hoverOffset:10}]},
-    options:{responsive:true,maintainAspectRatio:false,cutout:'68%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){ return c.label+': '+fmtF(c.raw); }}}}}
+    options:{responsive:true,maintainAspectRatio:false,cutout:'68%',plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){ return c.label+': '+fmtF(c.raw); }}}}
+    }
   }));
 
   var allL = months.map(function(k){ var p = k.split('-'); return p[0].slice(0,3)+' '+p[1]; });
