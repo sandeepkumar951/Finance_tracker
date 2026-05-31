@@ -323,6 +323,13 @@ table.et td.tt{font-family:var(--mono);font-size:12px;font-weight:700}
 .bdg.ok{color:var(--green);background:var(--gbg)}
 .bdg.ov{color:var(--red);background:var(--rbg)}
 .bdg.nt{color:var(--text3)}
+.scard-val,.mini-stat-val,.mpill-spent,.year-total,.bc.mono,.bc.tot,.bc.clos,.bc.auto,.bi,.ei,.bdg,.ti,.budget-inp,.target-edit-input,.spl-val,.spl-pct,.txn-amt,.txn-bal-val,.archive-value,.alloc-amt,.alloc2-amt,.ql-amt,.qo2-total{
+  font-variant-numeric:tabular-nums lining-nums;
+  font-feature-settings:"tnum" 1,"lnum" 1;
+}
+.scard-val,.mini-stat-val,.bc.tot,.bc.clos,.txn-amt,.archive-value{
+  letter-spacing:0;
+}
 
 .cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.25rem;margin-bottom:1.25rem}
 .ccrd{background:linear-gradient(145deg,rgba(255,255,255,.9),rgba(255,252,247,.72));border:1px solid rgba(59,31,14,.09);border-radius:var(--rl);padding:1.25rem;transition:border-color 0.2s;box-shadow:0 10px 28px rgba(59,31,14,.075),0 1px 3px rgba(59,31,14,.06)}
@@ -532,6 +539,16 @@ table.st td.sv{text-align:right;width:160px}
 .btn-icon.danger:hover{background:var(--rbg)}
 .btn-icon.primary{background:linear-gradient(135deg,#5C3420,#3B1F0E);color:#fff;border:none}
 .btn-icon.primary:hover{opacity:0.88}
+.archive-list{display:flex;flex-direction:column;gap:10px}
+.archive-card{display:grid;grid-template-columns:minmax(160px,1.1fr) repeat(4,minmax(110px,.75fr)) max-content;gap:12px;align-items:center;background:#fff;border:1px solid rgba(59,31,14,.09);border-radius:16px;padding:13px 14px;box-shadow:0 4px 16px rgba(59,31,14,.05)}
+.archive-card:hover{border-color:rgba(59,31,14,.16)}
+.archive-title{font-size:14px;font-weight:900;color:var(--text)}
+.archive-sub,.archive-label{font-size:9px;font-weight:850;color:var(--text3);text-transform:uppercase;letter-spacing:.09em}
+.archive-value{font-family:var(--mono);font-size:12px;font-weight:850;color:var(--text)}
+.archive-value.green{color:var(--green)}
+.archive-value.red{color:var(--red)}
+.archive-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}
+.archive-empty{padding:18px;border:1px dashed rgba(59,31,14,.16);border-radius:16px;background:rgba(245,244,240,.58);font-size:12px;font-weight:700;color:var(--text2);text-align:center}
 
 /* ── Tracker layout ── */
 :root{--expense-grid:minmax(260px,2.5fr) minmax(120px,1fr) minmax(120px,1fr) minmax(120px,1fr) minmax(140px,1fr) minmax(120px,1fr)}
@@ -669,6 +686,8 @@ html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;backgr
   .exp-metric{border-left:none;padding-left:0}
   .add-sec-grid{grid-template-columns:60px 1fr}
   .add-cat-grid{grid-template-columns:50px 1fr}
+  .archive-card{grid-template-columns:1fr 1fr}
+  .archive-actions{grid-column:1/-1;justify-content:flex-start}
 }
 @media(max-width:760px){
   .account-grid,.scards{grid-template-columns:1fr}
@@ -1056,6 +1075,7 @@ var DEF_SECS = [
 var ROW_C = ['#7F77DD','#6366F1','#378ADD','#1D9E75','#06B6D4','#0EA5E9','#EF9F27','#E8593C','#F97316','#84CC16','#D4537E','#14B8A6','#F43F5E','#A855F7','#22C55E','#EAB308','#64748B','#0F766E','#B45309','#7C3AED','#BE185D','#1D4ED8','#065F46','#92400E','#5B21B6','#0369A1','#166534','#9F1239','#1E3A5F','#78350F'];
 var SEC_COLORS = {savings:'#7F77DD',fixed:'#1D9E75',essentials:'#EF9F27',lifestyle:'#D4537E'};
 var ST = {};
+var archivedMonths = {};
 var cur = null;
 var view = 'tracker';
 var aCharts = [];
@@ -1097,17 +1117,27 @@ function isNumericEditing(){
   var el=document.activeElement;
   return !!(el&&el.tagName==='INPUT'&&(el.type==='number'||el.classList.contains('bi')||el.classList.contains('ei')||el.classList.contains('budget-inp')||el.classList.contains('target-edit-input')||el.classList.contains('ti')||el.classList.contains('target-field')));
 }
-function fmt(v){
-  var n=Math.round(v);
-  if(n>=100000) return '\u20B9'+(n/100000).toFixed(1).replace(/\.0$/,'')+'L';
-  if(n>=1000) return '\u20B9'+(n/1000).toFixed(1).replace(/\.0$/,'')+'K';
-  return '\u20B9'+n.toLocaleString('en-IN');
+function cleanNumber(v){ return isFinite(parseFloat(v))?parseFloat(v):0; }
+function indianNumber(n,decimals){
+  return n.toLocaleString('en-IN',{minimumFractionDigits:decimals||0,maximumFractionDigits:decimals||0});
 }
-function fmtF(v){ return '\u20B9'+Math.round(v).toLocaleString('en-IN'); }
+function trimFixed(n,d){ return n.toFixed(d).replace(/\.0+$/,'').replace(/(\.\d*[1-9])0+$/,'$1'); }
+function moneyPrefix(n){ return n<0?'-\u20B9':'\u20B9'; }
+function fmt(v){
+  var raw=cleanNumber(v),n=Math.abs(raw),label;
+  if(n>=10000000) label=trimFixed(n/10000000,1)+'Cr';
+  else if(n>=100000) label=trimFixed(n/100000,1)+'L';
+  else if(n>=1000) label=trimFixed(n/1000,1)+'K';
+  else label=indianNumber(Math.round(n));
+  return moneyPrefix(raw)+label;
+}
+function fmtF(v){
+  var raw=cleanNumber(v),n=Math.abs(Math.round(raw));
+  return moneyPrefix(raw)+indianNumber(n);
+}
 function fmtBal(v){
-  var n=Math.abs(v);
-  var s=n.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
-  return (v<0?'-':'')+'\u20B9'+s;
+  var raw=cleanNumber(v),n=Math.abs(raw);
+  return moneyPrefix(raw)+indianNumber(n,2);
 }
 function fmtTimestamp(ts){
   if(!ts) return '';
@@ -1173,6 +1203,11 @@ function getBudgetMixStyle(secs){
 }
 function getMonthIncome(key){ var t=calc(key); return t.hSal+t.sSal+t.hOth+t.sOth; }
 function getMonthProfitLoss(key){ var t=calc(key); return getMonthIncome(key)-t.totSp; }
+function cloneData(v){ return JSON.parse(JSON.stringify(v||{})); }
+function splitMonthKey(key){
+  var p=String(key||'').split('-');
+  return {month:p[0]||'',year:p[1]||''};
+}
 function sortedKeys(){
   return Object.keys(ST).sort(function(a,b){
     var ap=a.split('-'),bp=b.split('-');
@@ -1218,10 +1253,85 @@ function getInc(key,field){
   }
   return v;
 }
+function makeArchivedMonth(key){
+  var parts=splitMonthKey(key),t=calc(key),keys=sortedKeys();
+  return {
+    id:key,
+    key:key,
+    monthName:parts.month,
+    year:parts.year,
+    deletedAt:Date.now(),
+    originalIndex:keys.indexOf(key),
+    data:cloneData(ST[key]),
+    summary:{
+      totalIncome:getMonthIncome(key),
+      totalExpenses:t.totSp,
+      netSavings:getMonthProfitLoss(key),
+      totalAvailable:t.totA,
+      hsbcClosing:t.hC,
+      sbiClosing:t.sC,
+      combinedClosing:t.hC+t.sC
+    },
+    settingsSnapshot:{
+      cTargets:cloneData(cTargets),
+      mBudget:mBudget,
+      customSecs:cloneData(customSecs),
+      categorySections:cloneData(getSecs()),
+      logos:cloneData(LOGOS)
+    },
+    metadata:{archivedFrom:'finance-tracker',archivedVersion:1}
+  };
+}
+function getArchiveEntry(key){
+  var a=archivedMonths&&archivedMonths[key];
+  if(!a) return null;
+  if(a.data) return a;
+  var parts=splitMonthKey(key);
+  return {id:key,key:key,monthName:parts.month,year:parts.year,deletedAt:0,originalIndex:-1,data:cloneData(a),summary:null,metadata:{migrated:true}};
+}
+function archivedKeys(){
+  return Object.keys(archivedMonths||{}).sort(function(a,b){
+    var ad=(getArchiveEntry(a)||{}).deletedAt||0,bd=(getArchiveEntry(b)||{}).deletedAt||0;
+    if(ad!==bd) return bd-ad;
+    return a.localeCompare(b);
+  });
+}
+function archivedSummary(key){
+  var a=getArchiveEntry(key),sum=a&&a.summary;
+  if(sum) return sum;
+  var data=a?a.data:{},totalIncome=0,totalExpenses=0,inc=data.income||{};
+  totalIncome=(parseFloat(inc.sal_hsbc)||0)+(parseFloat(inc.sal_sbi)||0)+(parseFloat(inc.oth_hsbc)||0)+(parseFloat(inc.oth_sbi)||0);
+  getSecs().forEach(function(sec){ sec.rows.forEach(function(row){ try{ totalExpenses+=(parseFloat(data.expenses[row.id].hsbc)||0)+(parseFloat(data.expenses[row.id].sbi)||0); }catch(e){} }); });
+  return {totalIncome:totalIncome,totalExpenses:totalExpenses,netSavings:totalIncome-totalExpenses};
+}
+function mergeArchivedSettings(a){
+  var snap=a&&a.settingsSnapshot?a.settingsSnapshot:null;
+  if(!snap) return;
+  if(snap.cTargets){ Object.keys(snap.cTargets).forEach(function(id){ if(cTargets[id]===undefined) cTargets[id]=snap.cTargets[id]; }); }
+  var archivedSecs=snap.categorySections||snap.customSecs;
+  if(!archivedSecs||!archivedSecs.length) return;
+  var hadCustomSecs=!!customSecs,changed=false,secs=customSecs?cloneData(customSecs):cloneData(DEF_SECS);
+  archivedSecs.forEach(function(archSec){
+    if(!archSec||!archSec.id) return;
+    var sec=null;
+    secs.forEach(function(s){ if(s.id===archSec.id) sec=s; });
+    if(!sec){
+      secs.push(cloneData(archSec)); changed=true;
+      return;
+    }
+    if(!sec.rows) sec.rows=[];
+    (archSec.rows||[]).forEach(function(archRow){
+      var exists=false;
+      sec.rows.forEach(function(row){ if(row.id===archRow.id) exists=true; });
+      if(!exists){ sec.rows.push(cloneData(archRow)); changed=true; }
+    });
+  });
+  if(hadCustomSecs||changed) customSecs=secs;
+}
 function save(){
   var now=Date.now();
   lastSaveTimestamp=now;
-  var payload={state:ST,cTargets:cTargets,mBudget:mBudget,logos:LOGOS,customSecs:customSecs,updatedAt:now};
+  var payload={state:ST,archivedMonths:archivedMonths,cTargets:cTargets,mBudget:mBudget,logos:LOGOS,customSecs:customSecs,updatedAt:now};
   var ref=db.collection("trackers").doc("finance");
   ref.get().then(function(snap){
     var remoteUpdated=snap.exists&&snap.data().updatedAt?snap.data().updatedAt:null;
@@ -1262,7 +1372,7 @@ function bindAppEvents(){
   appEventsBound=true;
 }
 function applyData(p){
-  ST=p.state||{}; cTargets=p.cTargets||{}; mBudget=p.mBudget!==undefined?normalizeBudget(p.mBudget):32000;
+  ST=p.state||{}; archivedMonths=p.archivedMonths||{}; cTargets=p.cTargets||{}; mBudget=p.mBudget!==undefined?normalizeBudget(p.mBudget):32000;
   customSecs=p.customSecs||null;
   if(p.logos){ LOGOS.hsbc=p.logos.hsbc||LOGOS.hsbc; LOGOS.sbi=p.logos.sbi||LOGOS.sbi; }
   if(p.updatedAt){ lastSave=p.updatedAt; lastSaveTimestamp=p.updatedAt; lastRemoteUpdatedAt=p.updatedAt; }
@@ -1322,14 +1432,35 @@ function initSelects(){
 function addMonth(){
   var ms=R('sel-month'),ys=R('sel-year'); if(!ms||!ys) return;
   var m=ms.value,y=ys.value; if(!m||!y) return;
-  var key=m+'-'+y; if(!ST[key]) ST[key]={income:{},expenses:{}};
+  var key=m+'-'+y;
+  if(archivedMonths[key]){ alert(key+' is archived. Restore it from Settings > Archived Months to keep its original data.'); return; }
+  if(!ST[key]) ST[key]={income:{},expenses:{}};
   cur=key; save(); renderAll();
 }
 function delMonth(){
   if(!cur||!ST[cur]){ alert('Select a month before deleting.'); return; }
-  if(!confirm('Delete '+cur+'?')) return;
+  if(!confirm('Archive '+cur+'? The month will move to Archived Months and can be restored later.')) return;
+  archivedMonths[cur]=makeArchivedMonth(cur);
   delete ST[cur]; save();
   var ms=sortedKeys(); cur=ms.length?ms[ms.length-1]:null; renderAll();
+}
+function restoreMonth(key){
+  var a=getArchiveEntry(key);
+  if(!a){ alert('Archived month not found.'); return; }
+  if(ST[key]){ alert(key+' already exists in active months. Restore cancelled to prevent duplicates.'); return; }
+  mergeArchivedSettings(a);
+  ST[key]=cloneData(a.data);
+  delete archivedMonths[key];
+  cur=key;
+  save();
+  renderAll();
+}
+function permanentlyDeleteArchivedMonth(key){
+  if(!archivedMonths[key]){ alert('Archived month not found.'); return; }
+  if(!confirm('Are you sure you want to permanently delete this month? This action cannot be undone.')) return;
+  delete archivedMonths[key];
+  save();
+  if(view==='settings') renderSettings(R('app'));
 }
 </script>
 <script>
@@ -1688,11 +1819,33 @@ function renderSettings(app){
 +'</div>'
 
     +'<section class="settings-section category-workspace"><div class="settings-section-head"><div class="section-title-row"><span class="section-icon" style="background:var(--gbg);color:var(--green)">&#9638;</span><span><div class="section-heading">Expense Categories</div><div class="section-sub">Edit category budget rows</div></span></div><button class="btn-icon primary" onclick="toggleAddSection()">+ Add Category Group</button></div><div class="settings-section-body"><div class="cat-manager" id="cat-manager"></div><div class="add-sec-form" id="add-sec-form"><span class="form-label">New section</span><div class="add-sec-grid"><input class="add-cat-input emoji-field" id="new-sec-icon" placeholder="Icon" maxlength="4"/><input class="add-cat-input" id="new-sec-title" placeholder="Section title"/><input class="add-cat-input" id="new-sec-note" placeholder="Short note"/><input class="color-input" id="new-sec-color" type="color" value="#7F77DD"/></div><div style="display:flex;gap:8px"><button class="btn-icon primary" onclick="addNewSection()">&#10003; Create</button><button class="btn-icon" onclick="toggleAddSection()">&times; Cancel</button></div></div></div></section>'
-    +'<section class="settings-section data-panel"><div class="settings-section-head"><div class="section-title-row"><span class="section-icon" style="background:rgba(55,138,221,.12);color:var(--blue)">&#9729;</span><span><div class="section-heading">Backup & Restore</div><div class="section-sub">'+(lastSave?'Last backup '+fmtTimestamp(lastSave):'Waiting for sync')+'</div></span></div></div><div class="settings-section-body">'+renderAccountLogoControls()+'</div></section><span id="set-ok" style="font-size:12px;color:var(--green);opacity:0;transition:opacity 0.3s;font-weight:700">&#10003; Saved!</span></div>';
+    +'<section class="settings-section data-panel"><div class="settings-section-head"><div class="section-title-row"><span class="section-icon" style="background:rgba(55,138,221,.12);color:var(--blue)">&#9729;</span><span><div class="section-heading">Backup & Restore</div><div class="section-sub">'+(lastSave?'Last backup '+fmtTimestamp(lastSave):'Waiting for sync')+'</div></span></div></div><div class="settings-section-body">'+renderAccountLogoControls()+'</div></section>'
+    +renderArchivedMonthsSection()
+    +'<span id="set-ok" style="font-size:12px;color:var(--green);opacity:0;transition:opacity 0.3s;font-weight:700">&#10003; Saved!</span></div>';
   renderCategoryManager(secs);
 }
 function renderAccountLogoControls(){
   return '<div class="account-grid"><div class="account-card"><div class="account-logo"><img id="hsbc-img" src="'+escAttr(LOGOS.hsbc)+'" alt="HSBC" onerror="this.style.opacity=\'0.2\'"/></div><div><div class="account-name">HSBC</div><div class="account-type">Logo asset</div></div><label class="blr-btn">Upload<input type="file" class="blr-file" accept="image/*" onchange="uploadLogo(\'hsbc\',this)"/></label></div><div class="account-card"><div class="account-logo"><img id="sbi-img" src="'+escAttr(LOGOS.sbi)+'" alt="SBI" onerror="this.style.opacity=\'0.2\'"/></div><div><div class="account-name">SBI</div><div class="account-type">Logo asset</div></div><label class="blr-btn">Upload<input type="file" class="blr-file" accept="image/*" onchange="uploadLogo(\'sbi\',this)"/></label></div></div>';
+}
+function renderArchivedMonthsSection(){
+  var keys=archivedKeys();
+  var body='';
+  if(!keys.length){
+    body='<div class="archive-empty">No archived months yet.</div>';
+  } else {
+    body='<div class="archive-list">'+keys.map(function(key){
+      var a=getArchiveEntry(key),sum=archivedSummary(key),month=a.monthName||splitMonthKey(key).month,year=a.year||splitMonthKey(key).year,net=sum.netSavings||0;
+      return '<div class="archive-card">'
+        +'<div><div class="archive-title">'+escHtml(month)+' '+escHtml(year)+'</div><div class="archive-sub">Archived copy</div></div>'
+        +'<div><div class="archive-label">Date Deleted</div><div class="archive-value">'+(a.deletedAt?escHtml(fmtTimestamp(a.deletedAt)):'Unknown')+'</div></div>'
+        +'<div><div class="archive-label">Total Income</div><div class="archive-value">'+fmtF(sum.totalIncome||0)+'</div></div>'
+        +'<div><div class="archive-label">Total Expenses</div><div class="archive-value">'+fmtF(sum.totalExpenses||0)+'</div></div>'
+        +'<div><div class="archive-label">Net Savings</div><div class="archive-value '+(net>=0?'green':'red')+'">'+(net>=0?fmtF(net):'-'+fmtF(Math.abs(net)))+'</div></div>'
+        +'<div class="archive-actions"><button class="btn-icon primary" onclick="restoreMonth(\''+jsString(key)+'\')">Restore</button><button class="btn-icon danger" onclick="permanentlyDeleteArchivedMonth(\''+jsString(key)+'\')">Permanently Delete</button></div>'
+        +'</div>';
+    }).join('')+'</div>';
+  }
+  return '<section class="settings-section archive-panel"><div class="settings-section-head"><div class="section-title-row"><span class="section-icon" style="background:rgba(99,153,34,.12);color:var(--green)">&#8634;</span><span><div class="section-heading">Archived Months</div><div class="section-sub">'+keys.length+' saved for restore</div></span></div></div><div class="settings-section-body">'+body+'</div></section>';
 }
 function renderFixedAllocationCards(secs){
   var total=getLiveBudgetTotal(secs);
@@ -1870,7 +2023,7 @@ function renderCharts(app){
       aCharts.push(new Chart(R('c-'+sec.id),{
         type:'bar',
         data:{labels:labels,datasets:[{label:'Target',data:targets,backgroundColor:'#E0DDD9',borderRadius:6,barPercentage:0.6,categoryPercentage:0.75},{label:'Actual',data:actuals,backgroundColor:actuals.map(function(v,i){ return v>targets[i]?'#E24B4A':col; }),borderRadius:6,barPercentage:0.6,categoryPercentage:0.75}]},
-        options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){ return fmtF(c.raw); }}}},scales:{x:{ticks:{color:'#A89888',callback:function(v){ return v>=1000?'\u20B9'+(v/1000)+'k':'\u20B9'+v; },font:{size:10,family:'Montserrat,sans-serif'}},grid:{color:'rgba(59,31,14,0.05)'}},y:{ticks:{color:'#6B5C4E',font:{size:11,family:'Montserrat,sans-serif'}},grid:{display:false}}}}
+        options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){ return fmtF(c.raw); }}}},scales:{x:{ticks:{color:'#A89888',callback:function(v){ return fmt(v); },font:{size:10,family:'Montserrat,sans-serif'}},grid:{color:'rgba(59,31,14,0.05)'}},y:{ticks:{color:'#6B5C4E',font:{size:11,family:'Montserrat,sans-serif'}},grid:{display:false}}}}
       }));
     }
   });
@@ -1892,7 +2045,7 @@ function renderCharts(app){
   aCharts.push(new Chart(R('ca'),{
     type:'bar',
     data:{labels:allL,datasets:[{label:'Target',data:months.map(function(){ return TT; }),backgroundColor:'#E0DDD9',borderRadius:6,barPercentage:0.5,categoryPercentage:0.75},{label:'Actual',data:allA,backgroundColor:allA.map(function(v){ return v>TT?'#E24B4A':'#7F77DD'; }),borderRadius:6,barPercentage:0.5,categoryPercentage:0.75}]},
-    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){ return fmtF(c.raw); }}}},scales:{x:{ticks:{color:'#A89888',callback:function(v){ return v>=1000?'\u20B9'+(v/1000)+'k':'\u20B9'+v; },font:{size:10,family:'Montserrat,sans-serif'}},grid:{color:'rgba(59,31,14,0.05)'}},y:{ticks:{color:'#6B5C4E',font:{size:11,family:'Montserrat,sans-serif'}},grid:{display:false}}}}
+    options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){ return fmtF(c.raw); }}}},scales:{x:{ticks:{color:'#A89888',callback:function(v){ return fmt(v); },font:{size:10,family:'Montserrat,sans-serif'}},grid:{color:'rgba(59,31,14,0.05)'}},y:{ticks:{color:'#6B5C4E',font:{size:11,family:'Montserrat,sans-serif'}},grid:{display:false}}}}
   }));
 }
 loadState();
