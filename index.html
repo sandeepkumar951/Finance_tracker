@@ -251,18 +251,34 @@ body{min-height:100vh}
 .vtab:hover{color:var(--text);background:var(--bg3)}
 .vtab.active{background:linear-gradient(135deg,#3B1F0E,#7B4A2D);color:#fff;box-shadow:0 10px 24px rgba(59,31,14,.26)}
 
-.scards{display:grid;grid-template-columns:repeat(4,minmax(130px,1fr));gap:12px;margin-bottom:2rem}
-.scard{background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(255,252,247,.76));border:1px solid rgba(59,31,14,.09);border-radius:20px;padding:1rem;backdrop-filter:blur(14px);transition:all 0.2s;position:relative;overflow:hidden;box-shadow:0 10px 28px rgba(59,31,14,.075),0 1px 3px rgba(59,31,14,.06)}
-.scard:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 16px 34px rgba(59,31,14,.10)}
-.scard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);opacity:0;transition:opacity 0.2s}
-.scard:hover::before{opacity:1}
-.scard-icon{width:38px;height:38px;border-radius:13px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:10px}
-.scard-label{font-size:9px;color:var(--text3);font-weight:800;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:6px}
-.scard-val{font-size:22px;font-weight:800;font-family:var(--font);letter-spacing:-0.5px;color:var(--text)}
-.scard-val.green{color:var(--green)}
-.scard-val.red{color:var(--red)}
-.scard-val.blue{color:var(--blue)}
-.scard-sub{font-size:11px;color:var(--text3);margin-top:4px;font-weight:500}
+.scards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-bottom:1.55rem;align-items:stretch}
+.scard{height:150px;background:#FFFFFF;border:1px solid rgba(231,221,209,.86);border-radius:24px;padding:16px;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease;position:relative;overflow:hidden;box-shadow:0 10px 24px rgba(74,42,22,.055),0 1px 3px rgba(74,42,22,.035);display:flex;flex-direction:column;cursor:default}
+.scard:hover{border-color:rgba(107,61,31,.18);transform:translateY(-2px);box-shadow:0 16px 30px rgba(74,42,22,.085),0 2px 6px rgba(74,42,22,.04)}
+.scard:active{transform:translateY(-1px) scale(.998)}
+.scard-top,.scard-mid{position:relative;z-index:1}
+.scard-top{display:flex;justify-content:space-between;align-items:center;gap:10px;min-width:0}
+.scard-left{display:flex;align-items:center;gap:10px;min-width:0;flex:1 1 auto}.scard-right{display:flex;align-items:center;justify-content:flex-end;gap:8px;min-width:0;flex:0 1 auto}.scard-icon{width:42px;height:42px;flex:0 0 42px;border-radius:15px;background:#EFE7DD;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:inset 0 1px 0 rgba(255,255,255,.78),0 7px 16px rgba(74,42,22,.07)}
+.scard-title{min-width:0;flex:1 1 auto}
+.scard-label{font-size:10px;color:#8A7B6B;font-weight:900;letter-spacing:.09em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.scard-badge{height:22px;width:max-content;max-width:fit-content;padding:0 8px;border-radius:999px;font-size:10px;font-weight:600;line-height:22px;white-space:nowrap;overflow:hidden;text-overflow:clip;background:rgba(107,61,31,.08);color:#6B3D1F;display:inline-flex;align-items:center;justify-content:center;flex:0 1 auto}.scard-badge-compact,.scard-badge-dot{display:none}.scard-badge-dot{width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 0 3px currentColor;opacity:.75}
+.scard-badge.success{background:rgba(34,197,94,.10);color:#22C55E}.scard-badge.warning{background:rgba(245,158,11,.10);color:#F59E0B}.scard-badge.danger{background:rgba(239,68,68,.10);color:#EF4444}.scard-badge.neutral{background:rgba(107,61,31,.08);color:#6B3D1F}
+.scard-menu{width:27px;height:27px;flex:0 0 27px;border:1px solid rgba(231,221,209,.78);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#8A7B6B;background:#FAF7F2;font-weight:900;font-size:14px}
+.scard-mid{margin-top:auto;padding-top:12px;padding-right:70px}
+.scard-val{font-size:29px;font-weight:900;font-family:var(--font);letter-spacing:0;color:#2B221B;line-height:1;white-space:nowrap}
+.scard-val.green{color:#3BA55D}
+.scard-val.red{color:#E25555}
+.scard-sub{font-size:12px;color:#6B3D1F;margin-top:8px;font-weight:500;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.scard-sub .pos{color:#22C55E;font-weight:650}.scard-sub .neg{color:#EF4444;font-weight:650}.scard-sub .neu{color:#6B3D1F;font-weight:650}
+.scard-spark{position:absolute;right:-18px;bottom:-10px;width:188px;height:72px;display:block;overflow:visible;opacity:.72;z-index:0}
+.scard-spark .area{stroke:none;opacity:1}
+.scard-spark .line{fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 7px 10px rgba(74,42,22,.07));transition:opacity .18s ease}
+.scard-spark.available .line,.scard-spark.remaining .line{stroke:#22C55E}
+.scard-spark.target .line{stroke:#3B82F6}
+.scard-spark.spent .line{stroke:#EF4444}
+.scard:hover .scard-spark .line{opacity:.92}
+.scard.available,.scard.remaining{color:#3BA55D}
+.scard.target{color:#B87942}
+.scard.spent{color:#E25555}
 
 .str{display:flex;align-items:center;gap:10px;margin-bottom:0.85rem;margin-top:1.5rem}
 .str h3{font-size:10px;font-weight:800;color:var(--text2);text-transform:uppercase;letter-spacing:0.12em;white-space:nowrap}
@@ -695,6 +711,15 @@ html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;backgr
   .tracker-layout{grid-template-columns:minmax(0,1fr) minmax(300px,340px);gap:1.25rem}
   .settings-top-grid{grid-template-columns:minmax(0,3fr) minmax(300px,1fr)}
 }
+@media(max-width:1440px){
+  .scard-badge-full{display:none}
+  .scard-badge-compact{display:inline}
+}
+@media(max-width:1279.98px){
+  .scard-badge{width:22px;padding:0;overflow:visible}
+  .scard-badge-compact{display:none}
+  .scard-badge-dot{display:block}
+}
 @media(max-width:1450px){
   .exp-top{grid-template-columns:1fr 1fr 1fr;gap:12px}
   .exp-metric{border-left:none;padding:0;text-align:right}
@@ -704,7 +729,6 @@ html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;backgr
 }
 @media(max-width:1250px){
   .dashboard-grid{grid-template-columns:1fr}
-  .scards{grid-template-columns:repeat(2,minmax(0,1fr))}
   table.et{min-width:760px}
   .settings-top-grid{grid-template-columns:minmax(0,1fr) minmax(280px,340px)}
   .alloc-summary{grid-template-columns:repeat(2,minmax(150px,1fr))}
@@ -736,7 +760,7 @@ html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;backgr
   .alloc-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:900px){
-  .scards,.settings-grid,.alloc-summary{grid-template-columns:1fr}
+  .settings-grid,.alloc-summary{grid-template-columns:1fr}
   .main{padding:1rem}
   .exp-top{grid-template-columns:1fr}
   .exp-metric{border-left:none;padding-left:0}
@@ -746,7 +770,7 @@ html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;backgr
   .archive-actions{grid-column:1/-1;justify-content:flex-start}
 }
 @media(max-width:760px){
-  .account-grid,.scards{grid-template-columns:1fr}
+  .account-grid{grid-template-columns:1fr}
   .txn-filter-row{grid-template-columns:1fr}
   .alloc-card-bottom,.cat-row-progress{grid-template-columns:1fr}
   .settings-top-grid{grid-template-columns:1fr}
@@ -1042,6 +1066,77 @@ html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;backgr
 .fund-settings-title{font-size:13px;font-weight:900;color:var(--text)}
 .fund-settings-sub{font-size:10px;font-weight:700;color:var(--text3);margin-top:2px}
 @media(max-width:600px){.icon-picker,.color-picker,.fund-history-row,.fund-settings-row,.fund-grid{grid-template-columns:1fr}}
+/* Global transaction workspace */
+.tracker-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:1.25rem;flex-wrap:wrap;position:relative}.new-txn-btn{height:60px;min-width:238px;border:1px solid rgba(255,255,255,.18);background:linear-gradient(105deg,#6B3D1F 0%,#8B5A35 100%);color:#fff;font-family:var(--font);font-weight:700;font-size:15px;border-radius:999px;padding:0 18px 0 8px;cursor:pointer;box-shadow:0 10px 25px rgba(107,61,31,.20);display:inline-flex;align-items:center;justify-content:space-between;gap:13px;position:relative;overflow:visible;isolation:isolate;transition:transform .18s ease,box-shadow .18s ease,filter .18s ease}.new-txn-btn:before{content:'';position:absolute;inset:1px 9px auto 20px;height:16px;border-radius:999px;background:linear-gradient(180deg,rgba(248,244,238,.34),rgba(248,244,238,0));pointer-events:none;z-index:0}.new-txn-btn:after{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at var(--ripple-x,50%) var(--ripple-y,50%),rgba(248,244,238,.42),rgba(248,244,238,0) 42%);opacity:0;transform:scale(.72);pointer-events:none}.new-txn-btn:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(107,61,31,.28);filter:saturate(1.03)}.new-txn-btn:active{transform:translateY(0) scale(.98);box-shadow:0 8px 20px rgba(107,61,31,.22)}.new-txn-btn:active:after{animation:newTxnRipple .34s ease}.new-txn-btn:focus-visible{outline:3px solid rgba(217,164,65,.62);outline-offset:4px}.new-txn-badge,.new-txn-label,.new-txn-arrow{position:relative;z-index:1}.new-txn-badge{width:44px;height:44px;border-radius:50%;background:linear-gradient(145deg,#F8F4EE,#EFE7DD);color:#6B3D1F;display:flex;align-items:center;justify-content:center;font-size:23px;font-weight:900;line-height:1;box-shadow:0 7px 16px rgba(74,42,22,.20),inset 0 1px 0 rgba(255,255,255,.88);flex:0 0 auto}.new-txn-label{white-space:nowrap;letter-spacing:0}.new-txn-arrow{font-size:20px;font-weight:900;line-height:1;color:#F8F4EE;transition:transform .18s ease;flex:0 0 auto}.new-txn-btn:hover .new-txn-arrow{transform:translateX(4px)}.new-txn-spark{position:absolute;width:5px;height:5px;border-radius:50%;background:#D9A441;box-shadow:0 0 0 3px rgba(217,164,65,.12);pointer-events:none;z-index:2}.new-txn-spark.s1{right:24px;top:-6px;animation:newTxnFloat 3.2s ease-in-out infinite}.new-txn-spark.s2{left:38px;bottom:-7px;width:4px;height:4px;opacity:.82;animation:newTxnFloat 3.7s ease-in-out .45s infinite}.new-txn-arc{position:absolute;right:15px;bottom:-9px;width:54px;height:22px;border-bottom:2px solid rgba(217,164,65,.58);border-radius:0 0 999px 999px;transform:rotate(-8deg);pointer-events:none}.txn-desc{font-size:10px;font-weight:650;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;max-width:138px}.gtxn-card-actions{display:flex;gap:5px;margin-top:7px;justify-content:flex-end}.gtxn-mini-btn{border:1px solid rgba(59,31,14,.12);background:#fff;color:var(--text2);border-radius:8px;font-family:var(--font);font-size:9px;font-weight:800;padding:4px 7px;cursor:pointer}.gtxn-mini-btn.danger{color:var(--red);border-color:rgba(226,75,74,.24)}@keyframes newTxnRipple{from{opacity:1;transform:scale(.58)}to{opacity:0;transform:scale(1.45)}}@keyframes newTxnFloat{0%,100%{transform:translateY(0);opacity:.68}50%{transform:translateY(-4px);opacity:1}}
+
+/* Premium transaction modal */
+.gtxn-backdrop{position:fixed;inset:0;background:rgba(43,34,27,.32);z-index:80;display:flex;align-items:center;justify-content:center;padding:24px;animation:modalFade .25s ease both}
+.gtxn-modal{width:min(1400px,100%);max-height:min(92vh,900px);overflow:hidden;background:#FAF7F2;border:1px solid #E7DDD1;border-radius:28px;box-shadow:0 30px 80px rgba(0,0,0,.12);display:flex;flex-direction:column;animation:modalScale .25s ease both}
+@keyframes modalFade{from{opacity:0}to{opacity:1}}@keyframes modalScale{from{transform:scale(.98)}to{transform:scale(1)}}
+.gtxn-head{display:flex;justify-content:space-between;gap:18px;padding:22px 24px 14px}
+.gtxn-title{font-size:24px;font-weight:900;color:#2B221B;letter-spacing:0}
+.gtxn-sub{font-size:12px;color:#8A7B6B;font-weight:650;margin-top:4px}
+.gtxn-close{width:38px;height:38px;border:1px solid #E7DDD1;border-radius:14px;background:#FFFFFF;color:#4A2A16;font-size:24px;cursor:pointer;transition:all .18s ease}
+.gtxn-close:hover{transform:translateY(-1px);box-shadow:0 10px 18px rgba(74,42,22,.08)}
+.gtxn-body{display:grid;grid-template-columns:260px minmax(440px,1fr) 320px;gap:20px;padding:10px 24px 24px;overflow:auto}
+.gtxn-panel{background:#FFFFFF;border:1px solid #E7DDD1;border-radius:24px;padding:16px;min-width:0;box-shadow:0 14px 32px rgba(74,42,22,.055)}
+.gtxn-form-card{position:relative;padding:22px}
+.gtxn-panel-title{font-size:10px;font-weight:900;color:#8A7B6B;letter-spacing:.12em;text-transform:uppercase;margin-bottom:12px}
+.gtxn-section-list{display:flex;flex-direction:column;gap:12px;max-height:650px;overflow:auto;padding-right:2px}
+.gtxn-section-btn{width:100%;min-height:78px;border:1px solid #E7DDD1;background:#FFFFFF;border-radius:20px;padding:14px;text-align:left;font-family:var(--font);cursor:pointer;color:#2B221B;display:flex;gap:12px;align-items:center;box-shadow:0 8px 18px rgba(74,42,22,.045);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease,background .18s ease}
+.gtxn-section-btn:hover{transform:translateY(-2px);box-shadow:0 14px 24px rgba(74,42,22,.08)}
+.gtxn-section-btn.active{border-color:#6B3D1F;background:#EFE7DD;box-shadow:0 14px 26px rgba(107,61,31,.10)}
+.gtxn-section-ico{width:42px;height:42px;border-radius:15px;display:flex;align-items:center;justify-content:center;background:#EFE7DD;color:#6B3D1F;font-size:20px;box-shadow:inset 0 1px 0 rgba(255,255,255,.8)}
+.gtxn-section-name{font-size:13px;font-weight:900;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gtxn-section-note{font-size:11px;font-weight:650;color:#8A7B6B;display:block;margin-top:4px}
+.gtxn-illustration{position:absolute;right:20px;top:18px;width:92px;height:62px;border-radius:20px;background:linear-gradient(135deg,#EFE7DD,#FFFFFF);border:1px solid #E7DDD1;box-shadow:0 12px 24px rgba(74,42,22,.07);display:flex;align-items:center;justify-content:center;color:#B87942;font-size:28px}
+.gtxn-illustration:before{content:'₹';position:absolute;left:13px;bottom:8px;width:24px;height:24px;border-radius:50%;background:#B87942;color:#fff;font-size:15px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.gtxn-type-row{display:flex;gap:8px;margin:0 110px 18px 0}
+.gtxn-type{border:1px solid #E7DDD1;background:#FFFFFF;color:#8A7B6B;border-radius:999px;padding:9px 13px;font-family:var(--font);font-weight:850;cursor:pointer;min-width:96px;transition:all .18s ease}
+.gtxn-type.active{background:#6B3D1F;color:#fff;border-color:#6B3D1F;box-shadow:0 10px 20px rgba(107,61,31,.18)}
+.gtxn-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.gtxn-field{display:flex;flex-direction:column;gap:8px;position:relative}
+.gtxn-field.full{grid-column:1/-1}
+.gtxn-field label{font-size:10px;font-weight:900;color:#8A7B6B;letter-spacing:.09em;text-transform:uppercase}
+.gtxn-field input,.gtxn-field select,.gtxn-field textarea{width:100%;border:1px solid #E7DDD1;background:#FFFFFF;color:#2B221B;font-family:var(--font);border-radius:18px;padding:15px 16px 15px 42px;outline:none;font-size:14px;font-weight:750;transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease}
+.gtxn-field input:hover,.gtxn-field select:hover,.gtxn-field textarea:hover{border-color:rgba(107,61,31,.28)}
+.gtxn-field input:focus,.gtxn-field select:focus,.gtxn-field textarea:focus{border-color:#6B3D1F;box-shadow:0 0 0 4px rgba(107,61,31,.10)}
+.gtxn-field:before{content:attr(data-icon);position:absolute;left:15px;bottom:15px;color:#8A7B6B;font-size:16px;z-index:1}
+.gtxn-field textarea{resize:vertical;min-height:120px;padding-top:16px}
+.gtxn-note-field:after{content:'✎';position:absolute;right:17px;bottom:14px;color:#8A7B6B;font-size:15px}
+.gtxn-amount-wrap{grid-column:1/-1}
+.gtxn-amount-box{height:84px;border:2px dashed #E7DDD1;border-radius:24px;background:linear-gradient(145deg,#FFFFFF,#FAF7F2);display:flex;align-items:center;gap:12px;padding:0 20px;transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease}
+.gtxn-amount-box:focus-within{border-color:#6B3D1F;box-shadow:0 0 0 5px rgba(107,61,31,.10);transform:translateY(-1px)}
+.gtxn-currency{font-size:30px;font-weight:900;color:#6B3D1F}
+.gtxn-amount{height:72px!important;border:0!important;box-shadow:none!important;background:transparent!important;padding:0!important;font-size:34px!important;font-weight:900!important;font-family:var(--font)!important;color:#2B221B!important}
+.gtxn-live-preview{min-height:20px;margin-top:9px;font-size:12px;font-weight:750;color:#8A7B6B}
+.gtxn-toggle{display:inline-flex;align-items:center;gap:10px;font-size:12px!important;font-weight:850!important;color:#2B221B!important;margin-top:4px;text-transform:none!important;letter-spacing:0!important;cursor:pointer}
+.gtxn-toggle input{appearance:none;width:42px;height:24px;border-radius:999px;border:1px solid #E7DDD1;background:#EFE7DD;padding:0;position:relative;transition:background .18s ease,border-color .18s ease}
+.gtxn-toggle input:before{content:'';position:absolute;width:18px;height:18px;left:2px;top:2px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(74,42,22,.15);transition:transform .18s ease}
+.gtxn-toggle input:checked{background:#6B3D1F;border-color:#6B3D1F}
+.gtxn-toggle input:checked:before{transform:translateX(18px)}
+.gtxn-summary{display:flex;flex-direction:column;gap:12px}
+.gtxn-stat{background:#FFFFFF;border:1px solid #E7DDD1;border-radius:18px;padding:13px 14px;display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center}
+.gtxn-stat .si{width:30px;height:30px;border-radius:12px;background:#EFE7DD;display:flex;align-items:center;justify-content:center}
+.gtxn-stat span{font-size:11px;font-weight:800;color:#8A7B6B}
+.gtxn-stat strong{font-size:13px;font-weight:900;color:#2B221B;font-family:var(--font);text-align:right;white-space:nowrap}
+.gtxn-insight{border-radius:20px;padding:14px;border:1px solid #E7DDD1;background:#FFFFFF;display:flex;justify-content:space-between;gap:12px;align-items:flex-end}
+.gtxn-insight span{font-size:10px;font-weight:900;color:#8A7B6B;letter-spacing:.08em;text-transform:uppercase}
+.gtxn-insight strong{display:block;margin-top:5px;font-size:18px;font-weight:900;color:#2B221B;font-family:var(--font)}
+.gtxn-insight.green{background:rgba(59,165,93,.08);border-color:rgba(59,165,93,.18)}.gtxn-insight.green strong{color:#3BA55D}
+.gtxn-insight.red{background:rgba(226,85,85,.08);border-color:rgba(226,85,85,.18)}.gtxn-insight.red strong{color:#E25555}
+.gtxn-insight.beige{background:#EFE7DD;border-color:#E7DDD1}
+.gtxn-trend{width:58px;height:24px;color:#3BA55D}
+.gtxn-error{display:none;color:#E25555;background:rgba(226,85,85,.08);border:1px solid rgba(226,85,85,.18);border-radius:14px;padding:10px 12px;font-size:12px;font-weight:800;margin-top:12px}.gtxn-error.show{display:block}
+.gtxn-actions{display:flex;justify-content:flex-end;gap:12px;margin-top:18px;position:relative}
+.gtxn-actions button{border:1px solid #E7DDD1;background:#FFFFFF;color:#8A7B6B;font-family:var(--font);font-size:13px;font-weight:850;border-radius:16px;padding:13px 16px;cursor:pointer;transition:all .18s ease}
+.gtxn-actions .primary{height:58px;min-width:230px;border-radius:999px;background:linear-gradient(135deg,#6B3D1F,#8B5A35);color:#fff;border-color:transparent;box-shadow:0 18px 34px rgba(107,61,31,.26);font-size:15px;position:relative;overflow:hidden}
+.gtxn-actions .primary:hover{transform:translateY(-2px);box-shadow:0 24px 42px rgba(107,61,31,.32)}
+.gtxn-actions .primary:hover:after{content:'Updates balances instantly';position:absolute;right:0;bottom:66px;background:#4A2A16;color:#fff;font-size:11px;font-weight:800;padding:7px 10px;border-radius:10px;white-space:nowrap}
+.gtxn-actions .primary:active:before{content:'';position:absolute;inset:0;background:radial-gradient(circle at center,rgba(255,255,255,.34),transparent 58%);animation:ripple .32s ease}
+@keyframes ripple{from{opacity:1;transform:scale(.5)}to{opacity:0;transform:scale(1.4)}}
+@media(max-width:1200px){.gtxn-body{grid-template-columns:1fr}.gtxn-section-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));max-height:none}.gtxn-type-row{margin-right:110px}}
+@media(max-width:900px){.new-txn-btn{height:56px;min-width:218px;font-size:14px;padding-right:16px}.new-txn-badge{width:40px;height:40px;font-size:22px}.new-txn-arrow{font-size:19px}}@media(max-width:640px){.gtxn-backdrop{padding:10px;align-items:flex-start}.gtxn-head{padding:18px}.gtxn-body{padding:10px 14px 18px}.gtxn-form-grid{grid-template-columns:1fr}.gtxn-title{font-size:21px}.new-txn-btn{position:fixed;right:18px;bottom:18px;z-index:70;height:56px;min-width:0;width:auto;padding:0 16px 0 8px;justify-content:space-between;box-shadow:0 16px 34px rgba(107,61,31,.30)}.new-txn-label{max-width:132px;overflow:hidden;text-overflow:ellipsis}.new-txn-spark.s1{right:18px;top:-5px}.new-txn-spark.s2{left:34px;bottom:-6px}.txn-desc{max-width:160px}.gtxn-type-row{margin-right:0}.gtxn-illustration{display:none}.gtxn-actions{flex-direction:column}.gtxn-actions .primary{width:100%;min-width:0}}
 </style>
 </head>
 <body>
@@ -1202,6 +1297,7 @@ var txnArchiveFilters = {q:'', bank:'', month:'', cat:'', kind:''};
 var fundModalState = null;
 var openFundMenuKind = null;
 var confirmModalState = null;
+var transactionModalState = null;
 var financeUnsubscribe = null;
 var pendingUiRefresh = null;
 var LOGOS = {
@@ -1249,7 +1345,9 @@ function getFundTransferTimestamp(key,kind,acc){ var id=fundTxId(key,kind,acc,'d
 function recordFundSnapshot(kind,tx){ var f=funds[kind]||normalizeFund(null,kind),amt=cleanNumber(tx.amount||tx.amt),ts=tx.timestamp||tx.ts||Date.now(); if(amt<=0) return; if(tx.type==='transfer'||tx.type==='deposit'){ f.balance+=amt; f.totalAdded=cleanNumber(f.totalAdded)+amt; if(ts>=cleanNumber(f.lastAddedDate)){ f.lastAddedAmount=amt; f.lastAddedDate=ts; f.lastAddedAt=ts; } } else if(tx.type==='redemption'){ f.balance=Math.max(0,f.balance-amt); f.totalRedeemed=cleanNumber(f.totalRedeemed)+amt; if(ts>=cleanNumber(f.lastRedeemedDate)){ f.lastRedeemedAmount=amt; f.lastRedeemedDate=ts; f.lastRedeemedAt=ts; } } f.history.push(Object.assign({},tx,{amount:amt,amt:amt,monthKey:tx.monthKey||tx.key})); funds[kind]=f; }
 function getFundProgress(kind){ var f=getFund(kind),goal=cleanNumber(f.goal); return goal>0?Math.min(100,Math.round((cleanNumber(f.balance)/goal)*100)):0; }
 function fundDate(ts){ return ts?fmtTimestamp(ts):'Not yet'; }
-function bankName(acc){ return acc==='hsbc'?'HSBC':'SBI'; }
+function getBanks(){var map={};Object.keys(LOGOS||{}).forEach(function(k){if(k)map[k]=true});Object.keys(ST||{}).forEach(function(key){var m=ST[key]||{};try{Object.keys(m.income||{}).forEach(function(f){var p=f.split('_');if(p.length>1)map[p[p.length-1]]=true})}catch(e){}try{Object.keys(m.expenses||{}).forEach(function(r){Object.keys(m.expenses[r]||{}).forEach(function(acc){if(acc.indexOf('_ts_')!==0)map[acc]=true})})}catch(e){}try{Object.keys(m.transfers||{}).forEach(function(k){Object.keys(m.transfers[k]||{}).forEach(function(acc){map[acc]=true})})}catch(e){}});var keys=Object.keys(map).filter(function(k){return k&&k.indexOf('_')!==0});return keys.length?keys:['hsbc','sbi']}
+function bankLabel(acc){return String(acc||'').toUpperCase()}
+function bankName(acc){ return bankLabel(acc); }
 function ensureMonthData(key){ if(!ST[key]) ST[key]={income:{},expenses:{},transfers:{},transactions:[]}; if(!ST[key].income) ST[key].income={}; if(!ST[key].expenses) ST[key].expenses={}; if(!ST[key].transfers) ST[key].transfers={}; if(!Array.isArray(ST[key].transactions)) ST[key].transactions=[]; return ST[key]; }
 function txId(parts){ return parts.map(function(x){ return String(x).replace(/[^a-z0-9_-]/gi,'_'); }).join(':'); }
 function upsertTransaction(key,tx){
@@ -1271,17 +1369,17 @@ function applyFundTransfer(kind,acc,amount,monthKey){
   monthKey=monthKey||cur; if(!monthKey||!ST[monthKey]) return false;
   if(!ST[monthKey].transfers) ST[monthKey].transfers={}; if(!ST[monthKey].transfers[kind]) ST[monthKey].transfers[kind]={};
   ST[monthKey].transfers[kind][acc]=getMonthTransfers(monthKey,kind,acc)+amount;
-  var ts=Date.now()+(++fundActionSeq),def=FUND_DEFS[kind];
-  var tx=upsertTransaction(monthKey,{id:fundTxId(monthKey,kind,acc,'deposit'),type:'transfer',transactionType:(kind==='travel'?'Travel Fund Deposit':'Emergency Fund Deposit'),name:def.transferName,emoji:def.emoji,color:def.color,secId:'transfer',secColor:def.color,acc:acc,amount:getMonthTransfers(monthKey,kind,acc),amt:getMonthTransfers(monthKey,kind,acc),source:acc,destination:kind,rowId:kind+'_fund',timestamp:ts});
+  var ts=Date.now()+(++fundActionSeq),def=getFundDef(kind);
+  var tx=upsertTransaction(monthKey,{id:fundTxId(monthKey,kind,acc,'deposit'),type:'transfer',transactionType:def.transferName,name:def.transferName,emoji:def.emoji,color:def.color,secId:'transfer',secColor:def.color,acc:acc,amount:getMonthTransfers(monthKey,kind,acc),amt:getMonthTransfers(monthKey,kind,acc),source:acc,destination:kind,rowId:def.transferRow||kind+'_fund',timestamp:ts});
   syncFundStatsFromTransaction(kind,tx);
   return tx;
 }
 function applyFundRedemption(kind,acc,amount,monthKey){
   ensureFunds(); amount=Math.round(cleanNumber(amount)); if(amount<=0) return false;
   monthKey=monthKey||cur; if(!monthKey||!ST[monthKey]) return false;
-  var f=funds[kind],def=FUND_DEFS[kind]; if(amount>cleanNumber(f.balance)) return false;
+  var f=funds[kind],def=getFundDef(kind); if(amount>cleanNumber(f.balance)) return false;
   var ts=Date.now()+(++fundActionSeq);
-  var tx=upsertTransaction(monthKey,{id:fundTxId(monthKey,kind,acc,'redeem_'+ts),type:'redemption',transactionType:(kind==='travel'?'Travel Fund Redemption':'Emergency Fund Redemption'),name:def.redeemName,emoji:def.emoji,color:def.color,secId:'redemption',secColor:def.color,acc:acc,amount:amount,amt:amount,source:kind,destination:acc,rowId:kind+'_fund',timestamp:ts});
+  var tx=upsertTransaction(monthKey,{id:fundTxId(monthKey,kind,acc,'redeem_'+ts),type:'redemption',transactionType:def.redeemName,name:def.redeemName,emoji:def.emoji,color:def.color,secId:'redemption',secColor:def.color,acc:acc,amount:amount,amt:amount,source:kind,destination:acc,rowId:def.transferRow||kind+'_fund',timestamp:ts});
   syncFundStatsFromTransaction(kind,tx);
   return tx;
 }
@@ -1397,6 +1495,97 @@ function getBudgetMixStyle(secs){
     start=end;
   });
   return stops.length?'conic-gradient('+stops.join(',')+')'  :'conic-gradient(#EEECEA 0 100%)';
+}
+function pctOf(value,total){ return total>0?Math.round((cleanNumber(value)/cleanNumber(total))*100):0; }
+function getKpiBudgetUsed(t){ return cleanNumber(t&&t.totSp)+cleanNumber(t&&t.hTr)+cleanNumber(t&&t.sTr); }
+function kpiHistory(metric,key,TT){
+  var keys=sortedKeys(),idx=keys.indexOf(key);
+  if(idx<0) idx=keys.length-1;
+  return keys.slice(Math.max(0,idx-5),idx+1).map(function(k){
+    var tk=calc(k),target=TT||getTT(),used=getKpiBudgetUsed(tk),remaining=target-used;
+    if(metric==='available') return tk.totA;
+    if(metric==='target') return target;
+    if(metric==='spent') return used;
+    return remaining;
+  });
+}
+function sparklineSvg(vals,tone){
+  vals=(vals||[]).map(cleanNumber);
+  if(vals.length<2) vals=[0,vals[0]||0];
+  var first=vals[0],last=vals[vals.length-1],min=Math.min.apply(null,vals),max=Math.max.apply(null,vals),range=max-min||1,w=188,h=72,base=h-5;
+  var trend=(last-first)/range;
+  var endY=Math.max(16,Math.min(38,32-(trend*12)));
+  var midY=Math.max(24,Math.min(48,44-(trend*8)));
+  var line='M6 '+(h-12)+' C 38 '+(h-10)+', 48 '+midY+', 75 '+midY+' C 106 '+midY+', 118 '+endY+', 182 '+endY;
+  var area=line+' L 182 '+base+' C 134 '+(base-2)+', 64 '+base+', 6 '+base+' Z';
+  var fill=tone==='target'?'#3B82F6':(tone==='spent'?'#EF4444':'#22C55E');
+  return '<svg class="scard-spark '+escAttr(tone)+'" viewBox="0 0 '+w+' '+h+'" aria-hidden="true"><defs><linearGradient id="kpiRibbonFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="'+fill+'" stop-opacity="0.15"/><stop offset="100%" stop-color="'+fill+'" stop-opacity="0"/></linearGradient></defs><path class="area" fill="url(#kpiRibbonFill)" d="'+area+'"></path><path class="line" d="'+line+'"></path></svg>';
+}
+function kpiDelta(vals){vals=(vals||[]).map(cleanNumber);return vals.length>1?vals[vals.length-1]-vals[vals.length-2]:0}
+function kpiBadge(tone,value,TT,rem,history){
+  var usedRatio=TT>0?value/TT:0,delta=kpiDelta(history),b={text:'Stable',tone:'neutral'};
+  if(tone==='available'){
+    if(value<=0||value<TT*.15)b={text:'Low Balance',tone:'danger'};
+    else if(delta>TT*.03)b={text:'Growing',tone:'success'};
+    else if(value>=TT*.45)b={text:'Healthy',tone:'success'};
+  }else if(tone==='target'){
+    if(value<=0)b={text:'Needs Review',tone:'danger'};
+    else if(Math.abs(delta)>Math.max(1,value*.03))b={text:'Adjusted',tone:'warning'};
+    else if(value>0)b={text:'On Plan',tone:'neutral'};
+  }else if(tone==='spent'){
+    if(usedRatio>=1)b={text:'Over Budget',tone:'danger'};
+    else if(usedRatio>=.8)b={text:'Near Limit',tone:'warning'};
+    else b={text:'Under Budget',tone:'success'};
+  }else if(tone==='remaining'){
+    var ratio=TT>0?rem/TT:0;
+    if(rem<0)b={text:'Critical',tone:'danger'};
+    else if(ratio<.12)b={text:'Tight',tone:'warning'};
+    else if(ratio>.35)b={text:'Comfortable',tone:'success'};
+    else b={text:'On Track',tone:'success'};
+  }
+  return b;
+}
+function kpiInsight(tone,value,TT,rem,history){
+  var delta=kpiDelta(history),pct=TT>0?Math.round((value/TT)*100):0,cls=delta>0?'pos':(delta<0?'neg':'neu'),abs=Math.abs(Math.round(delta));
+  if(tone==='available')return '<span class="'+cls+'">'+(delta>0?'+':(delta<0?'-':''))+fmtF(abs)+'</span> vs last period';
+  if(tone==='target')return '<span class="neu">'+pctOf(value,TT)+'</span>% allocation baseline';
+  if(tone==='spent')return '<span class="'+(value>TT?'neg':'neu')+'">'+pct+'</span>% of budget used';
+  return rem>=0?'<span class="pos">'+pctOf(rem,TT)+'</span>% budget buffer':'<span class="neg">'+pctOf(Math.abs(rem),TT)+'</span>% over budget';
+}
+function compactKpiBadgeText(text){
+  var map={'Low Balance':'Low','Needs Review':'Review','Over Budget':'Over','Near Limit':'Near','Under Budget':'Under','Comfortable':'Good','On Track':'Track','On Plan':'Plan'};
+  return map[text]||String(text||'').replace(/ Status$/,'');
+}
+function makeKpiCard(cfg){
+  var badgeText=escHtml(cfg.badge.text),compactBadgeText=escHtml(compactKpiBadgeText(cfg.badge.text));
+  return '<div class="scard '+escAttr(cfg.tone)+'">'
+    +'<div class="scard-top"><div class="scard-left"><span class="scard-icon">'+cfg.icon+'</span><div class="scard-title"><div class="scard-label">'+escHtml(cfg.title)+'</div></div></div><div class="scard-right"><span class="scard-badge '+escAttr(cfg.badge.tone)+'" title="'+badgeText+'"><span class="scard-badge-full">'+badgeText+'</span><span class="scard-badge-compact">'+compactBadgeText+'</span><span class="scard-badge-dot" aria-hidden="true"></span></span><span class="scard-menu" aria-hidden="true">⋯</span></div></div>'
+    +'<div class="scard-mid"><div class="scard-val '+escAttr(cfg.valueClass||'')+'">'+escHtml(cfg.value)+'</div><div class="scard-sub">'+cfg.insight+'</div></div>'
+    +sparklineSvg(cfg.history,cfg.tone)
+    +'</div>';
+}
+function renderKpiCards(t,TT,rem,secs){
+  secs=secs||getSecs();
+  var used=getKpiBudgetUsed(t),availableHistory=kpiHistory('available',cur,TT),targetHistory=kpiHistory('target',cur,TT),spentHistory=kpiHistory('spent',cur,TT),remainingHistory=kpiHistory('remaining',cur,TT);
+  var cards=[
+    {
+      tone:'available',icon:'💳',title:'Total available',value:fmtF(t.totA),valueClass:t.totA>=0?'green':'red',history:availableHistory,
+      badge:kpiBadge('available',t.totA,TT,rem,availableHistory),insight:kpiInsight('available',t.totA,TT,rem,availableHistory)
+    },
+    {
+      tone:'target',icon:'🎯',title:'Budget target',value:fmtF(TT),valueClass:'',history:targetHistory,
+      badge:kpiBadge('target',TT,TT,rem,targetHistory),insight:kpiInsight('target',TT,TT,rem,targetHistory)
+    },
+    {
+      tone:'spent',icon:'🧾',title:'Total spent',value:fmtF(used),valueClass:used>TT?'red':'',history:spentHistory,
+      badge:kpiBadge('spent',used,TT,rem,spentHistory),insight:kpiInsight('spent',used,TT,rem,spentHistory)
+    },
+    {
+      tone:'remaining',icon:rem>=0?'✅':'🚨',title:rem>=0?'Remaining budget':'Budget variance',value:fmtF(Math.abs(rem)),valueClass:rem>=0?'green':'red',history:remainingHistory,
+      badge:kpiBadge('remaining',Math.abs(rem),TT,rem,remainingHistory),insight:kpiInsight('remaining',Math.abs(rem),TT,rem,remainingHistory)
+    }
+  ];
+  return '<div class="scards" id="kpi-cards">'+cards.map(makeKpiCard).join('')+'</div>';
 }
 function getMonthIncome(key){ var t=calc(key); return t.hSal+t.sSal+t.hOth+t.sOth+t.hRed+t.sRed; }
 function getMonthProfitLoss(key){ var t=calc(key); return getMonthIncome(key)-t.totSp; }
@@ -1737,19 +1926,19 @@ function getTxns(limit){
   var txns=[],secs=getSecs(),months=sortedKeys();
   months.forEach(function(k){
     var parts=k.split('-'),monthName=parts[0],year=parts[1],monthIdx=MN.indexOf(monthName);
-    var storedIds={};
-    try{ (ST[k].transactions||[]).forEach(function(tx){ var ntx=normalizeTxnForRender(tx,k,monthName,year); if(ntx){ storedIds[ntx.id]=true; txns.push(ntx); } }); }catch(e){}
+    var storedIds={},storedExpenseSums={},storedIncomeSums={};
+    try{ (ST[k].transactions||[]).forEach(function(tx){ var ntx=normalizeTxnForRender(tx,k,monthName,year); if(ntx){ storedIds[ntx.id]=true; if(ntx.type==='expense'&&ntx.rowId&&ntx.acc) storedExpenseSums[ntx.rowId+'_'+ntx.acc]=(storedExpenseSums[ntx.rowId+'_'+ntx.acc]||0)+cleanNumber(ntx.amount); if((ntx.type==='income'||ntx.type==='credit')&&ntx.incomeField) storedIncomeSums[ntx.incomeField]=(storedIncomeSums[ntx.incomeField]||0)+cleanNumber(ntx.amount); txns.push(ntx); } }); }catch(e){}
     var inc={}; try{ inc=ST[k].income||{}; }catch(e){}
     ['hsbc','sbi'].forEach(function(acc){
       var obField=acc==='hsbc'?'ob_hsbc':'ob_sbi',salField=acc==='hsbc'?'sal_hsbc':'sal_sbi',othField=acc==='hsbc'?'oth_hsbc':'oth_sbi';
-      var obVal=parseFloat(inc[obField])||0,salVal=parseFloat(inc[salField])||0,othVal=parseFloat(inc[othField])||0;
+      var obVal=Math.max(0,(parseFloat(inc[obField])||0)-(storedIncomeSums[obField]||0)),salVal=Math.max(0,(parseFloat(inc[salField])||0)-(storedIncomeSums[salField]||0)),othVal=Math.max(0,(parseFloat(inc[othField])||0)-(storedIncomeSums[othField]||0));
       var baseTs=new Date(parseInt(year),monthIdx,1).getTime();
       if(obVal>0) txns.push({id:txId(['income',k,'opening',acc]),name:'Opening Balance',emoji:'🏦',color:'#378ADD',secId:'income',secColor:'#378ADD',acc:acc,amt:obVal,amount:obVal,type:'credit',month:monthName,year:year,ts:baseTs+1,key:k,rowId:'ob_'+acc});
       if(salVal>0) txns.push({id:txId(['income',k,'salary',acc]),name:'Salary',emoji:'💰',color:'#1D9E75',secId:'income',secColor:'#1D9E75',acc:acc,amt:salVal,amount:salVal,type:'credit',month:monthName,year:year,ts:baseTs+2,key:k,rowId:'sal_'+acc});
       if(othVal>0) txns.push({id:txId(['income',k,'other',acc]),name:'Other Income',emoji:'➕',color:'#06B6D4',secId:'income',secColor:'#06B6D4',acc:acc,amt:othVal,amount:othVal,type:'credit',month:monthName,year:year,ts:baseTs+3,key:k,rowId:'oth_'+acc});
     });
-    secs.forEach(function(sec){ sec.rows.forEach(function(row){ if(isFundTransferRow(row.id)) return; ['hsbc','sbi'].forEach(function(acc){ var v=getX(k,row.id,acc),id=txId(['expense',k,row.id,acc]); if(v>0&&!storedIds[id]){ var txTs=0; try{ txTs=ST[k].expenses[row.id]['_ts_'+acc]||0; }catch(e){} txns.push({id:id,name:row.name,transactionType:'Expense',emoji:row.emoji,color:ROW_C[getRowIdx(row.id)],secId:sec.id,secColor:sec.color,acc:acc,amt:v,amount:v,type:'expense',month:monthName,year:year,ts:txTs,key:k,rowId:row.id,source:acc,destination:'expense'}); } }); }); });
-    ['travel','emergency'].forEach(function(kind){ var def=FUND_DEFS[kind]; getFund(kind).history.forEach(function(h){ if(h.monthKey!==k||storedIds[h.id]) return; var acc=h.type==='redemption'?h.destination:h.source; if(acc!=='hsbc'&&acc!=='sbi') return; txns.push({id:h.id,name:h.name||h.transactionType||def.label,emoji:def.emoji,color:def.color,secId:h.type,secColor:def.color,acc:acc,amt:cleanNumber(h.amount),amount:cleanNumber(h.amount),type:h.type,month:monthName,year:year,ts:h.timestamp||0,key:k,rowId:kind+'_fund',source:h.source,destination:h.destination,note:h.note}); }); });
+    secs.forEach(function(sec){ sec.rows.forEach(function(row){ if(isFundTransferRow(row.id)) return; ['hsbc','sbi'].forEach(function(acc){ var v=Math.max(0,getX(k,row.id,acc)-(storedExpenseSums[row.id+'_'+acc]||0)),id=txId(['expense',k,row.id,acc]); if(v>0&&!storedIds[id]){ var txTs=0; try{ txTs=ST[k].expenses[row.id]['_ts_'+acc]||0; }catch(e){} txns.push({id:id,name:row.name,transactionType:'Expense',emoji:row.emoji,color:ROW_C[getRowIdx(row.id)],secId:sec.id,secColor:sec.color,acc:acc,amt:v,amount:v,type:'expense',month:monthName,year:year,ts:txTs,key:k,rowId:row.id,source:acc,destination:'expense'}); } }); }); });
+    allFundKinds(true).forEach(function(kind){ var def=getFundDef(kind); getFund(kind).history.forEach(function(h){ if(h.monthKey!==k||storedIds[h.id]) return; var acc=h.type==='redemption'?h.destination:h.source; if(acc!=='hsbc'&&acc!=='sbi') return; txns.push({id:h.id,name:h.name||h.transactionType||def.label,emoji:def.emoji,color:def.color,secId:h.type,secColor:def.color,acc:acc,amt:cleanNumber(h.amount),amount:cleanNumber(h.amount),type:h.type,month:monthName,year:year,ts:h.timestamp||0,key:k,rowId:def.transferRow||kind+'_fund',source:h.source,destination:h.destination,note:h.note}); }); });
   });
   txns.sort(function(a,b){ var ai=months.indexOf(a.month+'-'+a.year),bi=months.indexOf(b.month+'-'+b.year); if(bi!==ai) return bi-ai; if(b.ts!==a.ts) return b.ts-a.ts; return b.amt-a.amt; });
   return limit?txns.slice(0,limit):txns;
@@ -1780,7 +1969,7 @@ function renderTxns(){
   function bankChip(acc){
     var logo=LOGOS[acc],safeAcc=acc==='hsbc'?'hsbc':'sbi';
     var li=logo?'<img src="'+escAttr(logo)+'" class="txn-bank-chip-logo" alt="'+safeAcc+'" onerror="this.style.display=\'none\'"/>':'';
-    return '<span class="txn-bank-chip '+safeAcc+'">'+li+(safeAcc==='hsbc'?'HSBC':'SBI')+'</span>';
+    return '<span class="txn-bank-chip '+safeAcc+'">'+li+escHtml(bankLabel(acc))+'</span>';
   }
   var h=txnArchiveOpen?renderTxnArchiveTools():'';
   groups.forEach(function(g){
@@ -1789,11 +1978,12 @@ function renderTxns(){
       var stripColor=safeColor(tx.secColor||SEC_COLORS[tx.secId]||'#378ADD');
       var tsStr=tx.ts?fmtTimestamp(tx.ts):(tx.month+' '+tx.year);
       var agoStr=tx.ts?tsAgo(tx.ts):'';
-      var balLbl=tx.acc==='hsbc'?'HSBC Balance':'SBI Balance';
+      var balLbl=bankLabel(tx.acc)+' Balance';
       var route=(tx.type==='transfer'||tx.type==='redemption')?'<span class="txn-route">'+escHtml((tx.source==='travel'?'Travel Fund':tx.source==='emergency'?'Emergency Fund':bankName(tx.source))+' → '+(tx.destination==='travel'?'Travel Fund':tx.destination==='emergency'?'Emergency Fund':bankName(tx.destination)))+'</span>':'';
       var arrowClass=(tx.type==='credit'||tx.type==='redemption')?'credit':'debit';
       var arrowIcon=(tx.type==='credit'||tx.type==='redemption')?'↙':'↗';
-      h+='<div class="txn-card"><div class="txn-strip" style="background:'+escAttr(stripColor)+'"></div><div class="txn-icon-col"><div class="txn-icon">'+escHtml(tx.emoji)+'</div></div><div class="txn-info"><div class="txn-name">'+escHtml(tx.name)+'</div><div class="txn-meta"><span class="txn-month">'+escHtml(tx.month.slice(0,3))+' '+escHtml(tx.year)+'</span>'+bankChip(tx.acc)+'</div><div class="txn-datetime"><span class="txn-datetime-icon">📅</span>'+escHtml(tsStr)+'</div>'+route+'</div><div class="txn-right"><div class="txn-amt-row"><span class="txn-amt">₹'+Math.round(tx.amt).toLocaleString('en-IN')+'</span><span class="txn-arrow '+arrowClass+'">'+arrowIcon+'</span></div><span class="txn-ago-pill">'+escHtml(agoStr)+'</span><span class="txn-bal-label">'+escHtml(balLbl)+'</span><span class="txn-bal-val">'+fmtBal(tx.displayBal)+'</span></div></div>';
+      var canManage=String(tx.id||'').indexOf('gts_')===0,desc=tx.description||tx.note||tx.transactionType||tx.section||''; var manage=canManage?'<div class="gtxn-card-actions"><button class="gtxn-mini-btn" onclick="openTransactionModal(\''+jsString(tx.id)+'\',\''+jsString(tx.key)+'\')">Edit</button><button class="gtxn-mini-btn danger" onclick="deleteGlobalTransaction(\''+jsString(tx.id)+'\',\''+jsString(tx.key)+'\')">Delete</button></div>':'';
+      h+='<div class="txn-card"><div class="txn-strip" style="background:'+escAttr(stripColor)+'"></div><div class="txn-icon-col"><div class="txn-icon">'+escHtml(tx.emoji)+'</div></div><div class="txn-info"><div class="txn-name">'+escHtml(tx.category||tx.name)+'</div><div class="txn-desc">'+escHtml(desc||'No description')+'</div><div class="txn-meta"><span class="txn-month">'+escHtml(tx.month.slice(0,3))+' '+escHtml(tx.year)+'</span>'+bankChip(tx.acc)+'</div><div class="txn-datetime"><span class="txn-datetime-icon">📅</span>'+escHtml(tsStr)+'</div>'+route+'</div><div class="txn-right"><div class="txn-amt-row"><span class="txn-amt">₹'+Math.round(tx.amt).toLocaleString('en-IN')+'</span><span class="txn-arrow '+arrowClass+'">'+arrowIcon+'</span></div><span class="txn-ago-pill">'+escHtml(agoStr)+'</span><span class="txn-bal-label">'+escHtml(balLbl)+'</span><span class="txn-bal-val">'+fmtBal(tx.displayBal)+'</span>'+manage+'</div></div>';
     });
   });
   h+='<div class="txn-footer"><button class="txn-view-all" onclick="toggleTxnArchive()">'+(txnArchiveOpen?'Show Latest 10':'View All Transactions')+'</button></div>';
@@ -1923,6 +2113,7 @@ function addTxnBalances(txns){
   }
   var runningBal={hsbc:getFinalClosing('hsbc'),sbi:getFinalClosing('sbi')};
   return txns.map(function(tx){
+    if(runningBal[tx.acc]===undefined) runningBal[tx.acc]=0;
     var bal=runningBal[tx.acc];
     if(tx.type==='expense'||tx.type==='transfer') runningBal[tx.acc]=bal+tx.amt;
     else runningBal[tx.acc]=bal-tx.amt;
@@ -1941,15 +2132,15 @@ function renderMain(){
   else renderCharts(app);
 }
 function renderTracker(app){
-  var parts=cur.split('-'),m=parts[0],y=parts[1],t=calc(cur),TT=getTT(),rem=TT-t.totSp,secs=getSecs();
+  var parts=cur.split('-'),m=parts[0],y=parts[1],t=calc(cur),TT=getTT(),rem=TT-getKpiBudgetUsed(t),secs=getSecs();
   var mostRecentTs=0; getTxns(0).forEach(function(tx){ if(tx.ts>mostRecentTs) mostRecentTs=tx.ts; });
   if(!mostRecentTs&&lastSaveTimestamp) mostRecentTs=lastSaveTimestamp;
   var mrStr=mostRecentTs?fmtTimestamp(mostRecentTs):'—',mrAgo=mostRecentTs?tsAgo(mostRecentTs):'';
   app.innerHTML=
     '<div class="page-header"><div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px"><div class="page-title">📅 '+escHtml(m)+' '+escHtml(y)+'</div><span class="save-badge" id="sbadge">✓ Saved</span></div><div class="page-sub">Personal finance tracker · '+fmtF(mBudget)+' budget · HSBC & SBI</div></div>'
-    +'<div class="vtabs"><button class="vtab active" onclick="setView(\'tracker\')">&#128202; Tracker</button><button class="vtab " onclick="setView(\'charts\')">&#128200; Charts</button><button class="vtab " onclick="setView(\'settings\')">&#9881; Settings</button></div>'
+    +'<div class="tracker-toolbar"><div class="vtabs"><button class="vtab active" onclick="setView(\'tracker\')">&#128202; Tracker</button><button class="vtab " onclick="setView(\'charts\')">&#128200; Charts</button><button class="vtab " onclick="setView(\'settings\')">&#9881; Settings</button></div><button class="new-txn-btn" type="button" aria-label="New Transaction" onclick="openTransactionModal()"><span class="new-txn-spark s1" aria-hidden="true"></span><span class="new-txn-spark s2" aria-hidden="true"></span><span class="new-txn-arc" aria-hidden="true"></span><span class="new-txn-badge" aria-hidden="true">+</span><span class="new-txn-label">New Transaction</span><span class="new-txn-arrow" aria-hidden="true">&rarr;</span></button></div>'
     +'<div class="tracker-layout"><div class="tracker-content"><div class="dashboard-grid"><div class="dashboard-left">'
-    +'<div class="scards"><div class="scard"><span class="scard-icon">💳</span><div class="scard-label">Total available</div><div class="scard-val blue">'+fmtF(t.totA)+'</div><div class="scard-sub">HSBC + SBI combined</div></div><div class="scard"><span class="scard-icon">🎯</span><div class="scard-label">Total target</div><div class="scard-val">'+fmtF(TT)+'</div><div class="scard-sub">Monthly budget plan</div></div><div class="scard"><span class="scard-icon">💸</span><div class="scard-label">Total spent</div><div class="scard-val '+(t.totSp>TT?'red':'')+'">'+fmtF(t.totSp)+'</div><div class="scard-sub">'+(t.totSp>TT?'⚠️ Over budget':'This month so far')+'</div></div><div class="scard"><span class="scard-icon">'+(rem>=0?'✅':'🚨')+'</span><div class="scard-label">'+(rem>=0?'Remaining':'Over by')+'</div><div class="scard-val '+(rem>=0?'green':'red')+'">'+fmtF(Math.abs(rem))+'</div><div class="scard-sub">'+(rem>=0?'Buffer left':'Exceeded budget')+'</div></div></div>'
+    +renderKpiCards(t,TT,rem,secs)
     +renderAccountCards()
     +'<div class="str"><h3>💼 Income & balances</h3></div><div class="bal-grid" id="balgrid"></div></div><div class="dashboard-right">'+quickOverviewCard(secs,TT)+'</div></div>'
     +'<div class="str" style="margin-top:2rem"><h3>📋 Expenses</h3></div><div id="expsecs"></div>'
@@ -2024,9 +2215,9 @@ function handleInput(e){
     ensureMonthData(cur); if(!ST[cur].transfers[kind]) ST[cur].transfers[kind]={};
     var nextVal=parseFloat(t.value)||0,prevVal=getMonthTransfers(cur,kind,acc),delta=nextVal-prevVal;
     ST[cur].transfers[kind][acc]=nextVal;
-    var def=FUND_DEFS[kind],ts=Date.now()+(++fundActionSeq),id=fundTxId(cur,kind,acc,'deposit');
+    var def=getFundDef(kind),ts=Date.now()+(++fundActionSeq),id=fundTxId(cur,kind,acc,'deposit');
     if(delta!==0){
-      if(nextVal>0) upsertTransaction(cur,{id:id,type:'transfer',transactionType:(kind==='travel'?'Travel Fund Deposit':'Emergency Fund Deposit'),name:def.transferName,emoji:def.emoji,color:def.color,secId:'transfer',secColor:def.color,acc:acc,amount:nextVal,amt:nextVal,source:acc,destination:kind,rowId:kind+'_fund',timestamp:ts});
+      if(nextVal>0) upsertTransaction(cur,{id:id,type:'transfer',transactionType:def.transferName,name:def.transferName,emoji:def.emoji,color:def.color,secId:'transfer',secColor:def.color,acc:acc,amount:nextVal,amt:nextVal,source:acc,destination:kind,rowId:def.transferRow||kind+'_fund',timestamp:ts});
       else removeTransaction(cur,id);
       rebuildFundStats();
     }
@@ -2057,11 +2248,9 @@ function recalcBal(){
   if(hc){ hc.textContent=fmtF(t.hC); hc.className='bc clos '+(t.hC>=0?'pos':'neg'); }
   if(sc){ sc.textContent=fmtF(t.sC); sc.className='bc clos '+(t.sC>=0?'pos':'neg'); }
   if(cc){ cc.textContent=fmtF(t.hC+t.sC); cc.className='bc clos '+((t.hC+t.sC)>=0?'pos':'neg'); }
-  var cards=document.querySelectorAll('.scard-val');
-  if(cards[0]) cards[0].textContent=fmtF(t.totA);
-  if(cards[2]){ cards[2].textContent=fmtF(t.totSp); cards[2].className='scard-val'+(t.totSp>TT?' red':''); }
-  var rem=TT-t.totSp;
-  if(cards[3]){ cards[3].textContent=fmtF(Math.abs(rem)); cards[3].className='scard-val'+(rem>=0?' green':' red'); }
+  var rem=TT-getKpiBudgetUsed(t);
+  var kpi=R('kpi-cards');
+  if(kpi) kpi.outerHTML=renderKpiCards(t,TT,rem,getSecs());
 }
 function recalcExp(secId,rowId){
   var secs=getSecs(),row=null;
@@ -2285,6 +2474,109 @@ function resetToDefaults(){
 function showSaveConfirm(){ var ok=R('set-ok'); if(ok){ ok.style.opacity='1'; setTimeout(function(){ ok.style.opacity='0'; },1500); } }
 </script>
 <script>
+function monthKeyFromDate(dateStr){var d=dateStr?new Date(dateStr+'T00:00:00'):new Date();if(isNaN(d.getTime()))d=new Date();return MN[d.getMonth()]+'-'+d.getFullYear()}
+function transactionTimestamp(dateStr,timeStr){var d=dateStr||new Date().toISOString().slice(0,10),t=timeStr||'00:00',dt=new Date(d+'T'+t);return isNaN(dt.getTime())?Date.now():dt.getTime()}
+function splitTimestamp(ts){var d=ts?new Date(ts):new Date();if(isNaN(d.getTime()))d=new Date();return{date:d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'),time:String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')}}
+function findSectionAndRow(rowId){var found={sec:null,row:null};getSecs().forEach(function(sec){sec.rows.forEach(function(row){if(row.id===rowId)found={sec:sec,row:row}})});return found}
+function fundKindForTransactionRow(row){ if(!row) return ''; if(FUND_ROWS[row.id]) return FUND_ROWS[row.id]; ensureFunds(); var rid=String(row.id||'').toLowerCase(),nm=String(row.name||'').toLowerCase(); var hit=''; allFundKinds(true).forEach(function(kind){ var f=getFundDef(kind),label=String(f.label||kind).toLowerCase(); if(!hit&&(rid===kind||rid===kind+'_fund'||rid.indexOf(kind+'_fund')>=0||nm.indexOf(label)>=0||(nm.indexOf('fund')>=0&&nm.indexOf(kind)>=0))) hit=kind; }); return hit; }
+function getTxnById(key,id){try{var list=ST[key].transactions||[];for(var i=0;i<list.length;i++){if(list[i]&&list[i].id===id)return list[i]}}catch(e){}return null}
+function findTxnLocation(id,key){var keys=key?[key]:sortedKeys();for(var k=0;k<keys.length;k++){var tx=getTxnById(keys[k],id);if(tx)return{key:keys[k],tx:tx}}return null}
+function incomeFieldForType(txType,bank){return 'oth_'+bank}
+function adjustStoredAmount(obj,field,delta){if(!obj)return;var next=cleanNumber(obj[field])+delta;if(Math.abs(next)<0.0001)delete obj[field];else obj[field]=Math.max(0,Math.round(next))}
+function applyTransactionEffects(tx,sign){if(!tx)return;var key=tx.monthKey||tx.key||cur,amount=Math.round(cleanNumber(tx.amount||tx.amt));if(!key||amount<=0)return;ensureMonthData(key);var delta=amount*(sign||1),type=tx.type;if(type==='income'||type==='credit'){adjustStoredAmount(ST[key].income,tx.incomeField||incomeFieldForType(type,tx.acc||tx.bank||'hsbc'),delta)}else if(type==='transfer'){var kind=tx.destination||FUND_ROWS[tx.rowId];if(!kind)return;if(!ST[key].transfers[kind])ST[key].transfers[kind]={};adjustStoredAmount(ST[key].transfers[kind],tx.acc||tx.source||'hsbc',delta);rebuildFundStats()}else{var row=tx.rowId||tx.category;if(!row)return;if(!ST[key].expenses[row])ST[key].expenses[row]={};var acc=tx.acc||tx.bank||'hsbc';adjustStoredAmount(ST[key].expenses[row],acc,delta);if(sign>0)ST[key].expenses[row]['_ts_'+acc]=tx.timestamp||Date.now()}}
+function refreshAfterTransaction(key){rebuildFundStats();if(key)cur=key;renderAll();queueSave({month:key||cur,refreshTransactions:true,delay:120})}
+function openTransactionModal(id,key){var loc=id?findTxnLocation(id,key):null,tx=loc&&loc.tx,now=splitTimestamp(tx?(tx.timestamp||tx.ts):Date.now()),secs=getSecs(),firstSec=secs[0]||{id:'',rows:[]},firstRow=(firstSec.rows||[])[0]||{},type=tx?(tx.type==='income'||tx.type==='credit'?'income':'expense'):'expense';transactionModalState={id:id||null,originalKey:loc&&loc.key,type:type,sectionId:tx?tx.secId:firstSec.id,rowId:tx?(tx.rowId||tx.category):firstRow.id,bank:tx?(tx.acc||tx.bank||''):(getBanks()[0]||'hsbc'),amount:tx?cleanNumber(tx.amount||tx.amt):0,date:tx?(tx.date||now.date):now.date,time:tx?(tx.time||now.time):now.time,useNow:!tx,description:tx?(tx.description||tx.note||''):''};renderTransactionModal()}
+function closeTransactionModal(){transactionModalState=null;if(transactionPreviewTimer){clearTimeout(transactionPreviewTimer);transactionPreviewTimer=null}modalHost().innerHTML=''}
+var transactionPreviewTimer=null;
+function updateTransactionState(field,value){
+  if(!transactionModalState)return;
+  transactionModalState[field]=value;
+  if(field==='sectionId'){
+    var sec=getSecs().filter(function(s){return s.id===value})[0];
+    transactionModalState.rowId=sec&&sec.rows[0]?sec.rows[0].id:'';
+  }
+  if(field==='useNow'&&value){var n=splitTimestamp(Date.now());transactionModalState.date=n.date;transactionModalState.time=n.time}
+  updateTransactionModalView({immediate:true,refreshOptions:field==='sectionId'||field==='type'});
+}
+function handleTransactionAmountInput(input){
+  if(!transactionModalState)return;
+  transactionModalState.amount=input.value;
+  scheduleTransactionPreviewUpdate();
+}
+function handleTransactionDescriptionInput(input){
+  if(!transactionModalState)return;
+  transactionModalState.description=input.value;
+  scheduleTransactionPreviewUpdate();
+}
+function scheduleTransactionPreviewUpdate(){
+  if(transactionPreviewTimer)clearTimeout(transactionPreviewTimer);
+  transactionPreviewTimer=setTimeout(function(){transactionPreviewTimer=null;updateTransactionModalView({previewOnly:true})},220);
+}
+function getTransactionPreview(){var s=transactionModalState||{},info=findSectionAndRow(s.rowId),sec=info.sec,row=info.row,bank=s.bank||getBanks()[0]||'hsbc',amount=Math.round(cleanNumber(s.amount)),key=monthKeyFromDate(s.date),before=calc(key),fundKind=fundKindForTransactionRow(row),isTransfer=!!fundKind,type=s.type==='income'?'income':(isTransfer?'transfer':'expense'),after={bankBalance:bank==='hsbc'?before.hC:before.sC,category:0,section:0,totalSpent:before.totSp,available:before.totA,closing:before.hC+before.sC};if(type==='income'){after.bankBalance+=amount;after.available+=amount;after.closing+=amount}else if(type==='transfer'){after.bankBalance-=amount;after.available-=amount;after.closing-=amount}else{after.bankBalance-=amount;after.category=getX(key,s.rowId,bank)+amount;if(sec)after.section=sec.rows.reduce(function(sum,r){return sum+(r.id===s.rowId?amount:0)+getX(key,r.id,'hsbc')+getX(key,r.id,'sbi')},0);after.totalSpent+=amount;after.available-=amount;after.closing-=amount}return{sec:sec,row:row,bank:bank,amount:amount,key:key,type:type,isTransfer:isTransfer,after:after,fundKind:fundKind}}
+function transactionCategoryOptions(rows,selectedId){return rows.map(function(row){return '<option value="'+escAttr(row.id)+'" '+(row.id===selectedId?'selected':'')+'>'+escHtml(row.emoji+' '+row.name)+'</option>'}).join('')}
+function transactionBankOptions(banks,selectedBank){return banks.map(function(b){return '<option value="'+escAttr(b)+'" '+(b===selectedBank?'selected':'')+'>'+escHtml(bankLabel(b))+'</option>'}).join('')}
+function buildTransactionSummaryHtml(s,p){
+  var amount=Math.round(cleanNumber(s.amount)),catName=p.row?p.row.name:'Income',catIcon=p.row?p.row.emoji:'₹',typeLabel=p.type==='transfer'?'Expense':(s.type==='income'?'Income':'Expense'),typeIcon=s.type==='income'?'↑':'↓';
+  var detailRows=[[''+typeIcon,typeLabel,p.type==='transfer'?'Fund Transfer':typeLabel],['📊','Category',catIcon+' '+catName],['🏦','Bank',bankLabel(s.bank)],['📅','Date',s.date||''],['⏰','Time',s.time||'']].map(function(r){return '<div class="gtxn-stat"><span class="si">'+escHtml(r[0])+'</span><span>'+escHtml(r[1])+'</span><strong>'+escHtml(r[2])+'</strong></div>'}).join('');
+  var catTotal=0,sectionTotal=0,totalSpent=getKpiBudgetUsed(calc(p.key));
+  if(p.sec){p.sec.rows.forEach(function(r){var kind=FUND_ROWS[r.id],curRow=kind?getMonthTransfers(p.key,kind,'hsbc')+getMonthTransfers(p.key,kind,'sbi'):getX(p.key,r.id,'hsbc')+getX(p.key,r.id,'sbi');if((p.type==='expense'||p.type==='transfer')&&r.id===s.rowId)curRow+=amount;sectionTotal+=curRow;if(r.id===s.rowId)catTotal=curRow})}
+  if(p.type==='expense'||p.type==='transfer')totalSpent+=amount;
+  var trend='<svg class="gtxn-trend" viewBox="0 0 58 24" aria-hidden="true"><path d="M2 18 C12 12, 17 15, 25 9 S41 7, 56 4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+  return detailRows+'<div class="gtxn-insight '+(p.after.bankBalance>=0?'green':'red')+'"><div><span>Bank Balance</span><strong>'+fmtF(p.after.bankBalance)+'</strong></div></div>'
+    +'<div class="gtxn-insight"><div><span>Category Total</span><strong>'+fmtF(catTotal)+'</strong></div></div>'
+    +'<div class="gtxn-insight beige"><div><span>Section Total</span><strong>'+fmtF(sectionTotal)+'</strong></div></div>'
+    +'<div class="gtxn-insight red"><div><span>Total Spent</span><strong>'+fmtF(totalSpent)+'</strong></div></div>'
+    +'<div class="gtxn-insight green"><div><span>Available Balance</span><strong>'+fmtF(p.after.available)+'</strong></div>'+trend+'</div>';
+}
+function updateTransactionModalView(opts){
+  var s=transactionModalState;if(!s)return;
+  opts=opts||{};
+  if(s.useNow){var n=splitTimestamp(Date.now());s.date=n.date;s.time=n.time}
+  var secs=getSecs(),banks=getBanks(),p=getTransactionPreview(),rows=(p.sec&&p.sec.rows)||[],amount=Math.round(cleanNumber(s.amount)),catName=p.row?p.row.name:'Income';
+  var preview=amount>0?'You’re '+(s.type==='income'?'adding income of':'adding')+' '+fmtF(amount)+' to '+catName:'Enter an amount to preview this transaction';
+  var amountEl=R('gtxn-amount');
+  if(amountEl&&document.activeElement!==amountEl&&amountEl.value!==String(s.amount||''))amountEl.value=s.amount||'';
+  var descEl=R('gtxn-description');
+  if(descEl&&document.activeElement!==descEl&&descEl.value!==(s.description||''))descEl.value=s.description||'';
+  var catSel=R('gtxn-category');
+  if(catSel){if(opts.refreshOptions)catSel.innerHTML=transactionCategoryOptions(rows,s.rowId);if(catSel.value!==s.rowId)catSel.value=s.rowId}
+  var bankSel=R('gtxn-bank');
+  if(bankSel){if(opts.refreshOptions)bankSel.innerHTML=transactionBankOptions(banks,s.bank);if(bankSel.value!==s.bank)bankSel.value=s.bank}
+  var dateEl=R('gtxn-date'),timeEl=R('gtxn-time'),nowEl=R('gtxn-use-now');
+  if(dateEl){dateEl.disabled=!!s.useNow;if(dateEl.value!==s.date)dateEl.value=s.date||''}
+  if(timeEl){timeEl.disabled=!!s.useNow;if(timeEl.value!==s.time)timeEl.value=s.time||''}
+  if(nowEl&&nowEl.checked!==!!s.useNow)nowEl.checked=!!s.useNow;
+  var expenseBtn=R('gtxn-type-expense'),incomeBtn=R('gtxn-type-income');
+  if(expenseBtn)expenseBtn.classList.toggle('active',s.type==='expense');
+  if(incomeBtn)incomeBtn.classList.toggle('active',s.type==='income');
+  var list=R('gtxn-section-list');
+  if(list){Array.prototype.forEach.call(list.querySelectorAll('.gtxn-section-btn'),function(btn){btn.classList.toggle('active',btn.getAttribute('data-section-id')===s.sectionId)})}
+  var live=R('gtxn-live-preview');if(live)live.textContent=preview;
+  var summary=R('gtxn-summary');if(summary)summary.innerHTML=buildTransactionSummaryHtml(s,p);
+}
+function renderTransactionModal(){
+  var s=transactionModalState;if(!s)return;
+  if(s.useNow){var n=splitTimestamp(Date.now());s.date=n.date;s.time=n.time}
+  var secs=getSecs(),banks=getBanks(),p=getTransactionPreview(),rows=(p.sec&&p.sec.rows)||[],amount=Math.round(cleanNumber(s.amount)),catName=p.row?p.row.name:'Income';
+  var preview=amount>0?'You’re '+(s.type==='income'?'adding income of':'adding')+' '+fmtF(amount)+' to '+catName:'Enter an amount to preview this transaction';
+  var secHtml=secs.map(function(sec){return '<button class="gtxn-section-btn '+(sec.id===s.sectionId?'active':'')+'" data-section-id="'+escAttr(sec.id)+'" onclick="updateTransactionState(\'sectionId\',\''+jsString(sec.id)+'\')"><span class="gtxn-section-ico">'+escHtml(sec.icon)+'</span><span><span class="gtxn-section-name">'+escHtml(sec.title)+'</span><span class="gtxn-section-note">'+escHtml(sec.note)+'</span></span></button>'}).join('');
+  modalHost().innerHTML='<div class="gtxn-backdrop"><div class="gtxn-modal">'
+    +'<div class="gtxn-head"><div><div class="gtxn-title">New Transaction</div><div class="gtxn-sub">Premium entry flow for live balance updates.</div></div><button class="gtxn-close" onclick="closeTransactionModal()">&times;</button></div>'
+    +'<div class="gtxn-body"><aside class="gtxn-panel"><div class="gtxn-panel-title">Sections</div><div class="gtxn-section-list" id="gtxn-section-list">'+secHtml+'</div></aside>'
+    +'<section class="gtxn-panel gtxn-form-card"><div class="gtxn-illustration">💼</div><div class="gtxn-panel-title">Transaction Form</div>'
+    +'<div class="gtxn-type-row"><button id="gtxn-type-expense" class="gtxn-type '+(s.type==='expense'?'active':'')+'" onclick="updateTransactionState(\'type\',\'expense\')">Expense</button><button id="gtxn-type-income" class="gtxn-type '+(s.type==='income'?'active':'')+'" onclick="updateTransactionState(\'type\',\'income\')">Income</button></div>'
+    +'<div class="gtxn-form-grid"><div class="gtxn-amount-wrap"><label class="gtxn-panel-title" for="gtxn-amount">Amount</label><div class="gtxn-amount-box"><span class="gtxn-currency">₹</span><input id="gtxn-amount" class="gtxn-amount" type="number" min="0" value="'+escAttr(s.amount||'')+'" oninput="handleTransactionAmountInput(this)" placeholder="0" autocomplete="off" inputmode="decimal"/></div><div class="gtxn-live-preview" id="gtxn-live-preview">'+escHtml(preview)+'</div></div>'
+    +'<div class="gtxn-field" data-icon="📊"><label for="gtxn-category">Category</label><select id="gtxn-category" onchange="updateTransactionState(\'rowId\',this.value)">'+transactionCategoryOptions(rows,s.rowId)+'</select></div>'
+    +'<div class="gtxn-field" data-icon="🏦"><label for="gtxn-bank">Bank Account</label><select id="gtxn-bank" onchange="updateTransactionState(\'bank\',this.value)">'+transactionBankOptions(banks,s.bank)+'</select></div>'
+    +'<div class="gtxn-field" data-icon="📅"><label for="gtxn-date">Date</label><input id="gtxn-date" type="date" value="'+escAttr(s.date)+'" '+(s.useNow?'disabled':'')+' onchange="updateTransactionState(\'date\',this.value)"/></div>'
+    +'<div class="gtxn-field" data-icon="⏰"><label for="gtxn-time">Time</label><input id="gtxn-time" type="time" value="'+escAttr(s.time)+'" '+(s.useNow?'disabled':'')+' onchange="updateTransactionState(\'time\',this.value)"/></div>'
+    +'<div class="gtxn-field full gtxn-note-field" data-icon="✎"><label for="gtxn-description">Description</label><textarea id="gtxn-description" maxlength="220" oninput="handleTransactionDescriptionInput(this)" placeholder="Add notes about this transaction...">'+escHtml(s.description||'')+'</textarea></div>'
+    +'<div class="gtxn-field full"><label class="gtxn-toggle"><input id="gtxn-use-now" type="checkbox" '+(s.useNow?'checked':'')+' onchange="updateTransactionState(\'useNow\',this.checked)"/> ✓ Use current date & time</label></div></div>'
+    +'<div class="gtxn-error" id="gtxn-error"></div><div class="gtxn-actions"><button onclick="closeTransactionModal()">Cancel</button><button class="primary" onclick="saveGlobalTransaction()">Save Transaction ✓</button></div></section>'
+    +'<aside class="gtxn-panel"><div class="gtxn-panel-title">Summary</div><div class="gtxn-summary" id="gtxn-summary">'+buildTransactionSummaryHtml(s,p)+'</div></aside></div></div></div>';
+}function showTransactionError(msg){var el=R('gtxn-error');if(el){el.textContent=msg;el.classList.add('show')}}
+function saveGlobalTransaction(){var s=transactionModalState,p=getTransactionPreview();if(!s)return;var amount=Math.round(cleanNumber(s.amount));if(amount<=0){showTransactionError('Amount must be greater than zero.');return}if(!p.row&&s.type!=='income'){showTransactionError('Choose a category.');return}if(!s.bank){showTransactionError('Choose a bank account.');return}var key=monthKeyFromDate(s.date),ts=transactionTimestamp(s.date,s.time),type=s.type==='income'?'income':(p.isTransfer?'transfer':'expense'),existing=s.id?findTxnLocation(s.id,s.originalKey):null;if(existing){applyTransactionEffects(existing.tx,-1);removeTransaction(existing.key,existing.tx.id)}ensureMonthData(key);var sec=p.sec||{},row=p.row||{},id=s.id||('gts_'+Date.now()+'_'+Math.random().toString(36).slice(2,8));var tx={id:id,type:type,transactionType:type==='income'?'Income':(type==='transfer'?'Fund Transfer':'Expense'),name:type==='income'?'Income':(row.name||'Transaction'),description:(s.description||'').trim().slice(0,220),note:(s.description||'').trim().slice(0,220),emoji:type==='income'?'?':(row.emoji||'??'),color:sec.color||'#378ADD',secId:sec.id||'income',secColor:sec.color||'#378ADD',section:sec.title||'',category:row.name||'Income',rowId:row.id||'income',acc:s.bank,bank:s.bank,amount:amount,amt:amount,source:s.bank,destination:type==='transfer'?p.fundKind:(type==='income'?s.bank:'expense'),date:s.date,time:s.time,timestamp:ts,month:key.split('-')[0],year:key.split('-')[1],monthKey:key,incomeField:type==='income'?incomeFieldForType(type,s.bank):undefined};applyTransactionEffects(tx,1);upsertTransaction(key,tx);closeTransactionModal();refreshAfterTransaction(key)}
+function deleteGlobalTransaction(id,key){var loc=findTxnLocation(id,key);if(!loc)return;if(!confirm('Delete this transaction? Its financial impact will be reversed.'))return;applyTransactionEffects(loc.tx,-1);removeTransaction(loc.key,id);refreshAfterTransaction(loc.key)}
 function renderCharts(app){
   var secs=getSecs(),months=sortedKeys();
   if(!months.length){ app.innerHTML='<div class="empty"><span class="empty-icon">📊</span><h3>No data yet</h3><p>Add a month first</p></div>'; return; }
@@ -2336,5 +2628,3 @@ loadState();
 </script>
 </body>
 </html>
-
-
