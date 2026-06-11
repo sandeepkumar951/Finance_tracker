@@ -1149,7 +1149,7 @@ function applyFundRedemption(kind,acc,amount,monthKey){
   return tx;
 }
 function indianNumber(n,decimals){ return n.toLocaleString('en-IN',{minimumFractionDigits:decimals||0,maximumFractionDigits:decimals||0}); }
-function trimFixed(n,d){ return n.toFixed(d).replace(/\.0+$/).replace(/(\.\d*[1-9])0+$/,'$1'); }
+function trimFixed(n,d){ return n.toFixed(d).replace(/\.0+$/,'').replace(/(\.\d*[1-9])0+$/,'$1'); }
 function moneyPrefix(n){ return n<0?'-\u20B9':'\u20B9'; }
 function fmt(v){
   var raw=cleanNumber(v),n=Math.abs(raw),label;
