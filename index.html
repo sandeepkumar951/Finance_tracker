@@ -1144,27 +1144,9 @@ html{background:radial-gradient(circle at 78% -10%,rgba(52,120,246,.08),transpar
 .overview-progress{gap:10px}
 .overview-progress-track{height:8px;background:#EEE8E2}
 .overview-used{font-size:12px}
-.header-mascot{
-  position:relative;display:flex;align-items:center;justify-content:center;width:88px;height:70px;flex:0 0 88px;
-  margin:-5px 2px -3px;isolation:isolate;pointer-events:none;overflow:visible
-}
-.header-mascot:after{
-  content:'';position:absolute;left:17px;right:13px;bottom:2px;height:8px;border-radius:50%;
-  background:rgba(74,48,32,.11);filter:blur(5px);z-index:-1;transform:scaleX(.88)
-}
-.header-mascot-img{
-  position:absolute;left:50%;top:50%;display:none;width:88px;height:76px;object-fit:contain;
-  object-position:center;transform:translate(-50%,-50%);mix-blend-mode:multiply;
-  filter:drop-shadow(0 7px 7px rgba(83,50,31,.10));animation:mascot-float 4.8s ease-in-out infinite;
-  transform-origin:50% 80%;user-select:none
-}
-.header-mascot[data-state="under"] .mascot-under,
-.header-mascot[data-state="near"] .mascot-near,
-.header-mascot[data-state="over"] .mascot-over{display:block}
-@keyframes mascot-float{0%,100%{transform:translate(-50%,-49%) rotate(-.25deg)}50%{transform:translate(-50%,-54%) rotate(.35deg)}}
 .tb-right{padding-left:0;border-left:0}
-@media(max-width:1250px){.overview-progress{order:4}.global-month-area{flex:1 1 auto}.overview-metrics{margin-left:auto}.header-mascot{width:76px;flex-basis:76px}.header-mascot-img{width:78px}}
-@media(max-width:900px){.top-bar{align-items:flex-start}.global-month-area{flex:1 1 100%}.global-month-nav{justify-content:center}.overview-metrics{margin-left:0}.header-mascot{display:none}.month-dropdown{left:50%;transform:translate(-50%,-5px) scale(.98);transform-origin:top center}.month-select-shell.open .month-dropdown{transform:translate(-50%,0) scale(1)}}
+@media(max-width:1250px){.overview-progress{order:4}.global-month-area{flex:1 1 auto}.overview-metrics{margin-left:auto}}
+@media(max-width:900px){.top-bar{align-items:flex-start}.global-month-area{flex:1 1 100%}.global-month-nav{justify-content:center}.overview-metrics{margin-left:0}.month-dropdown{left:50%;transform:translate(-50%,-5px) scale(.98);transform-origin:top center}.month-select-shell.open .month-dropdown{transform:translate(-50%,0) scale(1)}}
 @media(max-width:640px){
   .top-bar{padding:12px;gap:12px}.global-month-nav{gap:6px}.month-nav-btn{width:44px;height:44px;flex-basis:44px;border-radius:13px}
   .month-select-trigger{height:44px;min-width:0;width:min(196px,calc(100vw - 132px));padding-right:10px}.month-calendar{width:30px;height:30px;flex-basis:30px}
@@ -1173,7 +1155,7 @@ html{background:radial-gradient(circle at 78% -10%,rgba(52,120,246,.08),transpar
   .overview-metric{width:50%;min-width:0;padding:0 16px}.overview-metric:first-child{padding-left:0}.overview-metric:last-child{padding-right:0}
   .overview-progress{width:100%;flex-basis:100%}
 }
-@media(prefers-reduced-motion:reduce){.month-nav-btn,.month-select-trigger,.month-chevron,.month-dropdown{transition:none!important}.header-mascot-img{animation:none!important}}
+@media(prefers-reduced-motion:reduce){.month-nav-btn,.month-select-trigger,.month-chevron,.month-dropdown{transition:none!important}}
 </style>
 </head>
 <body>
@@ -1259,11 +1241,6 @@ html{background:radial-gradient(circle at 78% -10%,rgba(52,120,246,.08),transpar
     <div class="overview-progress">
       <div class="overview-progress-track"><div class="overview-progress-fill" id="overview-progress-fill"></div></div>
       <div class="overview-progress-meta"><span class="overview-used" id="overview-used">0% Used</span><span class="overview-budget-state" id="overview-budget-state"></span></div>
-    </div>
-    <div class="header-mascot" id="header-mascot" data-state="under" aria-hidden="true">
-      <img class="header-mascot-img mascot-under" src="wealth-mascot-under.png" alt="">
-      <img class="header-mascot-img mascot-near" src="wealth-mascot-near.png" alt="">
-      <img class="header-mascot-img mascot-over" src="wealth-mascot-over.png" alt="">
     </div>
     <div class="tb-right">
       <div class="tb-sync">
@@ -1919,15 +1896,12 @@ function renderGlobalHeader(){
   if(prev) prev.disabled=idx<=0;
   if(next) next.disabled=idx<0||idx>=months.length-1;
   var budget=cur?cleanNumber(getTT()):0,t=cur?calc(cur):null,spent=cleanNumber(t&&getKpiBudgetUsed(t)),pct=budget>0?Math.round((spent/budget)*100):0,remaining=budget-spent;
-  var budgetEl=R('overview-budget'),spentEl=R('overview-spent'),fill=R('overview-progress-fill'),usedEl=R('overview-used'),stateEl=R('overview-budget-state'),mascot=R('header-mascot');
+  var budgetEl=R('overview-budget'),spentEl=R('overview-spent'),fill=R('overview-progress-fill'),usedEl=R('overview-used'),stateEl=R('overview-budget-state');
   if(budgetEl) budgetEl.textContent=fmtF(budget);
   if(spentEl) spentEl.textContent=fmtF(spent);
   if(fill){ fill.style.width=Math.min(Math.max(pct,0),100)+'%'; fill.style.background=pct>100?'#E45454':(pct>=80?'#F28A35':'#0A8F61'); }
   if(usedEl){ usedEl.textContent=pct+'% Used'; usedEl.style.color=pct>100?'#E45454':(pct>=80?'#F28A35':'#0A8F61'); }
   if(stateEl) stateEl.textContent=remaining<0?'Over budget by '+fmtF(Math.abs(remaining)):fmtF(remaining)+' remaining';
-  if(mascot){
-    mascot.setAttribute('data-state',spent>budget&&budget>0?'over':(budget>0&&spent>=budget*.8?'near':'under'));
-  }
 }
 function selectDashboardMonth(key){ if(key&&ST[key]){ cur=key; renderAll(); } }
 function setMonthDropdownOpen(open){
