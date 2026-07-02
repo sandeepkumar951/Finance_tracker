@@ -1289,8 +1289,8 @@ html{background-color:#EEEBE5;background-image:linear-gradient(135deg,#EEEBE5 0%
 .dash-row1>.dash-card{margin-bottom:0;display:flex;flex-direction:column;border-radius:24px;background:#fff;border:1px solid rgba(59,31,14,.06);box-shadow:0 6px 24px rgba(59,31,14,.06)}
 .acct-card2{padding:16px 18px}
 .acct-card2 .dash-card-title,.budist-title{font-size:11px;font-weight:900;letter-spacing:.14em;color:var(--text3);text-transform:uppercase}
-.acct3-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px;flex:1;align-items:stretch}
-.acct3{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;gap:8px;cursor:pointer;border:1px solid rgba(59,31,14,.07);border-radius:16px;padding:14px;box-shadow:0 2px 10px rgba(59,31,14,.05);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+.acct3-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px;align-items:stretch}
+.acct3{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-start;gap:10px;cursor:pointer;border:1px solid rgba(59,31,14,.07);border-radius:16px;padding:14px;box-shadow:0 2px 10px rgba(59,31,14,.05);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
 .acct3:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(59,31,14,.14);border-color:color-mix(in srgb,var(--acc) 35%,transparent)}
 .acct3:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 .acct3.hsbc{--acc:#E24B4A;background:linear-gradient(160deg,#fff 52%,#FDEDEC)}
@@ -1320,12 +1320,12 @@ html{background-color:#EEEBE5;background-image:linear-gradient(135deg,#EEEBE5 0%
 .acct3-acct{display:flex;flex-direction:column;gap:3px;min-width:0}
 .acct3-acctlbl{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3)}
 .acct3-acctno{font-family:var(--mono);font-size:10px;font-weight:700;color:var(--text2);letter-spacing:.06em}
-.budist-card{padding:16px 18px;display:flex;flex-direction:column;gap:12px}
+.budist-card{padding:16px 18px;display:flex;flex-direction:column;gap:12px;height:100%}
 .budist-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .budist-month{border:1px solid rgba(59,31,14,.1);background:#FBF7F2;color:var(--text);font-family:var(--font);font-weight:700;font-size:12px;border-radius:10px;padding:6px 10px;cursor:pointer;max-width:150px}
-.budist-main{display:grid;grid-template-columns:200px minmax(0,1fr);gap:20px;align-items:center;flex:1}
+.budist-main{display:grid;grid-template-columns:210px minmax(0,1fr);gap:24px;align-items:center;flex:1;justify-content:center}
 .budist-donut-wrap{display:flex;align-items:center;justify-content:center}
-.budist-donut{width:100%;max-width:190px;aspect-ratio:1/1;position:relative;margin:0 auto;filter:drop-shadow(0 6px 14px rgba(59,31,14,.08))}
+.budist-donut{width:100%;max-width:200px;aspect-ratio:1/1;position:relative;margin:0 auto;filter:drop-shadow(0 6px 14px rgba(59,31,14,.08))}
 .budist-svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}
 .budist-donut-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;pointer-events:none}
 .budist-total{font-size:20px;font-weight:900;color:var(--text);letter-spacing:-.7px;line-height:1}
@@ -1510,6 +1510,47 @@ html{background-color:#EEEBE5;background-image:linear-gradient(135deg,#EEEBE5 0%
   .mbudget-card.mb2 .mb2-foot{flex-direction:column;align-items:flex-start;gap:10px}
 }
 /* ===== end mbudget v2 ===== */
+
+/* ===== Accounts card v2 - Premium Fintech 2026-07-02 ===== */
+.acct-card2{padding:18px 20px !important;background:#fff}
+.acct-card2 .dash-card-title{margin-bottom:14px !important;font-size:11px;letter-spacing:.14em}
+.acct-card2 .acct3-grid{gap:14px !important;margin-top:0 !important;align-items:stretch}
+
+.acct3{padding:16px 18px !important;border-radius:18px !important;gap:12px !important;justify-content:flex-start !important;background:#fff !important;border:1px solid rgba(59,31,14,.07) !important;box-shadow:0 2px 10px rgba(59,31,14,.05) !important;position:relative;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s cubic-bezier(.4,0,.2,1),box-shadow .2s cubic-bezier(.4,0,.2,1),border-color .2s cubic-bezier(.4,0,.2,1)}
+.acct3:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(59,31,14,.10) !important;border-color:color-mix(in srgb,var(--acc) 30%,transparent) !important}
+.acct3::before{content:'';position:absolute;right:-40px;top:-40px;width:140px;height:140px;border-radius:50%;background:var(--acc);opacity:.06;pointer-events:none;z-index:0}
+.acct3.hsbc{background:linear-gradient(160deg,#fff 60%,rgba(226,75,74,.06)) !important}
+.acct3.sbi{background:linear-gradient(160deg,#fff 60%,rgba(59,130,246,.06)) !important}
+.acct3.total{background:linear-gradient(160deg,#fff 60%,rgba(34,160,90,.06)) !important}
+
+.acct3-top{display:flex !important;flex-direction:column !important;align-items:stretch;justify-content:flex-start;gap:10px;margin:0;position:relative;z-index:1}
+.acct3-head{display:flex !important;align-items:center !important;gap:8px;flex:0 0 auto;min-width:0;justify-content:space-between !important}
+.acct3-ic{width:40px !important;height:40px !important;flex:0 0 40px !important;border-radius:12px !important;background:#fff !important;box-shadow:0 2px 8px rgba(59,31,14,.10),inset 0 0 0 1px rgba(59,31,14,.04) !important;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.acct3-logo{padding:6px !important;width:100%;height:100%;object-fit:contain}
+.acct3-id{min-width:0;flex:1 1 auto;display:flex;flex-direction:column;gap:2px}
+.acct3-name{font-size:15px !important;font-weight:800 !important;color:#222 !important;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:-.2px}
+.acct3-sub{font-size:10.5px !important;font-weight:600 !important;color:#7A7A7A !important;margin-top:0 !important;line-height:1.2}
+.acct3-status{display:inline-flex !important;align-items:center;gap:5px;flex:0 0 auto;font-size:10px !important;font-weight:800;letter-spacing:.02em;color:#15803D;background:rgba(34,160,90,.14);padding:4px 9px !important;border-radius:999px;white-space:nowrap;align-self:flex-start;position:relative;z-index:1}
+.acct3-status-dot{width:6px !important;height:6px !important;background:#22A05A;border-radius:50%;box-shadow:0 0 0 3px rgba(34,160,90,.20)}
+
+.acct3-mid{display:flex !important;flex-direction:column !important;gap:4px !important;margin:0;position:relative;z-index:1}
+.acct3-val{font-size:26px !important;font-weight:900 !important;color:#111 !important;letter-spacing:-.8px !important;line-height:1;font-family:var(--font);font-variant-numeric:tabular-nums lining-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.acct3-val.red{color:#E24B4A !important}
+.acct3-change{display:inline-flex;align-items:baseline;gap:4px;font-size:12px !important;font-weight:800;line-height:1.2}
+.acct3-change.up{color:#15803D}
+.acct3-change.down{color:#E24B4A}
+.acct3-change-lbl{font-size:10px !important;font-weight:600 !important;color:#7A7A7A !important}
+.acct3-arrow{font-size:11px}
+
+.acct3-foot{display:flex !important;align-items:center !important;justify-content:space-between !important;gap:10px;margin-top:4px !important;padding-top:10px;border-top:1px solid rgba(59,31,14,.06);position:relative;z-index:1}
+.acct3-acct{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1 1 auto;overflow:visible}
+.acct3-acctlbl{font-size:9px !important;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#9A9A9A !important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.acct3-acctno{font-family:var(--mono);font-size:11px !important;font-weight:700;color:#444 !important;letter-spacing:.04em;white-space:nowrap;overflow:hidden}
+.acct3-spark-wrap{flex:0 1 64px !important;width:64px !important;min-width:0;height:26px !important;position:relative;opacity:.9}
+.acct3-spark-wrap .scard-spark{position:absolute !important;inset:0 !important;width:100% !important;height:100% !important;opacity:1}
+.acct3-spark-wrap .scard-spark .line{stroke-width:2 !important}
+.acct3-spark-wrap .scard-spark .area{opacity:.35}
+/* ===== end accounts v2 ===== */
 
 /* ===== KPI Cards v3 - Premium Fintech Redesign 2026-07-02 ===== */
 .scards{gap:24px !important}
