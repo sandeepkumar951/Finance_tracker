@@ -1509,6 +1509,98 @@ html{background-color:#EEEBE5;background-image:linear-gradient(135deg,#EEEBE5 0%
   .mbudget-card.mb2 .mb2-title{font-size:22px}
   .mbudget-card.mb2 .mb2-foot{flex-direction:column;align-items:flex-start;gap:10px}
 }
+/* ===== Monthly Budget: stats row + emotion status strip (2026-07-07) ===== */
+.mbudget-card.mb2 .mb2-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;align-items:end}
+.mbudget-card.mb2 .mb2-stat{min-width:0}
+.mbudget-card.mb2 .mb2-stat:nth-child(2){text-align:center}
+.mbudget-card.mb2 .mb2-stat:nth-child(3){text-align:right}
+.mbudget-card.mb2 .mb2-stat-lbl{font-size:8.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:#9A9A9A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mbudget-card.mb2 .mb2-stat-val{font-size:14px;font-weight:800;color:#222;letter-spacing:-.3px;margin-top:2px;font-variant-numeric:tabular-nums lining-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mbudget-card.mb2 .mb2-stat.spent .mb2-stat-val{color:#222}
+.mbudget-card.mb2 .mb2-stat.rem .mb2-stat-val{color:#18A96E}
+.mbudget-card.mb2 .mb2-stat.rem.bad .mb2-stat-val{color:#E24B4A}
+
+.mbudget-card.mb2 .mb2-status{display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:15px;position:relative;overflow:hidden;transition:background-color .5s ease;animation:mbStatIn .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes mbStatIn{0%{transform:scale(.95);opacity:0}55%{transform:scale(1.02)}100%{transform:scale(1);opacity:1}}
+.mbudget-card.mb2 .mb2-status-pig{width:66px;height:66px;flex:0 0 66px;position:relative}
+.mbudget-card.mb2 .mb2-status-pig svg{width:100%;height:100%;display:block;overflow:visible;animation:mbPigBob 3.2s ease-in-out infinite}
+@keyframes mbPigBob{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-2.5px) rotate(1deg)}}
+.mbudget-card.mb2 .mb2-status-txt{flex:1 1 auto;min-width:0}
+.mbudget-card.mb2 .mb2-status-title{font-size:13.5px;font-weight:850;letter-spacing:-.2px;line-height:1.15}
+.mbudget-card.mb2 .mb2-status-msg{font-size:10.5px;font-weight:500;line-height:1.3;margin-top:2px;color:#6E6E6E;overflow:hidden;text-overflow:ellipsis}
+.mbudget-card.mb2 .mb2-status-ic{flex:0 0 22px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,255,255,.6)}
+.mbudget-card.mb2 .mb2-status-ic svg{width:13px;height:13px;stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round;display:block}
+
+/* per-state background tints + accents */
+.mbudget-card.mb2 .mb2-status.st-excellent{background:rgba(24,169,110,.10)}
+.mbudget-card.mb2 .mb2-status.st-ontrack{background:rgba(33,179,107,.10)}
+.mbudget-card.mb2 .mb2-status.st-careful{background:rgba(240,180,20,.15)}
+.mbudget-card.mb2 .mb2-status.st-almost{background:rgba(238,138,46,.15)}
+.mbudget-card.mb2 .mb2-status.st-limit{background:rgba(226,75,74,.13)}
+.mbudget-card.mb2 .mb2-status.st-over{background:rgba(226,75,74,.18)}
+.mbudget-card.mb2 .mb2-status.st-excellent .mb2-status-title,.mbudget-card.mb2 .mb2-status.st-ontrack .mb2-status-title{color:#178C5C}
+.mbudget-card.mb2 .mb2-status.st-careful .mb2-status-title{color:#B58600}
+.mbudget-card.mb2 .mb2-status.st-almost .mb2-status-title{color:#D97417}
+.mbudget-card.mb2 .mb2-status.st-limit .mb2-status-title,.mbudget-card.mb2 .mb2-status.st-over .mb2-status-title{color:#D63B3A}
+.mbudget-card.mb2 .mb2-status.st-excellent .mb2-status-ic,.mbudget-card.mb2 .mb2-status.st-ontrack .mb2-status-ic{color:#178C5C}
+.mbudget-card.mb2 .mb2-status.st-careful .mb2-status-ic{color:#B58600}
+.mbudget-card.mb2 .mb2-status.st-almost .mb2-status-ic{color:#D97417}
+.mbudget-card.mb2 .mb2-status.st-limit .mb2-status-ic,.mbudget-card.mb2 .mb2-status.st-over .mb2-status-ic{color:#D63B3A}
+
+/* floating coins for positive states */
+.mbudget-card.mb2 .mb2-coin{position:absolute;width:11px;height:11px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFE39A,#F2B824 70%);box-shadow:0 0 0 1.5px #E0A21A inset;opacity:0;pointer-events:none}
+.mbudget-card.mb2 .mb2-coin::after{content:"$";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:7px;font-weight:900;color:#B57F10}
+.mbudget-card.mb2 .mb2-coin.c1{left:2px;top:8px;animation:mbCoin 3.4s ease-in-out infinite}
+.mbudget-card.mb2 .mb2-coin.c2{left:48px;top:2px;width:9px;height:9px;animation:mbCoin 3.4s ease-in-out .9s infinite}
+.mbudget-card.mb2 .mb2-coin.c3{left:26px;top:46px;width:8px;height:8px;animation:mbCoin 3.4s ease-in-out 1.8s infinite}
+@keyframes mbCoin{0%{opacity:0;transform:translateY(6px) scale(.7)}25%{opacity:.95}55%{opacity:.9;transform:translateY(-8px) scale(1)}100%{opacity:0;transform:translateY(-16px) scale(.85)}}
+
+/* warning pulse for 91%+ */
+.mbudget-card.mb2 .mb2-status.pulse::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;animation:mbPulse 1.9s ease-out infinite}
+@keyframes mbPulse{0%{box-shadow:0 0 0 0 rgba(226,75,74,.30)}70%{box-shadow:0 0 0 10px rgba(226,75,74,0)}100%{box-shadow:0 0 0 0 rgba(226,75,74,0)}}
+@media(prefers-reduced-motion:reduce){.mbudget-card.mb2 .mb2-status,.mbudget-card.mb2 .mb2-status-pig svg,.mbudget-card.mb2 .mb2-coin,.mbudget-card.mb2 .mb2-status.pulse::after{animation:none}}
+@media(max-width:700px){
+  .mbudget-card.mb2 .mb2-stat-val{font-size:16px}
+  .mbudget-card.mb2 .mb2-status-title{font-size:15px}
+  .mbudget-card.mb2 .mb2-status-msg{font-size:12px}
+  .mbudget-card.mb2 .mb2-status-pig{width:74px;height:74px;flex:0 0 74px}
+}
+/* ===== end monthly budget status strip ===== */
+
+/* ===== Top Categories by Spend (2026-07-07) ===== */
+.tcat-card{background:#FBF6EE;border:1px solid rgba(59,31,14,.08);border-radius:22px;box-shadow:0 3px 14px rgba(59,31,14,.06);padding:20px 22px}
+.tcat-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}
+.tcat-title{font-size:16px;font-weight:800;color:#2B2620;letter-spacing:-.3px}
+.tcat-sub{font-size:11.5px;font-weight:500;color:#9A9086;margin-top:3px}
+.tcat-total{background:rgba(124,111,224,.12);color:#6A5ED0;font-size:11px;font-weight:800;padding:5px 11px;border-radius:10px;white-space:nowrap;font-variant-numeric:tabular-nums lining-nums}
+.tcat-row{display:grid;grid-template-columns:150px 1fr 74px;align-items:center;gap:12px;margin-bottom:11px}
+.tcat-row:last-child{margin-bottom:0}
+.tcat-name{font-size:12.5px;font-weight:700;color:#3A342E;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tcat-track{position:relative;height:24px;background:rgba(237,228,216,.55);border-radius:8px;overflow:hidden}
+.tcat-fill{height:100%;border-radius:8px;width:0;animation:tcatGrow .95s cubic-bezier(.4,0,.2,1) forwards}
+@keyframes tcatGrow{from{width:0}to{width:var(--w)}}
+.tcat-amt{font-size:12.5px;font-weight:800;text-align:left;font-variant-numeric:tabular-nums lining-nums}
+.tcat-legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:16px;padding-top:14px;border-top:1px solid #E7DED2}
+.tcat-lg{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:#6A6258}
+.tcat-lg-dot{width:10px;height:10px;border-radius:3px;flex:0 0 10px}
+.tcat-empty{font-size:12.5px;font-weight:600;color:#9A9086;padding:8px 0}
+@media(prefers-reduced-motion:reduce){.tcat-fill{animation:none;width:var(--w)}}
+@media(max-width:640px){.tcat-row{grid-template-columns:96px 1fr 62px;gap:8px}.tcat-name{font-size:11px}.tcat-amt{font-size:11px}}
+.trend-panel.tcat-panel{display:flex;flex-direction:column}
+.tcat-panel .tcat-panel-body{margin-top:2px}
+.tcat-panel .tcat-row{grid-template-columns:112px 1fr 60px;gap:10px;margin-bottom:6px}
+.tcat-panel .tcat-name{font-size:11px;font-weight:700}
+.tcat-panel .tcat-track{height:18px;border-radius:6px}
+.tcat-panel .tcat-fill{border-radius:6px}
+.tcat-panel .tcat-amt{font-size:11px}
+.tcat-panel .tcat-legend{margin-top:10px;padding-top:10px;gap:8px 12px}
+.tcat-panel .tcat-lg{font-size:10px}
+.tcat-panel .tcat-empty{padding:56px 0;text-align:center}
+@media(max-width:640px){.tcat-panel .tcat-row{grid-template-columns:92px 1fr 56px;gap:8px}}
+.trend-peak.neg{color:#E24B4A;background:rgba(226,75,74,.12)}
+/* ===== end top categories ===== */
+
+
 /* ===== end mbudget v2 ===== */
 
 /* ===== Accounts card v2 - Premium Fintech 2026-07-02 ===== */
@@ -2869,20 +2961,60 @@ function dashDaysLeft(){
   if(now.getFullYear()===yr&&now.getMonth()===mi) return Math.max(0,dim-now.getDate());
   return dim;
 }
+function mbStatusData(pct){
+  var ear='<path d="M23 22 Q17 8 31 18 Z" fill="#EE9FB0"/><path d="M57 22 Q63 8 49 18 Z" fill="#EE9FB0"/>';
+  var face='<ellipse cx="40" cy="42" rx="27" ry="24" fill="#F8BCCB"/>';
+  var chk='<circle cx="19" cy="48" r="4.5" fill="#F58AA0" opacity=".55"/><circle cx="61" cy="48" r="4.5" fill="#F58AA0" opacity=".55"/>';
+  var snout='<ellipse cx="40" cy="49" rx="12" ry="8.5" fill="#EFA6B8"/><ellipse cx="35.5" cy="49" rx="1.9" ry="3" fill="#C97D90"/><ellipse cx="44.5" cy="49" rx="1.9" ry="3" fill="#C97D90"/>';
+  function drop(x,y,sz){return '<path d="M'+x+' '+y+' L'+(x-sz*0.7)+' '+(y+sz*1.4)+' A'+(sz*0.95)+' '+(sz*0.95)+' 0 1 0 '+(x+sz*0.7)+' '+(y+sz*1.4)+' Z" fill="#8AD6F5"/>';}
+  function pig(inner){return '<svg viewBox="0 0 80 80" aria-hidden="true">'+ear+face+chk+inner.eyes+snout+inner.mouth+(inner.extra||'')+'</svg>';}
+  var icCheck='<svg viewBox="0 0 24 24" stroke="currentColor"><polyline points="20 6 9 17 4 12"/></svg>';
+  var icWarn='<svg viewBox="0 0 24 24" stroke="currentColor"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
+
+  if(pct<=30){
+    return {key:'excellent',title:'Excellent!',msg:"You're saving more than you're spending.",fill:'#18A96E',coins:true,pulse:false,ic:icCheck,
+      pig:pig({eyes:'<path d="M25 37 Q30 32 35 37" stroke="#4A3540" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M45 37 Q50 32 55 37" stroke="#4A3540" stroke-width="2.6" fill="none" stroke-linecap="round"/>',mouth:'<path d="M31 58 Q40 68 49 58" stroke="#C97D90" stroke-width="2.8" fill="none" stroke-linecap="round"/>',extra:'<g fill="#FFD54A"><path d="M64 28 l1.4 3.2 3.2 1.4 -3.2 1.4 -1.4 3.2 -1.4-3.2 -3.2-1.4 3.2-1.4 z"/><path d="M15 30 l1 2.3 2.3 1 -2.3 1 -1 2.3 -1-2.3 -2.3-1 2.3-1 z"/></g>'})};
+  }
+  if(pct<=60){
+    return {key:'ontrack',title:'On Track',msg:"You're managing your budget well.",fill:'#21B36B',coins:true,pulse:false,ic:icCheck,
+      pig:pig({eyes:'<circle cx="30" cy="37" r="3.3" fill="#4A3540"/><circle cx="50" cy="37" r="3.3" fill="#4A3540"/><circle cx="31.2" cy="35.8" r="1.1" fill="#fff"/><circle cx="51.2" cy="35.8" r="1.1" fill="#fff"/>',mouth:'<path d="M34 57 Q40 63 46 57" stroke="#C97D90" stroke-width="2.6" fill="none" stroke-linecap="round"/>'})};
+  }
+  if(pct<=75){
+    return {key:'careful',title:'Careful',msg:'Your spending is increasing.',fill:'#E0A400',coins:false,pulse:false,ic:icWarn,
+      pig:pig({eyes:'<circle cx="30" cy="38" r="3" fill="#4A3540"/><circle cx="50" cy="38" r="3" fill="#4A3540"/><path d="M26 31 L35 33.5" stroke="#4A3540" stroke-width="2" stroke-linecap="round"/><path d="M54 31 L45 33.5" stroke="#4A3540" stroke-width="2" stroke-linecap="round"/>',mouth:'<path d="M35 60 Q40 57.5 45 60" stroke="#C97D90" stroke-width="2.4" fill="none" stroke-linecap="round"/>',extra:drop(61,21,3)})};
+  }
+  if(pct<=90){
+    return {key:'almost',title:'Almost at Limit',msg:'Slow down to stay within budget.',fill:'#EE8A2E',coins:false,pulse:false,ic:icWarn,
+      pig:pig({eyes:'<circle cx="30" cy="38" r="3.4" fill="#4A3540"/><circle cx="50" cy="38" r="3.4" fill="#4A3540"/><path d="M25 32 L34 34.5" stroke="#4A3540" stroke-width="2" stroke-linecap="round"/><path d="M55 32 L46 34.5" stroke="#4A3540" stroke-width="2" stroke-linecap="round"/>',mouth:'<ellipse cx="40" cy="60" rx="3.6" ry="2.9" fill="#B96B7E"/>',extra:drop(61,20,3)+drop(19,24,2.4)+drop(64,33,2.1)})};
+  }
+  if(pct<=100){
+    return {key:'limit',title:'Budget Limit Reached',msg:"You've used nearly all your budget.",fill:'#E24B4A',coins:false,pulse:true,ic:icWarn,
+      pig:pig({eyes:'<circle cx="30" cy="37" r="4.6" fill="#fff" stroke="#4A3540" stroke-width="1.5"/><circle cx="30" cy="37.6" r="2.2" fill="#4A3540"/><circle cx="50" cy="37" r="4.6" fill="#fff" stroke="#4A3540" stroke-width="1.5"/><circle cx="50" cy="37.6" r="2.2" fill="#4A3540"/>',mouth:'<ellipse cx="40" cy="60" rx="4.8" ry="5.4" fill="#B96B7E"/><ellipse cx="40" cy="61.5" rx="2.5" ry="2.3" fill="#8E4E60"/>',extra:'<g><path d="M62 14 l7.5 12.5 h-15 z" fill="#F2C94C" stroke="#D9A400" stroke-width="1"/><rect x="61.2" y="18.5" width="1.7" height="4.6" rx=".8" fill="#7A5B00"/><circle cx="62" cy="25" r="1" fill="#7A5B00"/></g>'})};
+  }
+  return {key:'over',title:'Overspent',msg:"You've exceeded your monthly budget.",fill:'#E24B4A',coins:false,pulse:true,ic:icWarn,
+    pig:pig({eyes:'<path d="M25 35 Q30 40 35 35" stroke="#4A3540" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M45 35 Q50 40 55 35" stroke="#4A3540" stroke-width="2.4" fill="none" stroke-linecap="round"/>',mouth:'<path d="M33 63 Q40 56 47 63" stroke="#B96B7E" stroke-width="2.6" fill="none" stroke-linecap="round"/>',extra:'<path d="M29 40 q-2.2 6 0 11 q2.2 -5 0 -11 z" fill="#8AD6F5"/><path d="M51 40 q-2.2 6 0 11 q2.2 -5 0 -11 z" fill="#8AD6F5"/><path d="M31 19 l4 5 -4 4 3.5 5" stroke="#C98598" stroke-width="1.7" fill="none" stroke-linejoin="round" stroke-linecap="round"/>'})};
+}
 function dashMonthlyBudgetCard(t,TT){
-  var used=getKpiBudgetUsed(t),pct=TT>0?Math.round((used/TT)*100):0,rem=TT-used,dleft=dashDaysLeft();
-  var tone=pct>100?'over':(pct>=80?'warn':'ok'),remBad=rem<0;
+  var used=getKpiBudgetUsed(t),pct=TT>0?Math.round((used/TT)*100):0,rem=TT-used;
+  var tone=pct>100?'over':(pct>=80?'warn':'ok'),remBad=rem<0,w=Math.min(Math.max(pct,0),100);
+  var st=mbStatusData(pct);
   var pieSvg='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>';
-  var calSvg='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>';
+  var coinsHtml=st.coins?'<span class="mb2-coin c1"></span><span class="mb2-coin c2"></span><span class="mb2-coin c3"></span>':'';
   return '<section class="mbudget-card mb2 tone-'+tone+'">'
     +'<div class="mb2-hd">'
       +'<div class="mb2-hd-left"><div class="mb2-icon">'+pieSvg+'</div><div class="mb2-hd-text"><div class="mb2-title">Monthly Budget</div><div class="mb2-alloc"><b>'+fmtF(TT)+'</b> Allocated</div></div></div>'
       +'<div class="mb2-badge"><div class="mb2-badge-pct">'+pct+'%</div><div class="mb2-badge-lbl">Used</div></div>'
     +'</div>'
-    +'<div class="mb2-track"><div class="mb2-fill" style="width:'+Math.min(Math.max(pct,0),100)+'%"></div></div>'
-    +'<div class="mb2-foot">'
-      +'<div class="mb2-foot-item mb2-rem '+(remBad?'bad':'')+'"><span class="mb2-dot"></span><span class="mb2-rem-val">'+(rem>=0?fmtF(rem):'-'+fmtF(Math.abs(rem)))+'</span><span class="mb2-foot-lbl">'+(rem>=0?'Remaining':'Over budget')+'</span></div>'
-      +'<div class="mb2-foot-item mb2-days">'+calSvg+'<span>Ends in '+dleft+' day'+(dleft===1?'':'s')+'</span></div>'
+    +'<div class="mb2-track"><div class="mb2-fill" style="width:'+w+'%;background:'+st.fill+'"></div></div>'
+    +'<div class="mb2-stats">'
+      +'<div class="mb2-stat spent"><div class="mb2-stat-lbl">Spent So Far</div><div class="mb2-stat-val">'+fmtF(used)+'</div></div>'
+      +'<div class="mb2-stat rem'+(remBad?' bad':'')+'"><div class="mb2-stat-lbl">Remaining</div><div class="mb2-stat-val">'+(rem>=0?fmtF(rem):'-'+fmtF(Math.abs(rem)))+'</div></div>'
+      +'<div class="mb2-stat"><div class="mb2-stat-lbl">Monthly Budget</div><div class="mb2-stat-val">'+fmtF(TT)+'</div></div>'
+    +'</div>'
+    +'<div class="mb2-status st-'+st.key+(st.pulse?' pulse':'')+'">'
+      +'<div class="mb2-status-pig">'+st.pig+coinsHtml+'</div>'
+      +'<div class="mb2-status-txt"><div class="mb2-status-title">'+st.title+'</div><div class="mb2-status-msg">'+st.msg+'</div></div>'
+      +'<div class="mb2-status-ic">'+st.ic+'</div>'
     +'</div>'
     +'</section>';
 }
@@ -2943,13 +3075,47 @@ function dashBudgetVsActual(secs){
   }).join('');
   return '<section class="dash-section"><div class="dash-section-head"><div class="dash-section-title">Budget vs Actual</div><div class="dash-section-sub">Spending against target per category</div></div><div class="bva-grid">'+cards+'</div></section>';
 }
-function dashTrends(months){
-  var tm=months.slice(-6),savings=tm.map(function(k){ return cleanNumber(getMonthProfitLoss(k)); });
-  var peak=savings.length?Math.max.apply(null,savings):0;
-  return '<section class="dash-section trends-section"><div class="dash-section-head"><div class="dash-section-title">Trends</div><div class="dash-section-sub">Last '+tm.length+' months</div></div>'
-    +'<div class="trends-grid"><div class="trend-panel"><div class="trend-panel-head"><span class="trend-panel-title">Income vs Expense</span></div><div class="trend-canvas-wrap"><canvas id="dash-ie-chart"></canvas></div></div>'
-    +'<div class="trend-panel"><div class="trend-panel-head"><span class="trend-panel-title">Cash Flow Trend</span><span class="trend-peak">Peak '+fmtF(peak)+'</span></div><div class="trend-canvas-wrap"><canvas id="dash-cf-chart"></canvas></div></div></div></section>';
+function dashTopCategories(secs){
+  var items=[];
+  secs.forEach(function(sec){
+    var col=safeColor(sec.color);
+    sec.rows.forEach(function(r){
+      var isFund=isFundTransferRow(r.id);
+      var rs=isFund?(getMonthTransfers(cur,FUND_ROWS[r.id],'hsbc')+getMonthTransfers(cur,FUND_ROWS[r.id],'sbi')):(getX(cur,r.id,'hsbc')+getX(cur,r.id,'sbi'));
+      if(rs>0) items.push({name:r.name,val:rs,col:col,grp:sec.title});
+    });
+  });
+  items.sort(function(a,b){ return b.val-a.val; });
+  var top=items.slice(0,10),body,pill='';
+  if(!top.length){
+    body='<div class="tcat-empty">No spending logged for this month yet.</div>';
+  } else {
+    var max=top[0].val||1,total=top.reduce(function(a,x){ return a+x.val; },0);
+    var rows=top.map(function(x){
+      var w=Math.max(4,Math.round(x.val/max*100));
+      return '<div class="tcat-row"><div class="tcat-name" title="'+escAttr(x.name)+'">'+escHtml(x.name)+'</div>'
+        +'<div class="tcat-track"><div class="tcat-fill" style="--w:'+w+'%;background:'+escAttr(x.col)+'"></div></div>'
+        +'<div class="tcat-amt" style="color:'+escAttr(x.col)+'">'+fmtF(x.val)+'</div></div>';
+    }).join('');
+    var seen={},legend='';
+    secs.forEach(function(sec){
+      if(seen[sec.title]) return; seen[sec.title]=1;
+      legend+='<div class="tcat-lg"><span class="tcat-lg-dot" style="background:'+escAttr(safeColor(sec.color))+'"></span>'+escHtml(sec.title)+'</div>';
+    });
+    body=rows+'<div class="tcat-legend">'+legend+'</div>';
+    pill='<span class="trend-peak">Top 10 \u00b7 '+fmtF(total)+'</span>';
+  }
+  return '<div class="trend-panel tcat-panel"><div class="trend-panel-head"><span class="trend-panel-title">Top Categories by Spend</span>'+pill+'</div><div class="tcat-panel-body">'+body+'</div></div>';
 }
+function dashTrends(months,secs){
+  var tm=months.slice(-6);
+  var inc=cleanNumber(getMonthIncome(cur)),exp=cleanNumber((calc(cur)||{}).totSp),saved=inc-exp,rate=inc>0?Math.round(saved/inc*100):0;
+  var iePill='<span class="trend-peak'+(saved<0?' neg':'')+'">'+(saved>=0?'Saved ':'Over ')+fmtF(Math.abs(saved))+(inc>0?' \u00b7 '+Math.abs(rate)+'%':'')+'</span>';
+  return '<section class="dash-section trends-section"><div class="dash-section-head"><div class="dash-section-title">Trends</div><div class="dash-section-sub">Last '+tm.length+' months \u00b7 top spend this month</div></div>'
+    +'<div class="trends-grid"><div class="trend-panel"><div class="trend-panel-head"><span class="trend-panel-title">Income vs Expense</span>'+iePill+'</div><div class="trend-canvas-wrap"><canvas id="dash-ie-chart"></canvas></div></div>'
+    +dashTopCategories(secs)+'</div></section>';
+}
+
 function initDashCharts(months){
   if(dashTab==='entry'||typeof Chart==='undefined') return;
   var tm=months.slice(-6);
@@ -2961,8 +3127,10 @@ function initDashCharts(months){
   function shortF(v){ var n=Math.abs(v); if(n>=1000){ return (v<0?'-':'')+'\u20B9'+(n/1000).toFixed(n>=100000?0:1).replace(/\.0$/,'')+'K'; } return '\u20B9'+Math.round(v); }
   var ieCanvas=R('dash-ie-chart');
   if(ieCanvas){
-    var barLabels={id:'ieLabels',afterDatasetsDraw:function(c){ var ctx=c.ctx; ctx.save(); ctx.font="700 10px Montserrat,sans-serif"; ctx.textAlign="center"; c.data.datasets.forEach(function(ds,di){ var meta=c.getDatasetMeta(di); meta.data.forEach(function(bar,i){ var val=ds.data[i]; if(!val) return; ctx.fillStyle=ds.borderColor; ctx.fillText(shortF(val),bar.x,bar.y-4); }); }); ctx.restore(); }};
-    aCharts.push(new Chart(ieCanvas,{type:'bar',data:{labels:labels,datasets:[{label:'Income',data:income,backgroundColor:'#2D9B5A',borderColor:'#2D9B5A',borderRadius:6,maxBarThickness:24},{label:'Expense',data:expense,backgroundColor:'#E24B4A',borderColor:'#E24B4A',borderRadius:6,maxBarThickness:24}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:18}},plugins:{legend:{display:true,position:'top',align:'end',labels:{usePointStyle:true,boxWidth:8,font:{family:'Montserrat,sans-serif',size:11,weight:'700'},color:'#6B5C4E'}},tooltip:{callbacks:{label:function(c){return c.dataset.label+': '+fmtF(cleanNumber(c.raw));}}}},scales:{x:{grid:{display:false},ticks:{color:'#8A7A6A',font:{family:'Montserrat,sans-serif',size:10,weight:'600'}}},y:{beginAtZero:true,grid:{color:'rgba(59,31,14,.06)'},ticks:{color:'#A89888',font:{size:10},callback:function(v){return shortF(v);}}}}},plugins:[barLabels]}));
+    function mkGrad(top,bot){ return function(cx){ var ch=cx.chart,a=ch.chartArea; if(!a) return bot; var g=ch.ctx.createLinearGradient(0,a.bottom,0,a.top); g.addColorStop(0,bot); g.addColorStop(1,top); return g; }; }
+    var barLabels={id:'ieLabels',afterDatasetsDraw:function(c){ var ctx=c.ctx; ctx.save(); ctx.font="800 11px Montserrat,sans-serif"; ctx.textAlign="center"; c.data.datasets.forEach(function(ds,di){ var meta=c.getDatasetMeta(di); meta.data.forEach(function(bar,i){ var val=ds.data[i]; if(!val) return; ctx.fillStyle=di===0?'#1F8149':'#C43734'; ctx.fillText(shortF(val),bar.x,bar.y-7); }); }); ctx.restore(); }};
+    var rr={topLeft:9,topRight:9,bottomLeft:0,bottomRight:0};
+    aCharts.push(new Chart(ieCanvas,{type:'bar',data:{labels:labels,datasets:[{label:'Income',data:income,backgroundColor:mkGrad('#41C079','#1C7A44'),borderColor:'transparent',borderRadius:rr,borderSkipped:false,maxBarThickness:46,categoryPercentage:0.62,barPercentage:0.9},{label:'Expense',data:expense,backgroundColor:mkGrad('#F0716D','#C0332F'),borderColor:'transparent',borderRadius:rr,borderSkipped:false,maxBarThickness:46,categoryPercentage:0.62,barPercentage:0.9}]},options:{responsive:true,maintainAspectRatio:false,layout:{padding:{top:24}},plugins:{legend:{display:true,position:'top',align:'end',labels:{usePointStyle:true,pointStyle:'circle',boxWidth:8,padding:14,font:{family:'Montserrat,sans-serif',size:11,weight:'700'},color:'#6B5C4E'}},tooltip:{backgroundColor:'#2B2620',padding:10,cornerRadius:10,titleFont:{family:'Montserrat,sans-serif',size:11,weight:'700'},bodyFont:{family:'Montserrat,sans-serif',size:11},displayColors:true,usePointStyle:true,callbacks:{label:function(c){return '  '+c.dataset.label+': '+fmtF(cleanNumber(c.raw));}}}},scales:{x:{grid:{display:false},border:{display:false},ticks:{color:'#8A7A6A',font:{family:'Montserrat,sans-serif',size:11,weight:'700'},padding:6}},y:{beginAtZero:true,grid:{color:'rgba(59,31,14,.045)',drawTicks:false},border:{display:false},ticks:{color:'#B3A595',font:{size:10},padding:8,maxTicksLimit:6,callback:function(v){return shortF(v);}}}}},plugins:[barLabels]}));
   }
   var cfCanvas=R('dash-cf-chart');
   if(cfCanvas){
@@ -2986,7 +3154,7 @@ function renderTracker(app){
       +'<div class="dash-row1">'+dashAccountsCard(t)+dashBudgetDistribution(secs,t,TT)+'</div>'
       +renderAccountCards()
       +dashBudgetVsActual(secs)
-      +dashTrends(months)
+      +dashTrends(months,secs)
     +'</div>'
     +'<div class="dash-view dash-view-entry"'+(ovActive?' hidden':'')+'>'
       +'<div class="entry-main">'
