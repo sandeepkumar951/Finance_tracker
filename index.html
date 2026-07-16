@@ -1829,10 +1829,12 @@ var DEF_SECS = [
   {id:'essentials',title:'Essential living',icon:'🛒',note:'Stay within target',color:'#EF9F27',
    rows:[{id:'food',name:'Food',emoji:'🍔',target:4000},{id:'transport',name:'Transportation',emoji:'🚌',target:1000},{id:'car',name:'Car',emoji:'🚗',target:200},{id:'health',name:'Health',emoji:'💊',target:500}]},
   {id:'lifestyle',title:'Personal & lifestyle',icon:'🎯',note:'Control zone',color:'#D4537E',
-   rows:[{id:'personal',name:'Personal',emoji:'👕',target:2000},{id:'haircut',name:'Hair cut',emoji:'💈',target:300},{id:'skincare',name:'Skin care',emoji:'🧴',target:300},{id:'spotify',name:'Spotify',emoji:'🎵',target:150},{id:'tickets',name:'Tickets',emoji:'🎟️',target:1000},{id:'dumbtax',name:'Dumb tax',emoji:'🤦',target:550}]}
+   rows:[{id:'personal',name:'Personal',emoji:'👕',target:2000},{id:'haircut',name:'Hair cut',emoji:'💈',target:300},{id:'skincare',name:'Skin care',emoji:'🧴',target:300},{id:'spotify',name:'Spotify',emoji:'🎵',target:150},{id:'tickets',name:'Tickets',emoji:'🎟️',target:1000},{id:'dumbtax',name:'Dumb tax',emoji:'🤦',target:550}]},
+  {id:'healthy_food',title:'Healthy Food',icon:'🥗',note:'Nutrition budget — monthly',color:'#22C55E',
+   rows:[{id:'hf_eggs',name:'Eggs',emoji:'🥚',target:590},{id:'hf_chicken',name:'Chicken',emoji:'🍗',target:815},{id:'hf_fish',name:'Fish (Rohu/Pomfret)',emoji:'🐟',target:610},{id:'hf_milk',name:'Milk',emoji:'🥛',target:815},{id:'hf_curd',name:'Greek Yogurt / Curd',emoji:'🫙',target:1460},{id:'hf_chana',name:'Roasted Chana',emoji:'🫘',target:285},{id:'hf_veg',name:'Vegetables',emoji:'🥬',target:815},{id:'hf_fruits',name:'Fruits',emoji:'🍎',target:815},{id:'hf_dal',name:'Dal (moong/toor/masoor)',emoji:'🍲',target:245},{id:'hf_atta',name:'Whole Wheat Atta',emoji:'🌾',target:400},{id:'hf_isabgol',name:'Isabgol',emoji:'🌿',target:150}]}
 ];
 var ROW_C = ['#7F77DD','#6366F1','#378ADD','#1D9E75','#06B6D4','#0EA5E9','#EF9F27','#E8593C','#F97316','#84CC16','#D4537E','#14B8A6','#F43F5E','#A855F7','#22C55E','#EAB308','#64748B','#0F766E','#B45309','#7C3AED','#BE185D','#1D4ED8','#065F46','#92400E','#5B21B6','#0369A1','#166534','#9F1239','#1E3A5F','#78350F'];
-var SEC_COLORS = {savings:'#7F77DD',fixed:'#1D9E75',essentials:'#EF9F27',lifestyle:'#D4537E'};
+var SEC_COLORS = {savings:'#7F77DD',fixed:'#1D9E75',essentials:'#EF9F27',lifestyle:'#D4537E',healthy_food:'#22C55E'};
 var ST = {};
 var archivedMonths = {};
 var FUND_DEFS = {travel:{label:'Travel Fund',emoji:'✈️',color:'#378ADD',transferRow:'travel_fund',transferName:'Transfer To Travel Fund',redeemName:'Travel Fund Redemption'},emergency:{label:'Emergency Fund',emoji:'🚨',color:'#E24B4A',transferRow:'emergency_fund',transferName:'Transfer To Emergency Fund',redeemName:'Emergency Fund Redemption'}};
