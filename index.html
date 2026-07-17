@@ -1628,6 +1628,12 @@ html{background-color:#EEEBE5;background-image:linear-gradient(135deg,#EEEBE5 0%
 .acct3-mid{display:flex !important;flex-direction:column !important;gap:4px !important;margin:0;position:relative;z-index:1}
 .acct3-val{font-size:26px !important;font-weight:900 !important;color:#111 !important;letter-spacing:-.8px !important;line-height:1;font-family:var(--font);font-variant-numeric:tabular-nums lining-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .acct3-val.red{color:#E24B4A !important}
+.acct3-valrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0}
+.acct3-valrow .acct3-val{margin:0 !important;flex:0 1 auto;min-width:0}
+.acct3-alert{display:inline-flex;align-items:center;gap:4px;height:24px;padding:0 9px 0 7px;border-radius:999px;background:#FEE2E2;color:#DC2626;font-size:11px;font-weight:800;letter-spacing:-.1px;line-height:1;white-space:nowrap;box-shadow:0 2px 6px rgba(220,38,38,.16),inset 0 0 0 1px rgba(220,38,38,.18);flex:0 0 auto}
+.acct3-alert svg{width:13px;height:13px;flex:0 0 13px;display:block}
+@media(max-width:820px){.acct3-alert{height:22px;font-size:10.5px;padding:0 8px 0 6px}.acct3-alert svg{width:12px;height:12px;flex-basis:12px}}
+
 .acct3-change{display:inline-flex;align-items:baseline;gap:4px;font-size:12px !important;font-weight:800;line-height:1.2}
 .acct3-change.up{color:#15803D}
 .acct3-change.down{color:#E24B4A}
@@ -1678,6 +1684,15 @@ html{background-color:#EEEBE5;background-image:linear-gradient(135deg,#EEEBE5 0%
 .scard.k3.available:hover{box-shadow:0 22px 46px rgba(14,143,97,.32),0 2px 6px rgba(14,143,97,.22) !important}
 .scard.k3.available .scard-lb{color:rgba(255,255,255,.86) !important}
 .scard.k3.available .scard-val,.scard.k3.available .scard-val.green,.scard.k3.available .scard-val.red{color:#fff !important}
+.scard.k3 .scard-valrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;position:relative;z-index:2;margin:0}
+.scard.k3 .scard-valrow .scard-val{margin:0 !important}
+.scard-alert{display:inline-flex;align-items:center;gap:5px;height:26px;padding:0 10px 0 8px;border-radius:999px;background:#FEE2E2;color:#DC2626;font-size:11.5px;font-weight:800;letter-spacing:-.1px;line-height:1;white-space:nowrap;box-shadow:0 2px 6px rgba(220,38,38,.18),inset 0 0 0 1px rgba(220,38,38,.15);animation:scardAlertPulse 2.4s ease-in-out infinite}
+.scard-alert svg{width:14px;height:14px;flex:0 0 14px;display:block}
+.scard.k3.available .scard-alert{background:#fff;color:#DC2626;box-shadow:0 4px 10px rgba(0,0,0,.14),inset 0 0 0 1px rgba(220,38,38,.18)}
+.scard.k3.is-low.available{background:linear-gradient(135deg,#B84A3D 0%,#D65540 55%,#E8664E 100%) !important;box-shadow:0 14px 28px rgba(184,74,61,.22) !important}
+@keyframes scardAlertPulse{0%,100%{transform:translateY(0)}50%{transform:translateY(-1px)}}
+@media(max-width:640px){.scard-alert{height:24px;font-size:11px;padding:0 9px 0 7px}.scard-alert svg{width:12px;height:12px;flex-basis:12px}}
+
 .scard.k3.available .scard-ic{background:rgba(255,255,255,.20);color:#fff}
 .scard.k3.available .scard-pl{background:rgba(255,255,255,.22);color:#fff}
 .scard.k3.available .scard-pl .pos,.scard.k3.available .scard-pl .neg,.scard.k3.available .scard-pl .neu{color:#fff}
@@ -2149,9 +2164,11 @@ function kpiLgIcon(tone){
   return '';
 }
 function makeKpiCard(cfg){
-  return '<div class="scard k3 '+escAttr(cfg.tone)+'">'
+  var lowBal=(cfg.tone==='available' && cleanNumber(cfg.rawValue)<5000);
+  var alertPill=lowBal?'<span class="scard-alert" title="Balance below \u20B95,000"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3L2 20h20L12 3z" fill="currentColor" opacity=".18"/><path d="M12 3L2 20h20L12 3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><line x1="12" y1="10" x2="12" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="17" r="1.1" fill="currentColor"/></svg>Low Balance</span>':'';
+  return '<div class="scard k3 '+escAttr(cfg.tone)+(lowBal?' is-low':'')+'">'
     +'<div class="scard-hd"><span class="scard-ic">'+kpiSmIcon(cfg.tone)+'</span><span class="scard-lb">'+escHtml(cfg.title)+'</span></div>'
-    +'<div class="scard-val '+escAttr(cfg.valueClass||'')+'">'+escHtml(cfg.value)+'</div>'
+    +'<div class="scard-valrow"><div class="scard-val '+escAttr(cfg.valueClass||'')+'">'+escHtml(cfg.value)+'</div>'+alertPill+'</div>'
     +'<div class="scard-pl">'+cfg.insight+'</div>'
     +kpiLgIcon(cfg.tone)
     +'</div>';
@@ -2160,7 +2177,7 @@ function renderKpiCards(t,TT,rem,secs){
   secs=secs||getSecs();
   var used=getKpiBudgetUsed(t),income=getMonthIncome(cur),availableHistory=kpiHistory('available',cur,TT),incomeHistory=kpiHistory('income',cur,TT),spentHistory=kpiHistory('spent',cur,TT),remainingHistory=kpiHistory('remaining',cur,TT);
   var cards=[
-    {tone:'available',icon:'💳',title:'Available Balance',value:fmtF(t.totA),valueClass:t.totA>=0?'green':'red',history:availableHistory,badge:kpiBadge('available',t.totA,TT,rem,availableHistory),insight:kpiInsight('available',t.totA,TT,rem,availableHistory)},
+    {tone:'available',icon:'💳',title:'Available Balance',value:fmtF(t.totA),rawValue:t.totA,valueClass:t.totA>=0?'green':'red',history:availableHistory,badge:kpiBadge('available',t.totA,TT,rem,availableHistory),insight:kpiInsight('available',t.totA,TT,rem,availableHistory)},
     {tone:'income',icon:'↗',title:'Total Income',value:fmtF(income),valueClass:'',history:incomeHistory,badge:kpiBadge('income',income,TT,rem,incomeHistory),insight:kpiInsight('income',income,TT,rem,incomeHistory)},
     {tone:'spent',icon:'🧾',title:'Total Spent',value:fmtF(used),valueClass:used>TT?'red':'',history:spentHistory,badge:kpiBadge('spent',used,TT,rem,spentHistory),insight:kpiInsight('spent',used,TT,rem,spentHistory)},
     {tone:'remaining',icon:'!',title:rem>=0?'Budget Left':'Over Budget',value:fmtF(Math.abs(rem)),valueClass:rem>=0?'green':'red',history:remainingHistory,badge:kpiBadge('remaining',Math.abs(rem),TT,rem,remainingHistory),insight:kpiInsight('remaining',Math.abs(rem),TT,rem,remainingHistory)}
@@ -3037,7 +3054,7 @@ function dashAccountsCard(t){
     return '<div class="acct3 '+escAttr(r.key)+'" role="button" tabindex="0" onclick="setDashTab(\'entry\')" onkeypress="if(event.key===\'Enter\')setDashTab(\'entry\')">'
       +'<div class="acct3-top"><div class="acct3-head"><span class="acct3-ic">'+logo+'</span><span class="acct3-status"><span class="acct3-status-dot"></span>'+escHtml(r.status)+'</span></div>'
       +'<div class="acct3-id"><div class="acct3-name">'+escHtml(r.name)+'</div><div class="acct3-sub">'+escHtml(r.sub)+'</div></div></div>'
-      +'<div class="acct3-mid"><div class="acct3-val '+(r.val>=0?'':'red')+'">'+fmtF(r.val)+'</div>'
+      +'<div class="acct3-mid"><div class="acct3-valrow"><div class="acct3-val '+(r.val>=0?'':'red')+'">'+fmtF(r.val)+'</div>'+(r.val<5000?'<span class="acct3-alert" title="Balance below \u20B95,000"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3L2 20h20L12 3z" fill="currentColor" opacity=".18"/><path d="M12 3L2 20h20L12 3z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><line x1="12" y1="10" x2="12" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="17" r="1.1" fill="currentColor"/></svg>Low Balance</span>':'')+'</div>'
       +'<div class="acct3-change '+(up?'up':'down')+'"><span class="acct3-arrow">'+(up?'\u2191':'\u2193')+'</span>'+Math.abs(delta)+'%<span class="acct3-change-lbl">vs last month</span></div></div>'
       +'<div class="acct3-foot"><div class="acct3-acct"><span class="acct3-acctlbl">'+escHtml(r.acctlbl)+'</span><span class="acct3-acctno">'+escHtml(r.acctno)+'</span></div><div class="acct3-spark-wrap">'+sparklineSvg(hist,r.tone)+'</div></div>'
       +'</div>';
